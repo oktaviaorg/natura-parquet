@@ -74,7 +74,39 @@
   },
   "contact": {
     "title": "Kontaktieren Sie uns",
-    "subtitle": "Unser Team steht Ihnen zur Verfügung"
+    "subtitle": "Angebotsanfrage, Informationen oder Muster",
+    "info": {
+      "title": "Unsere Kontaktdaten",
+      "hours": "Öffnungszeiten",
+      "pro": "Sie sind Profi?",
+      "pro_desc": "Entdecken Sie unser Partnerprogramm mit attraktiven Konditionen."
+    },
+    "form": {
+      "title": "Angebotsanfrage",
+      "name": "Name & Vorname",
+      "email": "E-Mail",
+      "phone": "Telefon",
+      "subject": "Art der Anfrage",
+      "subjects": {
+        "quote": "Angebotsanfrage",
+        "info": "Informationsanfrage",
+        "sample": "Musteranfrage",
+        "other": "Sonstiges"
+      },
+      "product": "Betreffendes Produkt",
+      "product_placeholder": "z.B. Eiche Kashmir 190mm",
+      "surface": "Geschätzte Fläche (m²)",
+      "surface_placeholder": "z.B. 45 m²",
+      "message": "Ihre Nachricht",
+      "message_placeholder": "Beschreiben Sie Ihr Projekt...",
+      "submit": "Anfrage senden",
+      "sending": "Wird gesendet...",
+      "error": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+      "success": {
+        "title": "Anfrage gesendet!",
+        "message": "Wir antworten Ihnen innerhalb von 24-48 Stunden mit Ihrem persönlichen Angebot."
+      }
+    }
   },
   "footer": {
     "description": "Natura Parquet - Europäischer Vertrieb von Premium-Parkett aus Eiche und Esche. Qualität, Authentizität und europäisches Know-how.",

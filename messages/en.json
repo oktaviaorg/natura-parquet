@@ -74,7 +74,39 @@
   },
   "contact": {
     "title": "Contact Us",
-    "subtitle": "Our team is at your service"
+    "subtitle": "Quote request, information or samples",
+    "info": {
+      "title": "Our Contact Details",
+      "hours": "Opening Hours",
+      "pro": "Are you a professional?",
+      "pro_desc": "Discover our partner program with attractive conditions."
+    },
+    "form": {
+      "title": "Quote Request",
+      "name": "Full Name",
+      "email": "Email",
+      "phone": "Phone",
+      "subject": "Request Type",
+      "subjects": {
+        "quote": "Quote Request",
+        "info": "Information Request",
+        "sample": "Sample Request",
+        "other": "Other"
+      },
+      "product": "Product Concerned",
+      "product_placeholder": "e.g. Oak Kashmir 190mm",
+      "surface": "Estimated Area (m²)",
+      "surface_placeholder": "e.g. 45 m²",
+      "message": "Your Message",
+      "message_placeholder": "Describe your project...",
+      "submit": "Send Request",
+      "sending": "Sending...",
+      "error": "An error occurred. Please try again.",
+      "success": {
+        "title": "Request Sent!",
+        "message": "We will respond within 24-48 hours with your personalized quote."
+      }
+    }
   },
   "footer": {
     "description": "Natura Parquet - European distributor of premium oak and ash parquet. Quality, authenticity and European craftsmanship.",
