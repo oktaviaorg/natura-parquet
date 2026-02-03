@@ -153,16 +153,38 @@
   },
   "contact": {
     "title": "Contactez-nous",
-    "subtitle": "Notre équipe est à votre écoute",
-    "email": "contact@natura-parquets.fr",
-    "email_pro": "partenaires@natura-parquets.fr",
-    "address": "Alsace, France",
+    "subtitle": "Demande de devis, informations ou échantillons",
+    "info": {
+      "title": "Nos coordonnées",
+      "hours": "Horaires",
+      "pro": "Vous êtes professionnel ?",
+      "pro_desc": "Découvrez notre programme partenaires avec des conditions avantageuses."
+    },
     "form": {
-      "name": "Nom",
+      "title": "Demande de devis",
+      "name": "Nom & Prénom",
       "email": "Email",
-      "subject": "Sujet",
-      "message": "Message",
-      "submit": "Envoyer"
+      "phone": "Téléphone",
+      "subject": "Type de demande",
+      "subjects": {
+        "quote": "Demande de devis",
+        "info": "Demande d'informations",
+        "sample": "Demande d'échantillons",
+        "other": "Autre"
+      },
+      "product": "Produit concerné",
+      "product_placeholder": "Ex: Chêne Kashmir 190mm",
+      "surface": "Surface estimée (m²)",
+      "surface_placeholder": "Ex: 45 m²",
+      "message": "Votre message",
+      "message_placeholder": "Décrivez votre projet...",
+      "submit": "Envoyer ma demande",
+      "sending": "Envoi en cours...",
+      "error": "Une erreur est survenue. Veuillez réessayer.",
+      "success": {
+        "title": "Demande envoyée !",
+        "message": "Nous vous répondrons sous 24-48h avec votre devis personnalisé."
+      }
     }
   },
   "footer": {

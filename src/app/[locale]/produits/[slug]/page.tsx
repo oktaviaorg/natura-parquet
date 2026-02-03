@@ -215,7 +215,7 @@ export default function ProductPage({ params }: { params: { slug: string; locale
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link
-                  href={`/${locale}/devenir-partenaire`}
+                  href={`/${locale}/contact`}
                   className="flex-1 px-8 py-4 bg-natura-900 text-white text-center font-medium hover:bg-natura-800 transition-colors"
                 >
                   {locale === 'fr' ? 'Demander un devis' : locale === 'de' ? 'Angebot anfordern' : 'Request a quote'}
