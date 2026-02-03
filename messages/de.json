@@ -1,0 +1,89 @@
+{
+  "brand": {
+    "name": "Natura Parquet",
+    "tagline": "Authentisches europäisches Holz",
+    "description": "Premium europäisches Parkett - Eiche & Esche in Spitzenqualität"
+  },
+  "nav": {
+    "home": "Startseite",
+    "products": "Produkte",
+    "collections": "Kollektionen",
+    "inspirations": "Inspirationen",
+    "partners": "Partner werden",
+    "contact": "Kontakt",
+    "about": "Über uns"
+  },
+  "hero": {
+    "title": "Authentisches europäisches Holz",
+    "subtitle": "Premium Parkett aus Eiche und Esche, in Europa mit Leidenschaft und Fachwissen gefertigt",
+    "cta_products": "Produkte entdecken",
+    "cta_catalog": "Katalog herunterladen"
+  },
+  "products": {
+    "engineered": {
+      "name": "Mehrschichtparkett",
+      "tagline": "Eleganz & Stabilität",
+      "description": "Unser Mehrschichtparkett vereint die Eleganz von Naturholz mit außergewöhnlicher Stabilität. Aus mehreren hochwertigen Schichten gefertigt, ist es perfekt für Fußbodenheizung geeignet.",
+      "specs": [
+        "Breiten: 100 bis 230 mm",
+        "Längen: 600 bis 2450 mm",
+        "Stärke: 14 oder 16 mm",
+        "Nutzschicht: 3,5 mm"
+      ]
+    },
+    "solid": {
+      "name": "Massivparkett",
+      "tagline": "Tradition & Langlebigkeit",
+      "description": "Massivparkett verkörpert die Exzellenz traditioneller Bodenbeläge. Seine außergewöhnliche Langlebigkeit und die Möglichkeit mehrfacher Renovierungen machen es zu einer nachhaltigen Investition.",
+      "specs": [
+        "Breiten: 60 bis 70 mm",
+        "Längen: 350 bis 500 mm",
+        "Stärke: 16 oder 22 mm"
+      ]
+    },
+    "industrial": {
+      "name": "Industrieparkett",
+      "tagline": "Robustheit & Design",
+      "description": "Unser Industrieparkett vereint hohe Belastbarkeit mit zeitgenössischer Ästhetik. Ideal für stark frequentierte Bereiche und Innenräume im Industrial Style.",
+      "specs": [
+        "Maße: 10×8×160 mm",
+        "Maße: 10×8×250 mm",
+        "Maße: 23×8×160 mm"
+      ]
+    }
+  },
+  "collections": {
+    "title": "Unsere Kollektionen",
+    "subtitle": "Einzigartige Oberflächen für jeden Stil"
+  },
+  "partners": {
+    "title": "Werden Sie Natura Parquet Partner",
+    "subtitle": "Treten Sie unserem europäischen Vertriebsnetz bei",
+    "benefits": {
+      "title": "Ihre Vorteile",
+      "items": [
+        "Premium-Produkte in europäischer Qualität",
+        "Attraktive Margen auf das gesamte Sortiment",
+        "Optimierte Lieferung in ganz Europa",
+        "Kompletter Marketing-Support (Visuals, Muster)",
+        "Individuelle Produktschulung",
+        "Möglichkeit der Gebietsexklusivität"
+      ]
+    },
+    "cta": "Jetzt bewerben"
+  },
+  "contact": {
+    "title": "Kontaktieren Sie uns",
+    "subtitle": "Unser Team steht Ihnen zur Verfügung"
+  },
+  "footer": {
+    "description": "Natura Parquet - Europäischer Vertrieb von Premium-Parkett aus Eiche und Esche. Qualität, Authentizität und europäisches Know-how.",
+    "copyright": "© 2026 Natura Parquet. Alle Rechte vorbehalten."
+  },
+  "cta": {
+    "catalog": "Katalog herunterladen",
+    "quote": "Angebot anfordern",
+    "contact": "Kontakt aufnehmen",
+    "partner": "Partner werden"
+  }
+}

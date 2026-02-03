@@ -1,0 +1,186 @@
+{
+  "brand": {
+    "name": "Natura Parquet",
+    "tagline": "L'authenticité du bois européen",
+    "description": "Parquets premium européens - Chêne & Frêne de qualité supérieure"
+  },
+  "nav": {
+    "home": "Accueil",
+    "products": "Produits",
+    "collections": "Collections",
+    "inspirations": "Inspirations",
+    "partners": "Devenir partenaire",
+    "contact": "Contact",
+    "about": "À propos"
+  },
+  "hero": {
+    "title": "L'authenticité du bois européen",
+    "subtitle": "Parquets premium en chêne et frêne, fabriqués en Europe avec passion et savoir-faire",
+    "cta_products": "Découvrir nos produits",
+    "cta_catalog": "Télécharger le catalogue"
+  },
+  "products": {
+    "engineered": {
+      "name": "Parquet Contrecollé",
+      "tagline": "Élégance & Stabilité",
+      "description": "Notre parquet contrecollé allie l'élégance du bois naturel à une stabilité exceptionnelle. Composé de plusieurs couches de haute qualité, il est parfaitement adapté au chauffage au sol.",
+      "specs": [
+        "Largeurs : 100 à 230 mm",
+        "Longueurs : 600 à 2450 mm",
+        "Épaisseur : 14 ou 16 mm",
+        "Couche noble : 3,5 mm"
+      ]
+    },
+    "solid": {
+      "name": "Parquet Massif",
+      "tagline": "Tradition & Longévité",
+      "description": "Le parquet massif incarne l'excellence du revêtement de sol traditionnel. Sa longévité exceptionnelle et la possibilité de rénovations multiples en font un investissement durable.",
+      "specs": [
+        "Largeurs : 60 à 70 mm",
+        "Longueurs : 350 à 500 mm",
+        "Épaisseur : 16 ou 22 mm"
+      ]
+    },
+    "industrial": {
+      "name": "Parquet Industriel",
+      "tagline": "Robustesse & Design",
+      "description": "Notre parquet industriel combine haute résistance et esthétique contemporaine. Idéal pour les espaces à fort passage et les intérieurs au style industriel.",
+      "specs": [
+        "Dimensions : 10×8×160 mm",
+        "Dimensions : 10×8×250 mm",
+        "Dimensions : 23×8×160 mm"
+      ]
+    }
+  },
+  "collections": {
+    "title": "Nos Collections",
+    "subtitle": "Des finitions uniques pour tous les styles",
+    "items": {
+      "kashmir": {
+        "name": "Kashmir",
+        "description": "Teinte claire et chaleureuse, finition huilée naturelle"
+      },
+      "raw": {
+        "name": "Raw",
+        "description": "L'authenticité du bois brut, aspect naturel préservé"
+      },
+      "julia": {
+        "name": "Julia",
+        "description": "Élégance classique, tons dorés et lumineux"
+      },
+      "brown": {
+        "name": "Brown",
+        "description": "Teinte profonde et chaleureuse, caractère affirmé"
+      },
+      "nude": {
+        "name": "Nude",
+        "description": "Sobriété scandinave, tons clairs et épurés"
+      },
+      "natural_oil": {
+        "name": "Natural Oil",
+        "description": "Protection naturelle, beauté authentique du bois"
+      }
+    }
+  },
+  "wood_grades": {
+    "title": "Sélections de bois",
+    "select": {
+      "name": "Select",
+      "description": "Qualité premium, bois uniforme avec très peu de nœuds"
+    },
+    "natur": {
+      "name": "Natur",
+      "description": "Aspect naturel avec nœuds et variations de couleur modérées"
+    },
+    "rustic": {
+      "name": "Rustic",
+      "description": "Caractère authentique avec nœuds prononcés et variations marquées"
+    }
+  },
+  "partners": {
+    "title": "Devenez Partenaire Natura Parquet",
+    "subtitle": "Rejoignez notre réseau européen de distribution",
+    "intro": "Vous êtes professionnel du parquet ou de l'aménagement intérieur ? Rejoignez le réseau Natura Parquet et proposez à vos clients des parquets premium européens.",
+    "benefits": {
+      "title": "Vos avantages",
+      "items": [
+        "Produits premium de qualité européenne",
+        "Marges attractives sur toute la gamme",
+        "Livraison optimisée dans toute l'Europe",
+        "Support marketing complet (visuels, échantillons)",
+        "Formation produit personnalisée",
+        "Possibilité d'exclusivité territoriale"
+      ]
+    },
+    "profiles": {
+      "title": "Profils recherchés",
+      "reseller": {
+        "name": "Revendeurs",
+        "description": "Négoces bois, showrooms décoration, magasins bricolage"
+      },
+      "agent": {
+        "name": "Agents commerciaux / VRP",
+        "description": "Couverture régionale, réseau professionnel existant"
+      },
+      "installer": {
+        "name": "Poseurs partenaires",
+        "description": "Artisans qualifiés recommandant nos produits"
+      }
+    },
+    "territories": {
+      "title": "Territoires prioritaires",
+      "items": [
+        "France : Grand Est, Île-de-France, Auvergne-Rhône-Alpes",
+        "Allemagne : Bade-Wurtemberg, Bavière, Rhénanie",
+        "Belgique : Wallonie, Flandre",
+        "Suisse : Suisse romande, Suisse alémanique",
+        "Luxembourg"
+      ]
+    },
+    "cta": "Candidater maintenant",
+    "form": {
+      "company": "Société",
+      "name": "Nom & Prénom",
+      "email": "Email professionnel",
+      "phone": "Téléphone",
+      "territory": "Zone géographique",
+      "profile": "Type de partenariat",
+      "experience": "Expérience dans le parquet",
+      "volume": "Volume estimé (m²/an)",
+      "message": "Votre motivation",
+      "submit": "Envoyer ma candidature"
+    }
+  },
+  "contact": {
+    "title": "Contactez-nous",
+    "subtitle": "Notre équipe est à votre écoute",
+    "email": "contact@natura-parquets.fr",
+    "email_pro": "partenaires@natura-parquets.fr",
+    "address": "Alsace, France",
+    "form": {
+      "name": "Nom",
+      "email": "Email",
+      "subject": "Sujet",
+      "message": "Message",
+      "submit": "Envoyer"
+    }
+  },
+  "footer": {
+    "description": "Natura Parquet - Distributeur européen de parquets premium en chêne et frêne. Qualité, authenticité et savoir-faire européen.",
+    "links": {
+      "products": "Produits",
+      "collections": "Collections",
+      "partners": "Devenir partenaire",
+      "contact": "Contact",
+      "legal": "Mentions légales",
+      "privacy": "Politique de confidentialité"
+    },
+    "copyright": "© 2026 Natura Parquet. Tous droits réservés."
+  },
+  "cta": {
+    "catalog": "Télécharger le catalogue",
+    "quote": "Demander un devis",
+    "contact": "Nous contacter",
+    "partner": "Devenir partenaire"
+  }
+}

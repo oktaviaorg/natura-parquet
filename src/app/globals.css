@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-white text-natura-900;
+}
+
+/* Typography */
+.font-display {
+  font-family: var(--font-playfair), serif;
+}
+
+/* Smooth image loading */
+img {
+  @apply transition-opacity duration-300;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-natura-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-natura-400 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-natura-500;
+}

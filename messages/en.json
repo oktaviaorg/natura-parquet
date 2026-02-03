@@ -1,0 +1,89 @@
+{
+  "brand": {
+    "name": "Natura Parquet",
+    "tagline": "Authentic European Wood",
+    "description": "Premium European parquet - Top quality Oak & Ash"
+  },
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "collections": "Collections",
+    "inspirations": "Inspirations",
+    "partners": "Become a partner",
+    "contact": "Contact",
+    "about": "About"
+  },
+  "hero": {
+    "title": "Authentic European Wood",
+    "subtitle": "Premium oak and ash parquet, crafted in Europe with passion and expertise",
+    "cta_products": "Discover our products",
+    "cta_catalog": "Download catalog"
+  },
+  "products": {
+    "engineered": {
+      "name": "Engineered Flooring",
+      "tagline": "Elegance & Stability",
+      "description": "Our engineered flooring combines the elegance of natural wood with exceptional stability. Made of multiple high-quality layers, it's perfectly suited for underfloor heating.",
+      "specs": [
+        "Widths: 100 to 230 mm",
+        "Lengths: 600 to 2450 mm",
+        "Thickness: 14 or 16 mm",
+        "Wear layer: 3.5 mm"
+      ]
+    },
+    "solid": {
+      "name": "Solid Parquet",
+      "tagline": "Tradition & Longevity",
+      "description": "Solid parquet embodies the excellence of traditional flooring. Its exceptional longevity and the possibility of multiple refinishing make it a sustainable investment.",
+      "specs": [
+        "Widths: 60 to 70 mm",
+        "Lengths: 350 to 500 mm",
+        "Thickness: 16 or 22 mm"
+      ]
+    },
+    "industrial": {
+      "name": "Industrial Parquet",
+      "tagline": "Durability & Design",
+      "description": "Our industrial parquet combines high durability with contemporary aesthetics. Ideal for high-traffic areas and industrial-style interiors.",
+      "specs": [
+        "Dimensions: 10×8×160 mm",
+        "Dimensions: 10×8×250 mm",
+        "Dimensions: 23×8×160 mm"
+      ]
+    }
+  },
+  "collections": {
+    "title": "Our Collections",
+    "subtitle": "Unique finishes for every style"
+  },
+  "partners": {
+    "title": "Become a Natura Parquet Partner",
+    "subtitle": "Join our European distribution network",
+    "benefits": {
+      "title": "Your Benefits",
+      "items": [
+        "Premium European quality products",
+        "Attractive margins across the range",
+        "Optimized delivery throughout Europe",
+        "Complete marketing support (visuals, samples)",
+        "Personalized product training",
+        "Possibility of territorial exclusivity"
+      ]
+    },
+    "cta": "Apply now"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Our team is at your service"
+  },
+  "footer": {
+    "description": "Natura Parquet - European distributor of premium oak and ash parquet. Quality, authenticity and European craftsmanship.",
+    "copyright": "© 2026 Natura Parquet. All rights reserved."
+  },
+  "cta": {
+    "catalog": "Download catalog",
+    "quote": "Request a quote",
+    "contact": "Contact us",
+    "partner": "Become a partner"
+  }
+}
