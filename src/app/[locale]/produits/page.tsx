@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import ProductCard from '@/components/ProductCard';
@@ -11,13 +12,27 @@ import { products, heroImages, type Product } from '@/data/products';
 export default function ProductsPage() {
   const t = useTranslations();
   const locale = useLocale() as 'fr' | 'de' | 'en';
+  const searchParams = useSearchParams();
+  
+  // Initialize filters from URL params
+  const initialCategory = searchParams.get('category') as Product['category'] | null;
   
   const [filters, setFilters] = useState<{
     category?: Product['category'];
     color?: Product['color'];
     woodType?: Product['woodType'];
     grade?: Product['grade'];
-  }>({});
+  }>({
+    category: initialCategory || undefined
+  });
+  
+  // Update filters when URL params change
+  useEffect(() => {
+    const urlCategory = searchParams.get('category') as Product['category'] | null;
+    if (urlCategory) {
+      setFilters(prev => ({ ...prev, category: urlCategory }));
+    }
+  }, [searchParams]);
   
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
