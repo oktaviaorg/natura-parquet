@@ -175,7 +175,82 @@
       "legal": "Mentions légales",
       "privacy": "Politique de confidentialité"
     },
-    "copyright": "© 2026 Natura Parquet. Tous droits réservés."
+    "copyright": "© 2026 Natura Parquet. Tous droits réservés.",
+    "rights": "Tous droits réservés."
+  },
+  "partner": {
+    "hero": {
+      "title": "Rejoignez le réseau Natura Parquet",
+      "subtitle": "Devenez partenaire et proposez des parquets premium européens à vos clients"
+    },
+    "benefits": {
+      "title": "Vos avantages",
+      "quality": {
+        "title": "Produits Premium",
+        "desc": "Parquets chêne et frêne européens, fabriqués en Pologne avec un savoir-faire d'excellence"
+      },
+      "margin": {
+        "title": "Marges Attractives",
+        "desc": "Conditions commerciales avantageuses et tarifs dégressifs selon volume"
+      },
+      "logistics": {
+        "title": "Livraison Europe",
+        "desc": "Logistique optimisée via Aigle Group - Livraison palettes dans toute l'Europe"
+      },
+      "support": {
+        "title": "Support Marketing",
+        "desc": "Visuels HD, échantillons, catalogues et supports de vente personnalisés"
+      },
+      "territory": {
+        "title": "Exclusivité Territoriale",
+        "desc": "Possibilité d'exclusivité sur votre zone géographique"
+      },
+      "partnership": {
+        "title": "Partenariat Durable",
+        "desc": "Accompagnement personnalisé et relation de confiance sur le long terme"
+      }
+    },
+    "profiles": {
+      "title": "Profils recherchés",
+      "reseller": {
+        "title": "Revendeurs",
+        "desc": "Négoces bois, showrooms, magasins spécialisés"
+      },
+      "agent": {
+        "title": "Agents / VRP",
+        "desc": "Agents commerciaux avec réseau professionnel existant"
+      },
+      "installer": {
+        "title": "Poseurs Partenaires",
+        "desc": "Artisans parqueteurs recommandant nos produits"
+      }
+    },
+    "form": {
+      "title": "Déposez votre candidature",
+      "subtitle": "Nous reviendrons vers vous sous 48h",
+      "company": "Société",
+      "contact_name": "Nom & Prénom",
+      "email": "Email",
+      "phone": "Téléphone",
+      "profile_type": "Type de partenariat",
+      "territory": "Zone géographique",
+      "territory_placeholder": "Ex: Alsace, Bade-Wurtemberg...",
+      "experience": "Votre expérience",
+      "experience_placeholder": "Décrivez votre activité et expérience dans le parquet...",
+      "message": "Message complémentaire",
+      "message_placeholder": "Vos motivations, questions...",
+      "select": "Sélectionnez...",
+      "submit": "Envoyer ma candidature",
+      "sending": "Envoi en cours...",
+      "error": "Une erreur est survenue. Veuillez réessayer.",
+      "success": {
+        "title": "Candidature envoyée !",
+        "message": "Merci pour votre intérêt. Notre équipe vous contactera sous 48h."
+      }
+    },
+    "footer": {
+      "rights": "Tous droits réservés."
+    }
   },
   "cta": {
     "catalog": "Télécharger le catalogue",

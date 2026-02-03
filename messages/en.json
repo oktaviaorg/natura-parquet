@@ -78,7 +78,82 @@
   },
   "footer": {
     "description": "Natura Parquet - European distributor of premium oak and ash parquet. Quality, authenticity and European craftsmanship.",
-    "copyright": "© 2026 Natura Parquet. All rights reserved."
+    "copyright": "© 2026 Natura Parquet. All rights reserved.",
+    "rights": "All rights reserved."
+  },
+  "partner": {
+    "hero": {
+      "title": "Join the Natura Parquet Network",
+      "subtitle": "Become a partner and offer premium European parquet to your customers"
+    },
+    "benefits": {
+      "title": "Your Benefits",
+      "quality": {
+        "title": "Premium Products",
+        "desc": "European oak and ash parquet, crafted in Poland with exceptional expertise"
+      },
+      "margin": {
+        "title": "Attractive Margins",
+        "desc": "Competitive pricing with volume-based discounts"
+      },
+      "logistics": {
+        "title": "Europe-wide Delivery",
+        "desc": "Optimized logistics via Aigle Group - Pallet delivery across Europe"
+      },
+      "support": {
+        "title": "Marketing Support",
+        "desc": "HD visuals, samples, catalogs and customized sales materials"
+      },
+      "territory": {
+        "title": "Territorial Exclusivity",
+        "desc": "Possibility of exclusivity in your geographic area"
+      },
+      "partnership": {
+        "title": "Long-term Partnership",
+        "desc": "Personalized support and trusted long-term relationship"
+      }
+    },
+    "profiles": {
+      "title": "Profiles We're Looking For",
+      "reseller": {
+        "title": "Resellers",
+        "desc": "Timber merchants, showrooms, specialty stores"
+      },
+      "agent": {
+        "title": "Sales Agents",
+        "desc": "Commercial agents with existing professional network"
+      },
+      "installer": {
+        "title": "Partner Installers",
+        "desc": "Qualified flooring professionals recommending our products"
+      }
+    },
+    "form": {
+      "title": "Submit Your Application",
+      "subtitle": "We'll get back to you within 48 hours",
+      "company": "Company",
+      "contact_name": "Full Name",
+      "email": "Email",
+      "phone": "Phone",
+      "profile_type": "Partnership Type",
+      "territory": "Geographic Area",
+      "territory_placeholder": "e.g. Bavaria, Baden-Württemberg...",
+      "experience": "Your Experience",
+      "experience_placeholder": "Describe your business and experience in flooring...",
+      "message": "Additional Message",
+      "message_placeholder": "Your motivation, questions...",
+      "select": "Select...",
+      "submit": "Submit Application",
+      "sending": "Sending...",
+      "error": "An error occurred. Please try again.",
+      "success": {
+        "title": "Application Sent!",
+        "message": "Thank you for your interest. Our team will contact you within 48 hours."
+      }
+    },
+    "footer": {
+      "rights": "All rights reserved."
+    }
   },
   "cta": {
     "catalog": "Download catalog",

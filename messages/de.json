@@ -78,7 +78,82 @@
   },
   "footer": {
     "description": "Natura Parquet - Europäischer Vertrieb von Premium-Parkett aus Eiche und Esche. Qualität, Authentizität und europäisches Know-how.",
-    "copyright": "© 2026 Natura Parquet. Alle Rechte vorbehalten."
+    "copyright": "© 2026 Natura Parquet. Alle Rechte vorbehalten.",
+    "rights": "Alle Rechte vorbehalten."
+  },
+  "partner": {
+    "hero": {
+      "title": "Werden Sie Teil des Natura Parquet Netzwerks",
+      "subtitle": "Werden Sie Partner und bieten Sie Ihren Kunden Premium-Parkett aus Europa"
+    },
+    "benefits": {
+      "title": "Ihre Vorteile",
+      "quality": {
+        "title": "Premium-Produkte",
+        "desc": "Eiche- und Eschenparkett aus Europa, in Polen mit höchster Handwerkskunst gefertigt"
+      },
+      "margin": {
+        "title": "Attraktive Margen",
+        "desc": "Vorteilhafte Konditionen und mengenabhängige Staffelpreise"
+      },
+      "logistics": {
+        "title": "Lieferung Europa",
+        "desc": "Optimierte Logistik über Aigle Group - Palettenlieferung in ganz Europa"
+      },
+      "support": {
+        "title": "Marketing-Support",
+        "desc": "HD-Bilder, Muster, Kataloge und personalisierte Verkaufsunterlagen"
+      },
+      "territory": {
+        "title": "Gebietsexklusivität",
+        "desc": "Möglichkeit der Exklusivität in Ihrer Region"
+      },
+      "partnership": {
+        "title": "Langfristige Partnerschaft",
+        "desc": "Persönliche Betreuung und vertrauensvolle Zusammenarbeit"
+      }
+    },
+    "profiles": {
+      "title": "Gesuchte Profile",
+      "reseller": {
+        "title": "Händler",
+        "desc": "Holzfachhändler, Showrooms, Fachgeschäfte"
+      },
+      "agent": {
+        "title": "Handelsvertreter",
+        "desc": "Handelsvertreter mit bestehendem Fachnetzwerk"
+      },
+      "installer": {
+        "title": "Partner-Verleger",
+        "desc": "Qualifizierte Parkettleger, die unsere Produkte empfehlen"
+      }
+    },
+    "form": {
+      "title": "Bewerben Sie sich",
+      "subtitle": "Wir melden uns innerhalb von 48 Stunden",
+      "company": "Unternehmen",
+      "contact_name": "Name & Vorname",
+      "email": "E-Mail",
+      "phone": "Telefon",
+      "profile_type": "Art der Partnerschaft",
+      "territory": "Region",
+      "territory_placeholder": "z.B. Baden-Württemberg, Bayern...",
+      "experience": "Ihre Erfahrung",
+      "experience_placeholder": "Beschreiben Sie Ihre Tätigkeit und Erfahrung im Parkettbereich...",
+      "message": "Zusätzliche Nachricht",
+      "message_placeholder": "Ihre Motivation, Fragen...",
+      "select": "Auswählen...",
+      "submit": "Bewerbung absenden",
+      "sending": "Wird gesendet...",
+      "error": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+      "success": {
+        "title": "Bewerbung gesendet!",
+        "message": "Vielen Dank für Ihr Interesse. Unser Team wird Sie innerhalb von 48 Stunden kontaktieren."
+      }
+    },
+    "footer": {
+      "rights": "Alle Rechte vorbehalten."
+    }
   },
   "cta": {
     "catalog": "Katalog herunterladen",
