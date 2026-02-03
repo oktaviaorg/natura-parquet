@@ -60,7 +60,9 @@ export default function ProductCard({ product }: ProductCardProps) {
         <div className="flex items-center gap-3 text-sm text-natura-500">
           <span>{product.dimensions.width} × {product.dimensions.thickness}</span>
           <span className="w-1 h-1 rounded-full bg-natura-300" />
-          <span>{gradeLabels[product.grade][locale]}</span>
+          <span className="font-medium">
+            {locale === 'fr' ? 'Sélection' : locale === 'de' ? 'Auswahl' : 'Wood Selection'}: {gradeLabels[product.grade][locale]}
+          </span>
         </div>
         
         <p className="text-sm text-natura-600 line-clamp-2">
