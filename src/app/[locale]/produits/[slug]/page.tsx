@@ -6,6 +6,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import ProductCard from '@/components/ProductCard';
+import DownloadPDFButton from '@/components/ProductPDF';
 import { products, getProductBySlug, type Product } from '@/data/products';
 
 export default function ProductPage({ params }: { params: { slug: string; locale: string } }) {
@@ -220,9 +221,22 @@ export default function ProductPage({ params }: { params: { slug: string; locale
                 >
                   {locale === 'fr' ? 'Demander un devis' : locale === 'de' ? 'Angebot anfordern' : 'Request a quote'}
                 </Link>
-                <button className="flex-1 px-8 py-4 border-2 border-natura-900 text-natura-900 font-medium hover:bg-natura-50 transition-colors">
-                  {locale === 'fr' ? 'Télécharger la fiche' : locale === 'de' ? 'Datenblatt herunterladen' : 'Download datasheet'}
-                </button>
+                <DownloadPDFButton
+                  product={{
+                    name: product.name[locale],
+                    category: product.category,
+                    description: product.description[locale],
+                    wood: woodLabels[product.woodType][locale],
+                    grade: gradeLabels[product.grade][locale],
+                    finish: product.finish,
+                    width: parseInt(product.dimensions.width),
+                    length: parseInt(product.dimensions.length),
+                    thickness: parseInt(product.dimensions.thickness),
+                    features: product.features,
+                  }}
+                  locale={locale}
+                  className="flex-1 justify-center"
+                />
               </div>
             </div>
           </div>
