@@ -2,13 +2,17 @@
 
 import { useTranslations, useLocale } from 'next-intl';
 import { useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import Link from 'next/link';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+// Create Supabase client only if env vars are available
+let supabase: SupabaseClient | null = null;
+if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+  supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  );
+}
 
 export default function PartnerPage() {
   const t = useTranslations('partner');
@@ -33,11 +37,18 @@ export default function PartnerPage() {
     setStatus('loading');
     
     try {
-      const { error } = await supabase
-        .from('partner_applications')
-        .insert([formData]);
-      
-      if (error) throw error;
+      if (supabase) {
+        const { error } = await supabase
+          .from('partner_applications')
+          .insert([formData]);
+        
+        if (error) throw error;
+      } else {
+        // Fallback: open mailto with form data
+        const subject = `Demande partenariat - ${formData.company || formData.contact_name}`;
+        const body = `Nom: ${formData.contact_name}\nEntreprise: ${formData.company}\nEmail: ${formData.email}\nTél: ${formData.phone}\nProfil: ${formData.profile_type}\nTerritoire: ${formData.territory}\nExpérience: ${formData.experience}\nMessage: ${formData.message}`;
+        window.location.href = `mailto:contact@natura-parquets.fr?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      }
       setStatus('success');
       setFormData({ company: '', contact_name: '', email: '', phone: '', territory: '', profile_type: '', experience: '', message: '' });
     } catch (err) {
