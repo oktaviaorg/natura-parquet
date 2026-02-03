@@ -225,13 +225,24 @@ export default function ProductPage({ params }: { params: { slug: string; locale
               </div>
 
               {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link
-                  href={`/${locale}/contact`}
-                  className="flex-1 px-8 py-4 bg-natura-900 text-white text-center font-medium hover:bg-natura-800 transition-colors"
-                >
-                  {locale === 'fr' ? 'Demander un devis' : locale === 'de' ? 'Angebot anfordern' : 'Request a quote'}
-                </Link>
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Link
+                    href={`/${locale}/contact?product=${encodeURIComponent(product.name[locale])}&type=devis`}
+                    className="flex-1 px-8 py-4 bg-natura-900 text-white text-center font-medium hover:bg-natura-800 transition-colors"
+                  >
+                    {locale === 'fr' ? 'Demander un devis' : locale === 'de' ? 'Angebot anfordern' : 'Request a quote'}
+                  </Link>
+                  <Link
+                    href={`/${locale}/contact?product=${encodeURIComponent(product.name[locale])}&type=echantillon`}
+                    className="flex-1 px-8 py-4 bg-natura-700 text-white text-center font-medium hover:bg-natura-600 transition-colors flex items-center justify-center gap-2"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                    </svg>
+                    {locale === 'fr' ? 'Échantillon A4 gratuit' : locale === 'de' ? 'Kostenloses A4-Muster' : 'Free A4 sample'}
+                  </Link>
+                </div>
                 <DownloadPDFButton
                   product={{
                     name: product.name[locale],
@@ -246,7 +257,7 @@ export default function ProductPage({ params }: { params: { slug: string; locale
                     features: product.features,
                   }}
                   locale={locale}
-                  className="flex-1 justify-center"
+                  className="w-full justify-center"
                 />
               </div>
             </div>

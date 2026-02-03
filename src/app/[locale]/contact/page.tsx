@@ -1,7 +1,8 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { createClient } from '@supabase/supabase-js';
 import Link from 'next/link';
 
@@ -13,6 +14,7 @@ const supabase = createClient(
 export default function ContactPage() {
   const t = useTranslations('contact');
   const tNav = useTranslations('nav');
+  const searchParams = useSearchParams();
   
   const [formData, setFormData] = useState({
     name: '',
@@ -23,6 +25,20 @@ export default function ContactPage() {
     surface: '',
     message: ''
   });
+
+  // Pré-remplir le formulaire avec les paramètres URL
+  useEffect(() => {
+    const productParam = searchParams.get('product');
+    const typeParam = searchParams.get('type');
+    
+    if (productParam || typeParam) {
+      setFormData(prev => ({
+        ...prev,
+        product: productParam || prev.product,
+        subject: typeParam || prev.subject,
+      }));
+    }
+  }, [searchParams]);
   
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
