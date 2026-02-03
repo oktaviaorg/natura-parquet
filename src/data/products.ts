@@ -45,7 +45,7 @@ export interface Collection {
 
 // Premium Unsplash images for parquet
 export const heroImages = {
-  main: '/images/showroom/showroom-complet.jpg',
+  main: '/images/showroom/lames-gros-plan.jpg',
   engineered: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=85',
   solid: 'https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=1200&q=85',
   industrial: 'https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=1200&q=85',
@@ -55,19 +55,34 @@ export const heroImages = {
 };
 
 export const productImages = {
-  // Light oak variations
-  oakLight1: 'https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800&q=85',
-  oakLight2: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800&q=85',
-  oakLight3: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=85',
-  // Medium oak
-  oakMedium1: 'https://images.unsplash.com/photo-1600573472591-ee6b68d14c68?w=800&q=85',
-  oakMedium2: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=85',
-  // Dark oak
-  oakDark1: 'https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=800&q=85',
-  oakDark2: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=85',
-  // Herringbone pattern
-  herringbone1: 'https://images.unsplash.com/photo-1594484208280-efa00f96fc21?w=800&q=85',
-  herringbone2: 'https://images.unsplash.com/photo-1600566752547-33e5e4a05a0e?w=800&q=85',
+  // Axemark product images
+  kashmir: '/images/products/kashmir.jpg',
+  kashmirDetail: '/images/products/kashmir-detail.jpg',
+  raw: '/images/products/raw.jpg',
+  rawDetail: '/images/products/raw-detail.jpg',
+  julia: '/images/products/julia.jpg',
+  juliaDetail: '/images/products/julia-detail.jpg',
+  brown: '/images/products/brown.jpg',
+  brownDetail: '/images/products/brown-detail.jpg',
+  nude: '/images/products/nude.jpg',
+  nudeDetail: '/images/products/nude-detail.jpg',
+  naturalOil: '/images/products/natural-oil.jpg',
+  naturalOilDetail: '/images/products/natural-oil-detail.jpg',
+  chevron: '/images/products/chevron.jpg',
+  chevronDetail: '/images/products/chevron-detail.jpg',
+  // Showroom images
+  showroom1: '/images/showroom/lames-sol-1.jpg',
+  showroom2: '/images/showroom/showroom-complet.jpg',
+  // Legacy mappings for compatibility
+  oakLight1: '/images/products/kashmir.jpg',
+  oakLight2: '/images/products/raw.jpg',
+  oakLight3: '/images/products/nude.jpg',
+  oakMedium1: '/images/products/julia.jpg',
+  oakMedium2: '/images/products/natural-oil.jpg',
+  oakDark1: '/images/products/brown.jpg',
+  oakDark2: '/images/products/brown-detail.jpg',
+  herringbone1: '/images/products/chevron.jpg',
+  herringbone2: '/images/products/chevron-detail.jpg',
 };
 
 export const collections: Collection[] = [
