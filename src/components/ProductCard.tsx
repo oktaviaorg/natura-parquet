@@ -68,6 +68,13 @@ export default function ProductCard({ product }: ProductCardProps) {
         <p className="text-sm text-natura-600 line-clamp-2">
           {product.description[locale]}
         </p>
+        
+        <div className="mt-3 pt-3 border-t border-natura-100">
+          <span className="text-lg font-semibold text-natura-900">
+            {product.price.display}
+          </span>
+          <span className="text-xs text-natura-500 ml-1">HT</span>
+        </div>
       </div>
     </Link>
   );

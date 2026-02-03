@@ -140,9 +140,24 @@ export default function ProductPage({ params }: { params: { slug: string; locale
               </h1>
 
               {/* Description */}
-              <p className="text-lg text-natura-600 leading-relaxed mb-8">
+              <p className="text-lg text-natura-600 leading-relaxed mb-6">
                 {product.description[locale]}
               </p>
+
+              {/* Price */}
+              <div className="mb-8 p-4 bg-natura-50 border border-natura-200 rounded-lg">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-3xl font-display text-natura-900">
+                    {product.price.display}
+                  </span>
+                  <span className="text-natura-600">HT</span>
+                </div>
+                <p className="text-sm text-natura-500 mt-1">
+                  {locale === 'fr' ? 'Prix au m² - Livraison 2-3€/m² en Europe' : 
+                   locale === 'de' ? 'Preis pro m² - Lieferung 2-3€/m² in Europa' : 
+                   'Price per m² - Delivery 2-3€/m² in Europe'}
+                </p>
+              </div>
 
               {/* Quick Specs */}
               <div className="flex flex-wrap gap-4 mb-8">

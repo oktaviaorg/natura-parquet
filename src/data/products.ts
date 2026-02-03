@@ -24,7 +24,10 @@ export interface Product {
   };
   features: string[];
   images: string[];
-  price?: string;
+  price: {
+    value: number; // Prix vente HT en €/m²
+    display: string; // Format affiché
+  };
 }
 
 export interface Collection {
@@ -177,6 +180,7 @@ export const products: Product[] = [
     dimensions: { width: '190mm', length: '1900mm', thickness: '14mm' },
     features: ['Chauffage au sol compatible', 'Couche noble 3.5mm', 'Click system'],
     images: [productImages.oakLight1, productImages.oakLight2, heroImages.ambiance1],
+    price: { value: 73.40, display: '73,40 €/m²' },
   },
   {
     id: 'eng-oak-raw-220',
@@ -199,6 +203,7 @@ export const products: Product[] = [
     dimensions: { width: '220mm', length: '2200mm', thickness: '16mm' },
     features: ['Chauffage au sol compatible', 'Couche noble 3.5mm', 'Brossé légèrement'],
     images: [productImages.oakLight2, productImages.oakLight3, heroImages.ambiance2],
+    price: { value: 101.40, display: '101,40 €/m²' },
   },
   {
     id: 'eng-oak-julia-180',
@@ -221,6 +226,7 @@ export const products: Product[] = [
     dimensions: { width: '180mm', length: '1800mm', thickness: '14mm' },
     features: ['Chauffage au sol compatible', 'Couche noble 3.5mm', 'Chanfreins 4 côtés'],
     images: [productImages.oakMedium1, productImages.oakMedium2, heroImages.ambiance3],
+    price: { value: 73.40, display: '73,40 €/m²' },
   },
   {
     id: 'eng-oak-brown-200',
@@ -243,6 +249,7 @@ export const products: Product[] = [
     dimensions: { width: '200mm', length: '2000mm', thickness: '14mm' },
     features: ['Chauffage au sol compatible', 'Couche noble 3.5mm', 'Brossé'],
     images: [productImages.oakDark1, productImages.oakDark2, heroImages.ambiance1],
+    price: { value: 61.40, display: '61,40 €/m²' },
   },
   {
     id: 'eng-oak-herringbone',
@@ -265,6 +272,7 @@ export const products: Product[] = [
     dimensions: { width: '90mm', length: '600mm', thickness: '14mm' },
     features: ['Chauffage au sol compatible', 'Couche noble 3.5mm', 'Pose chevron'],
     images: [productImages.herringbone1, productImages.herringbone2, heroImages.ambiance2],
+    price: { value: 81.20, display: '81,20 €/m²' },
   },
 
   // Solid Parquet - Massif
@@ -289,6 +297,7 @@ export const products: Product[] = [
     dimensions: { width: '70mm', length: '350-500mm', thickness: '22mm' },
     features: ['Pose collée', 'Rénovation multiple possible', 'Microchanfrein 4 côtés'],
     images: [productImages.oakMedium1, productImages.oakLight1, heroImages.ambiance3],
+    price: { value: 75.80, display: '75,80 €/m²' },
   },
   {
     id: 'solid-oak-rustic-60',
@@ -311,6 +320,7 @@ export const products: Product[] = [
     dimensions: { width: '60mm', length: '350-500mm', thickness: '16mm' },
     features: ['Pose collée', 'Rénovation multiple possible', 'Sans chanfrein'],
     images: [productImages.oakDark1, productImages.oakMedium2, heroImages.ambiance1],
+    price: { value: 59.80, display: '59,80 €/m²' },
   },
   {
     id: 'solid-ash-natur-70',
@@ -333,6 +343,7 @@ export const products: Product[] = [
     dimensions: { width: '70mm', length: '350-500mm', thickness: '22mm' },
     features: ['Pose collée', 'Rénovation multiple possible', 'Microchanfrein 4 côtés'],
     images: [productImages.oakLight3, productImages.oakLight2, heroImages.ambiance2],
+    price: { value: 75.80, display: '75,80 €/m²' },
   },
 
   // Industrial Parquet
@@ -357,6 +368,7 @@ export const products: Product[] = [
     dimensions: { width: '8mm', length: '160mm', thickness: '10mm' },
     features: ['Haute résistance', 'Pose mosaïque', 'Idéal fort passage'],
     images: [productImages.herringbone1, productImages.oakMedium1, heroImages.ambiance3],
+    price: { value: 52.00, display: '52,00 €/m²' },
   },
   {
     id: 'ind-oak-standard-250',
@@ -379,6 +391,7 @@ export const products: Product[] = [
     dimensions: { width: '8mm', length: '250mm', thickness: '10mm' },
     features: ['Haute résistance', 'Pose mosaïque', 'Rendu contemporain'],
     images: [productImages.oakDark2, productImages.herringbone2, heroImages.ambiance1],
+    price: { value: 55.00, display: '55,00 €/m²' },
   },
   {
     id: 'ind-ash-natur-160',
@@ -401,6 +414,7 @@ export const products: Product[] = [
     dimensions: { width: '8mm', length: '160mm', thickness: '23mm' },
     features: ['Haute résistance', 'Pose mosaïque', 'Épaisseur max'],
     images: [productImages.oakLight1, productImages.oakLight3, heroImages.ambiance2],
+    price: { value: 58.00, display: '58,00 €/m²' },
   },
 ];
 
