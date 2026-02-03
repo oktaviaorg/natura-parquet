@@ -143,12 +143,12 @@ export const products: Product[] = [
   // Engineered Parquet - Contrecollé
   {
     id: 'eng-oak-kashmir-190',
-    slug: 'chene-kashmir-190',
+    slug: 'aurore',
     category: 'engineered',
     name: {
-      fr: 'Chêne Kashmir 190mm',
-      de: 'Eiche Kashmir 190mm',
-      en: 'Oak Kashmir 190mm'
+      fr: 'Aurore',
+      de: 'Aurore',
+      en: 'Aurore'
     },
     description: {
       fr: 'Parquet contrecollé chêne européen, finition huilée Kashmir. Lames larges pour un rendu contemporain et lumineux.',
@@ -165,12 +165,12 @@ export const products: Product[] = [
   },
   {
     id: 'eng-oak-raw-220',
-    slug: 'chene-raw-220',
+    slug: 'ecorce',
     category: 'engineered',
     name: {
-      fr: 'Chêne Raw 220mm',
-      de: 'Eiche Raw 220mm',
-      en: 'Oak Raw 220mm'
+      fr: 'Écorce',
+      de: 'Écorce',
+      en: 'Écorce'
     },
     description: {
       fr: 'Parquet contrecollé aspect brut, finition invisible pour révéler la beauté naturelle du chêne européen.',
@@ -187,12 +187,12 @@ export const products: Product[] = [
   },
   {
     id: 'eng-oak-julia-180',
-    slug: 'chene-julia-180',
+    slug: 'vendange',
     category: 'engineered',
     name: {
-      fr: 'Chêne Julia 180mm',
-      de: 'Eiche Julia 180mm',
-      en: 'Oak Julia 180mm'
+      fr: 'Vendange',
+      de: 'Vendange',
+      en: 'Vendange'
     },
     description: {
       fr: 'Parquet contrecollé aux tons dorés, finition huilée pour une ambiance chaleureuse et classique.',
@@ -209,12 +209,12 @@ export const products: Product[] = [
   },
   {
     id: 'eng-oak-brown-200',
-    slug: 'chene-brown-200',
+    slug: 'automne',
     category: 'engineered',
     name: {
-      fr: 'Chêne Brown 200mm',
-      de: 'Eiche Brown 200mm',
-      en: 'Oak Brown 200mm'
+      fr: 'Automne',
+      de: 'Automne',
+      en: 'Automne'
     },
     description: {
       fr: 'Parquet contrecollé teinte profonde, finition huilée pour un caractère affirmé et élégant.',
@@ -231,12 +231,12 @@ export const products: Product[] = [
   },
   {
     id: 'eng-oak-herringbone',
-    slug: 'chene-chevron-classique',
+    slug: 'haussmann',
     category: 'engineered',
     name: {
-      fr: 'Chêne Chevron Classique',
+      fr: 'Haussmann',
       de: 'Eiche Klassisches Fischgrät',
-      en: 'Oak Classic Herringbone'
+      en: 'Haussmann'
     },
     description: {
       fr: 'Parquet contrecollé pose chevron, finition huilée naturelle pour un style parisien intemporel.',
@@ -255,12 +255,12 @@ export const products: Product[] = [
   // Solid Parquet - Massif
   {
     id: 'solid-oak-natur-70',
-    slug: 'massif-chene-natur-70',
+    slug: 'racine',
     category: 'solid',
     name: {
-      fr: 'Massif Chêne Natur 70mm',
-      de: 'Massiv Eiche Natur 70mm',
-      en: 'Solid Oak Natur 70mm'
+      fr: 'Racine',
+      de: 'Racine',
+      en: 'Racine'
     },
     description: {
       fr: 'Parquet massif chêne européen, sélection Natur. Traditionnelle lame à coller, durabilité exceptionnelle.',
@@ -277,12 +277,12 @@ export const products: Product[] = [
   },
   {
     id: 'solid-oak-rustic-60',
-    slug: 'massif-chene-rustic-60',
+    slug: 'heritage',
     category: 'solid',
     name: {
-      fr: 'Massif Chêne Rustic 60mm',
-      de: 'Massiv Eiche Rustikal 60mm',
-      en: 'Solid Oak Rustic 60mm'
+      fr: 'Héritage',
+      de: 'Héritage',
+      en: 'Héritage'
     },
     description: {
       fr: 'Parquet massif chêne sélection Rustic, nœuds apparents pour un caractère authentique et chaleureux.',
@@ -299,12 +299,12 @@ export const products: Product[] = [
   },
   {
     id: 'solid-ash-natur-70',
-    slug: 'massif-frene-natur-70',
+    slug: 'nordic',
     category: 'solid',
     name: {
-      fr: 'Massif Frêne Natur 70mm',
-      de: 'Massiv Esche Natur 70mm',
-      en: 'Solid Ash Natur 70mm'
+      fr: 'Nordic',
+      de: 'Nordic',
+      en: 'Nordic'
     },
     description: {
       fr: 'Parquet massif frêne européen, sélection Natur. Grain distinctif et teinte claire naturelle.',
@@ -323,12 +323,12 @@ export const products: Product[] = [
   // Industrial Parquet
   {
     id: 'ind-oak-natur-160',
-    slug: 'industriel-chene-natur-160',
+    slug: 'atelier',
     category: 'industrial',
     name: {
-      fr: 'Industriel Chêne 160mm',
-      de: 'Industrie Eiche 160mm',
-      en: 'Industrial Oak 160mm'
+      fr: 'Atelier',
+      de: 'Atelier',
+      en: 'Atelier'
     },
     description: {
       fr: 'Parquet industriel chêne en lamelles, haute résistance au trafic. Idéal espaces professionnels et lofts.',
@@ -345,12 +345,12 @@ export const products: Product[] = [
   },
   {
     id: 'ind-oak-standard-250',
-    slug: 'industriel-chene-standard-250',
+    slug: 'loft',
     category: 'industrial',
     name: {
-      fr: 'Industriel Chêne 250mm',
-      de: 'Industrie Eiche 250mm',
-      en: 'Industrial Oak 250mm'
+      fr: 'Loft',
+      de: 'Loft',
+      en: 'Loft'
     },
     description: {
       fr: 'Parquet industriel chêne lamelles longues, motif contemporain pour intérieurs design.',
@@ -367,12 +367,12 @@ export const products: Product[] = [
   },
   {
     id: 'ind-ash-natur-160',
-    slug: 'industriel-frene-natur-160',
+    slug: 'manufacture',
     category: 'industrial',
     name: {
-      fr: 'Industriel Frêne 160mm',
-      de: 'Industrie Esche 160mm',
-      en: 'Industrial Ash 160mm'
+      fr: 'Manufacture',
+      de: 'Manufacture',
+      en: 'Manufacture'
     },
     description: {
       fr: 'Parquet industriel frêne européen, teinte claire et motifs de pose variés possibles.',
