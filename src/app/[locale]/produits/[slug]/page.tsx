@@ -7,6 +7,7 @@ import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import ProductCard from '@/components/ProductCard';
 import DownloadPDFButton from '@/components/ProductPDF';
+import ImageLightbox from '@/components/ImageLightbox';
 import { products, getProductBySlug, type Product } from '@/data/products';
 
 export default function ProductPage({ params }: { params: { slug: string; locale: string } }) {
@@ -14,6 +15,7 @@ export default function ProductPage({ params }: { params: { slug: string; locale
   const locale = useLocale() as 'fr' | 'de' | 'en';
   const product = getProductBySlug(params.slug);
   const [selectedImage, setSelectedImage] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
 
   if (!product) {
     return (
@@ -84,12 +86,21 @@ export default function ProductPage({ params }: { params: { slug: string; locale
             {/* Image Gallery */}
             <div className="space-y-4">
               {/* Main Image */}
-              <div className="aspect-[4/3] overflow-hidden bg-natura-100">
+              <div 
+                className="aspect-[4/3] overflow-hidden bg-natura-100 cursor-zoom-in relative group"
+                onClick={() => setLightboxOpen(true)}
+              >
                 <img
                   src={product.images[selectedImage]}
                   alt={product.name[locale]}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
+                {/* Zoom icon overlay */}
+                <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/20 transition-colors">
+                  <svg className="w-12 h-12 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                  </svg>
+                </div>
               </div>
               
               {/* Thumbnails */}
@@ -260,6 +271,15 @@ export default function ProductPage({ params }: { params: { slug: string; locale
       )}
 
       <Footer />
+
+      {/* Image Lightbox */}
+      <ImageLightbox
+        images={product.images}
+        initialIndex={selectedImage}
+        isOpen={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+        productName={product.name[locale]}
+      />
     </main>
   );
 }
