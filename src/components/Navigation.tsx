@@ -42,10 +42,11 @@ export default function Navigation() {
           {/* Logo */}
           <Link 
             href={`/${locale}`}
-            className={`font-display text-2xl tracking-wide transition-colors ${
+            className={`font-display text-2xl tracking-wide transition-colors flex items-center gap-2 ${
               isScrolled ? 'text-natura-900' : 'text-white'
             }`}
           >
+            <span className="text-xl">🌳</span>
             Natura Parquet
           </Link>
 

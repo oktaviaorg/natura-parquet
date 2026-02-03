@@ -15,7 +15,10 @@ export default function Footer() {
           {/* Brand */}
           <div className="md:col-span-2">
             <Link href={`/${locale}`} className="inline-block mb-6">
-              <span className="font-display text-3xl text-white">Natura Parquet</span>
+              <span className="font-display text-3xl text-white flex items-center gap-2">
+                <span className="text-2xl">🌳</span>
+                Natura Parquet
+              </span>
             </Link>
             <p className="text-natura-400 leading-relaxed max-w-md">
               {t('footer.description')}
