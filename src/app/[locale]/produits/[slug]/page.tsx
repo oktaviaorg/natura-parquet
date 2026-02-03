@@ -150,12 +150,12 @@ export default function ProductPage({ params }: { params: { slug: string; locale
                   <span className="text-3xl font-display text-natura-900">
                     {product.price.display}
                   </span>
-                  <span className="text-natura-600">HT</span>
+                  <span className="text-natura-600">TTC</span>
                 </div>
                 <p className="text-sm text-natura-500 mt-1">
-                  {locale === 'fr' ? 'Prix au m² - Livraison 2-3€/m² en Europe' : 
-                   locale === 'de' ? 'Preis pro m² - Lieferung 2-3€/m² in Europa' : 
-                   'Price per m² - Delivery 2-3€/m² in Europe'}
+                  {locale === 'fr' ? 'Prix au m² - Livraison incluse en France' : 
+                   locale === 'de' ? 'Preis pro m² inkl. MwSt. - Lieferung nach Frankreich inklusive' : 
+                   'Price per m² incl. VAT - Delivery included in France'}
                 </p>
               </div>
 

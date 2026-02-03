@@ -73,7 +73,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           <span className="text-lg font-semibold text-natura-900">
             {product.price.display}
           </span>
-          <span className="text-xs text-natura-500 ml-1">HT</span>
+          <span className="text-xs text-natura-500 ml-1">TTC</span>
         </div>
       </div>
     </Link>
