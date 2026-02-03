@@ -1,9 +1,11 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
-import Link from 'next/link';
+import Navigation from '@/components/Navigation';
+import Footer from '@/components/Footer';
+import { heroImages } from '@/data/products';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -12,7 +14,7 @@ const supabase = createClient(
 
 export default function PartnerPage() {
   const t = useTranslations('partner');
-  const tNav = useTranslations('nav');
+  const locale = useLocale() as 'fr' | 'de' | 'en';
   
   const [formData, setFormData] = useState({
     company: '',
@@ -62,188 +64,207 @@ export default function PartnerPage() {
     }));
   };
 
+  const benefits = [
+    { icon: '🌿', key: 'quality' },
+    { icon: '💰', key: 'margin' },
+    { icon: '🚚', key: 'logistics' },
+    { icon: '📈', key: 'support' },
+    { icon: '🗺️', key: 'territory' },
+    { icon: '🤝', key: 'partnership' },
+  ];
+
+  const profiles = [
+    { icon: '🏪', key: 'reseller' },
+    { icon: '💼', key: 'agent' },
+    { icon: '🔨', key: 'installer' },
+  ];
+
   return (
-    <main className="min-h-screen bg-natura-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="font-display text-2xl text-natura-900">
-            Natura Parquet
-          </Link>
-          <nav className="hidden md:flex items-center gap-8">
-            <Link href="/" className="text-natura-600 hover:text-natura-900">{tNav('home')}</Link>
-            <Link href="/produits" className="text-natura-600 hover:text-natura-900">{tNav('products')}</Link>
-            <Link href="/devenir-partenaire" className="text-natura-900 font-medium">{tNav('partners')}</Link>
-            <Link href="/contact" className="text-natura-600 hover:text-natura-900">{tNav('contact')}</Link>
-          </nav>
-        </div>
-      </header>
+    <main className="min-h-screen bg-white">
+      <Navigation />
 
       {/* Hero Section */}
-      <section className="bg-natura-900 text-white py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="font-display text-4xl md:text-5xl mb-6">{t('hero.title')}</h1>
-          <p className="text-xl opacity-90">{t('hero.subtitle')}</p>
+      <section className="relative h-[60vh] min-h-[500px] flex items-center justify-center overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url('${heroImages.ambiance3}')` }}
+        >
+          <div className="absolute inset-0 bg-natura-900/75" />
+        </div>
+        
+        <div className="relative z-10 text-center text-white px-6 max-w-4xl mx-auto">
+          <p className="text-sm uppercase tracking-[0.3em] mb-6 opacity-80">
+            {locale === 'fr' ? 'Développez votre activité' : locale === 'de' ? 'Entwickeln Sie Ihr Geschäft' : 'Grow your business'}
+          </p>
+          <h1 className="font-display text-4xl md:text-6xl mb-6">
+            {t('hero.title')}
+          </h1>
+          <p className="text-lg md:text-xl opacity-90 max-w-2xl mx-auto">
+            {t('hero.subtitle')}
+          </p>
         </div>
       </section>
 
-      {/* Avantages */}
-      <section className="py-16 px-4">
+      {/* Benefits Section */}
+      <section className="py-20 px-6 bg-natura-50">
         <div className="max-w-6xl mx-auto">
-          <h2 className="font-display text-3xl text-natura-900 text-center mb-12">{t('benefits.title')}</h2>
+          <div className="text-center mb-16">
+            <h2 className="font-display text-3xl md:text-4xl text-natura-900 mb-4">
+              {t('benefits.title')}
+            </h2>
+            <p className="text-natura-600 max-w-2xl mx-auto">
+              {locale === 'fr' 
+                ? 'Rejoignez un réseau de distribution premium et bénéficiez de nombreux avantages'
+                : locale === 'de'
+                ? 'Treten Sie einem Premium-Vertriebsnetz bei und profitieren Sie von zahlreichen Vorteilen'
+                : 'Join a premium distribution network and enjoy numerous benefits'}
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {benefits.map((benefit) => (
+              <div 
+                key={benefit.key}
+                className="bg-white p-8 border border-natura-100 hover:shadow-lg transition-shadow"
+              >
+                <span className="text-4xl mb-6 block">{benefit.icon}</span>
+                <h3 className="font-display text-xl text-natura-900 mb-3">
+                  {t(`benefits.${benefit.key}.title`)}
+                </h3>
+                <p className="text-natura-600 leading-relaxed">
+                  {t(`benefits.${benefit.key}.desc`)}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Profiles Section */}
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="font-display text-3xl md:text-4xl text-natura-900 mb-4">
+              {t('profiles.title')}
+            </h2>
+          </div>
           
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-lg shadow-sm">
-              <div className="w-12 h-12 bg-natura-100 rounded-full flex items-center justify-center mb-4">
-                <span className="text-2xl">🌿</span>
+            {profiles.map((profile) => (
+              <div 
+                key={profile.key}
+                className="text-center p-8 border-2 border-natura-100 hover:border-natura-300 transition-colors"
+              >
+                <span className="text-5xl mb-6 block">{profile.icon}</span>
+                <h3 className="font-display text-xl text-natura-900 mb-3">
+                  {t(`profiles.${profile.key}.title`)}
+                </h3>
+                <p className="text-natura-600">
+                  {t(`profiles.${profile.key}.desc`)}
+                </p>
               </div>
-              <h3 className="font-display text-xl text-natura-900 mb-2">{t('benefits.quality.title')}</h3>
-              <p className="text-natura-600">{t('benefits.quality.desc')}</p>
-            </div>
-            
-            <div className="bg-white p-8 rounded-lg shadow-sm">
-              <div className="w-12 h-12 bg-natura-100 rounded-full flex items-center justify-center mb-4">
-                <span className="text-2xl">💰</span>
-              </div>
-              <h3 className="font-display text-xl text-natura-900 mb-2">{t('benefits.margin.title')}</h3>
-              <p className="text-natura-600">{t('benefits.margin.desc')}</p>
-            </div>
-            
-            <div className="bg-white p-8 rounded-lg shadow-sm">
-              <div className="w-12 h-12 bg-natura-100 rounded-full flex items-center justify-center mb-4">
-                <span className="text-2xl">🚚</span>
-              </div>
-              <h3 className="font-display text-xl text-natura-900 mb-2">{t('benefits.logistics.title')}</h3>
-              <p className="text-natura-600">{t('benefits.logistics.desc')}</p>
-            </div>
-            
-            <div className="bg-white p-8 rounded-lg shadow-sm">
-              <div className="w-12 h-12 bg-natura-100 rounded-full flex items-center justify-center mb-4">
-                <span className="text-2xl">📈</span>
-              </div>
-              <h3 className="font-display text-xl text-natura-900 mb-2">{t('benefits.support.title')}</h3>
-              <p className="text-natura-600">{t('benefits.support.desc')}</p>
-            </div>
-            
-            <div className="bg-white p-8 rounded-lg shadow-sm">
-              <div className="w-12 h-12 bg-natura-100 rounded-full flex items-center justify-center mb-4">
-                <span className="text-2xl">🗺️</span>
-              </div>
-              <h3 className="font-display text-xl text-natura-900 mb-2">{t('benefits.territory.title')}</h3>
-              <p className="text-natura-600">{t('benefits.territory.desc')}</p>
-            </div>
-            
-            <div className="bg-white p-8 rounded-lg shadow-sm">
-              <div className="w-12 h-12 bg-natura-100 rounded-full flex items-center justify-center mb-4">
-                <span className="text-2xl">🤝</span>
-              </div>
-              <h3 className="font-display text-xl text-natura-900 mb-2">{t('benefits.partnership.title')}</h3>
-              <p className="text-natura-600">{t('benefits.partnership.desc')}</p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Profils recherchés */}
-      <section className="py-16 px-4 bg-white">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="font-display text-3xl text-natura-900 text-center mb-12">{t('profiles.title')}</h2>
-          
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="border border-natura-200 p-6 rounded-lg text-center">
-              <span className="text-4xl mb-4 block">🏪</span>
-              <h3 className="font-display text-lg text-natura-900 mb-2">{t('profiles.reseller.title')}</h3>
-              <p className="text-natura-600 text-sm">{t('profiles.reseller.desc')}</p>
-            </div>
-            
-            <div className="border border-natura-200 p-6 rounded-lg text-center">
-              <span className="text-4xl mb-4 block">💼</span>
-              <h3 className="font-display text-lg text-natura-900 mb-2">{t('profiles.agent.title')}</h3>
-              <p className="text-natura-600 text-sm">{t('profiles.agent.desc')}</p>
-            </div>
-            
-            <div className="border border-natura-200 p-6 rounded-lg text-center">
-              <span className="text-4xl mb-4 block">🔨</span>
-              <h3 className="font-display text-lg text-natura-900 mb-2">{t('profiles.installer.title')}</h3>
-              <p className="text-natura-600 text-sm">{t('profiles.installer.desc')}</p>
-            </div>
+      {/* Form Section */}
+      <section className="py-20 px-6 bg-natura-50">
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="font-display text-3xl md:text-4xl text-natura-900 mb-4">
+              {t('form.title')}
+            </h2>
+            <p className="text-natura-600">
+              {t('form.subtitle')}
+            </p>
           </div>
-        </div>
-      </section>
-
-      {/* Formulaire */}
-      <section className="py-16 px-4 bg-natura-100">
-        <div className="max-w-2xl mx-auto">
-          <h2 className="font-display text-3xl text-natura-900 text-center mb-4">{t('form.title')}</h2>
-          <p className="text-natura-600 text-center mb-12">{t('form.subtitle')}</p>
           
           {status === 'success' ? (
-            <div className="bg-green-50 border border-green-200 rounded-lg p-8 text-center">
-              <span className="text-4xl mb-4 block">✅</span>
-              <h3 className="font-display text-xl text-green-800 mb-2">{t('form.success.title')}</h3>
-              <p className="text-green-700">{t('form.success.message')}</p>
+            <div className="bg-white border border-green-200 p-12 text-center">
+              <div className="w-16 h-16 mx-auto mb-6 bg-green-100 rounded-full flex items-center justify-center">
+                <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <h3 className="font-display text-2xl text-natura-900 mb-3">
+                {t('form.success.title')}
+              </h3>
+              <p className="text-natura-600">
+                {t('form.success.message')}
+              </p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-sm space-y-6">
+            <form onSubmit={handleSubmit} className="bg-white p-8 md:p-12 shadow-sm space-y-8">
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-natura-700 mb-2 font-medium">{t('form.company')}</label>
+                  <label className="block text-sm font-medium text-natura-700 mb-2">
+                    {t('form.company')}
+                  </label>
                   <input
                     type="text"
                     name="company"
                     value={formData.company}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-natura-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-natura-500"
+                    className="w-full px-4 py-3 border border-natura-200 focus:border-natura-900 focus:ring-1 focus:ring-natura-900 outline-none transition-colors"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-natura-700 mb-2 font-medium">{t('form.contact_name')} *</label>
+                  <label className="block text-sm font-medium text-natura-700 mb-2">
+                    {t('form.contact_name')} *
+                  </label>
                   <input
                     type="text"
                     name="contact_name"
                     value={formData.contact_name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-natura-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-natura-500"
+                    className="w-full px-4 py-3 border border-natura-200 focus:border-natura-900 focus:ring-1 focus:ring-natura-900 outline-none transition-colors"
                   />
                 </div>
               </div>
               
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-natura-700 mb-2 font-medium">{t('form.email')} *</label>
+                  <label className="block text-sm font-medium text-natura-700 mb-2">
+                    {t('form.email')} *
+                  </label>
                   <input
                     type="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-natura-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-natura-500"
+                    className="w-full px-4 py-3 border border-natura-200 focus:border-natura-900 focus:ring-1 focus:ring-natura-900 outline-none transition-colors"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-natura-700 mb-2 font-medium">{t('form.phone')}</label>
+                  <label className="block text-sm font-medium text-natura-700 mb-2">
+                    {t('form.phone')}
+                  </label>
                   <input
                     type="tel"
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-natura-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-natura-500"
+                    className="w-full px-4 py-3 border border-natura-200 focus:border-natura-900 focus:ring-1 focus:ring-natura-900 outline-none transition-colors"
                   />
                 </div>
               </div>
               
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-natura-700 mb-2 font-medium">{t('form.profile_type')} *</label>
+                  <label className="block text-sm font-medium text-natura-700 mb-2">
+                    {t('form.profile_type')} *
+                  </label>
                   <select
                     name="profile_type"
                     value={formData.profile_type}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-natura-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-natura-500 bg-white"
+                    className="w-full px-4 py-3 border border-natura-200 focus:border-natura-900 focus:ring-1 focus:ring-natura-900 outline-none transition-colors bg-white"
                   >
                     <option value="">{t('form.select')}</option>
                     <option value="reseller">{t('profiles.reseller.title')}</option>
@@ -253,44 +274,50 @@ export default function PartnerPage() {
                 </div>
                 
                 <div>
-                  <label className="block text-natura-700 mb-2 font-medium">{t('form.territory')}</label>
+                  <label className="block text-sm font-medium text-natura-700 mb-2">
+                    {t('form.territory')}
+                  </label>
                   <input
                     type="text"
                     name="territory"
                     value={formData.territory}
                     onChange={handleChange}
                     placeholder={t('form.territory_placeholder')}
-                    className="w-full px-4 py-3 border border-natura-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-natura-500"
+                    className="w-full px-4 py-3 border border-natura-200 focus:border-natura-900 focus:ring-1 focus:ring-natura-900 outline-none transition-colors"
                   />
                 </div>
               </div>
               
               <div>
-                <label className="block text-natura-700 mb-2 font-medium">{t('form.experience')}</label>
+                <label className="block text-sm font-medium text-natura-700 mb-2">
+                  {t('form.experience')}
+                </label>
                 <textarea
                   name="experience"
                   value={formData.experience}
                   onChange={handleChange}
                   rows={3}
                   placeholder={t('form.experience_placeholder')}
-                  className="w-full px-4 py-3 border border-natura-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-natura-500"
+                  className="w-full px-4 py-3 border border-natura-200 focus:border-natura-900 focus:ring-1 focus:ring-natura-900 outline-none transition-colors resize-none"
                 />
               </div>
               
               <div>
-                <label className="block text-natura-700 mb-2 font-medium">{t('form.message')}</label>
+                <label className="block text-sm font-medium text-natura-700 mb-2">
+                  {t('form.message')}
+                </label>
                 <textarea
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
                   rows={4}
                   placeholder={t('form.message_placeholder')}
-                  className="w-full px-4 py-3 border border-natura-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-natura-500"
+                  className="w-full px-4 py-3 border border-natura-200 focus:border-natura-900 focus:ring-1 focus:ring-natura-900 outline-none transition-colors resize-none"
                 />
               </div>
               
               {status === 'error' && (
-                <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700">
+                <div className="bg-red-50 border border-red-200 p-4 text-red-700 text-center">
                   {t('form.error')}
                 </div>
               )}
@@ -298,7 +325,7 @@ export default function PartnerPage() {
               <button
                 type="submit"
                 disabled={status === 'loading'}
-                className="w-full py-4 bg-natura-900 text-white font-medium rounded-lg hover:bg-natura-800 transition-colors disabled:opacity-50"
+                className="w-full py-4 bg-natura-900 text-white font-medium hover:bg-natura-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {status === 'loading' ? t('form.sending') : t('form.submit')}
               </button>
@@ -307,13 +334,7 @@ export default function PartnerPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-natura-900 text-white py-12 px-4">
-        <div className="max-w-6xl mx-auto text-center">
-          <p className="font-display text-2xl mb-4">Natura Parquet</p>
-          <p className="opacity-70">© 2025 Natura Parquet. {t('footer.rights')}</p>
-        </div>
-      </footer>
+      <Footer />
     </main>
   );
 }
