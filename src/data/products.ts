@@ -47,15 +47,23 @@ export interface Collection {
   image: string;
 }
 
-// Premium Unsplash images for parquet
+// Images showroom et ambiance
 export const heroImages = {
-  main: '/images/showroom/hero-formpark.jpg',
-  engineered: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=85',
-  solid: 'https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=1200&q=85',
-  industrial: 'https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=1200&q=85',
-  ambiance1: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1200&q=85',
-  ambiance2: 'https://images.unsplash.com/photo-1600573472591-ee6b68d14c68?w=1200&q=85',
-  ambiance3: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=85',
+  main: '/images/showroom/mosaique-echantillons.jpg',
+  engineered: '/images/showroom/structure-couches.jpg',
+  solid: '/images/showroom/artisan-atelier-1.jpg',
+  industrial: '/images/showroom/usine-palettes.jpg',
+  ambiance1: '/images/showroom/assemblage-chevron.jpg',
+  ambiance2: '/images/showroom/parquet-escalier.jpg',
+  ambiance3: '/images/showroom/artisan-atelier-2.jpg',
+  // Nouvelles photos
+  mosaique: '/images/showroom/mosaique-echantillons.jpg',
+  usine: '/images/showroom/usine-palettes.jpg',
+  artisan1: '/images/showroom/artisan-atelier-1.jpg',
+  artisan2: '/images/showroom/artisan-atelier-2.jpg',
+  structure: '/images/showroom/structure-couches.jpg',
+  escalier: '/images/showroom/parquet-escalier.jpg',
+  chevron: '/images/showroom/assemblage-chevron.jpg',
 };
 
 export const productImages = {
