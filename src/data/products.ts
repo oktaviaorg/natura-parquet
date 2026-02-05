@@ -49,7 +49,7 @@ export interface Collection {
 
 // Premium Unsplash images for parquet
 export const heroImages = {
-  main: '/images/showroom/lames-gros-plan.jpg',
+  main: '/images/showroom/hero-formpark.jpg',
   engineered: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=85',
   solid: 'https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=1200&q=85',
   industrial: 'https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=1200&q=85',
