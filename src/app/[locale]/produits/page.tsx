@@ -10,33 +10,33 @@ import ProductFilters from '@/components/ProductFilters';
 import { products, heroImages, type Product } from '@/data/products';
 
 export default function ProductsPage() {
-  const t = useTranslations();
   const locale = useLocale() as 'fr' | 'de' | 'en';
   const searchParams = useSearchParams();
   
   // Initialize filters from URL params
-  const initialCategory = searchParams.get('category') as Product['category'] | null;
+  const initialGamme = searchParams.get('gamme') as Product['gamme'] | null;
   
   const [filters, setFilters] = useState<{
-    category?: Product['category'];
-    color?: Product['color'];
-    woodType?: Product['woodType'];
-    grade?: Product['grade'];
+    gamme?: Product['gamme'];
+    finition?: string;
+    largeur?: number;
+    priceRange?: string;
   }>({
-    category: initialCategory || undefined
+    gamme: initialGamme || undefined
   });
   
   // Update filters when URL params change
   useEffect(() => {
-    const urlCategory = searchParams.get('category') as Product['category'] | null;
-    if (urlCategory) {
-      setFilters(prev => ({ ...prev, category: urlCategory }));
+    const urlGamme = searchParams.get('gamme') as Product['gamme'] | null;
+    if (urlGamme) {
+      setFilters(prev => ({ ...prev, gamme: urlGamme }));
     }
   }, [searchParams]);
   
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [sortBy, setSortBy] = useState<'price-asc' | 'price-desc' | 'name'>('price-asc');
 
-  const handleFilterChange = (filterType: string, value: string | undefined) => {
+  const handleFilterChange = (filterType: string, value: string | number | undefined) => {
     setFilters(prev => ({
       ...prev,
       [filterType]: value
@@ -44,14 +44,39 @@ export default function ProductsPage() {
   };
 
   const filteredProducts = useMemo(() => {
-    return products.filter(p => {
-      if (filters.category && p.category !== filters.category) return false;
-      if (filters.color && p.color !== filters.color) return false;
-      if (filters.woodType && p.woodType !== filters.woodType) return false;
-      if (filters.grade && p.grade !== filters.grade) return false;
+    let result = products.filter(p => {
+      // Gamme filter
+      if (filters.gamme && p.gamme !== filters.gamme) return false;
+      
+      // Finition filter
+      if (filters.finition) {
+        const finitionLower = p.finition.toLowerCase();
+        if (!finitionLower.includes(filters.finition.toLowerCase())) return false;
+      }
+      
+      // Largeur filter
+      if (filters.largeur && p.largeur !== filters.largeur) return false;
+      
+      // Price range filter
+      if (filters.priceRange) {
+        const price = p.price.ttc;
+        if (filters.priceRange === '0-50' && price >= 50) return false;
+        if (filters.priceRange === '50-60' && (price < 50 || price >= 60)) return false;
+        if (filters.priceRange === '60+' && price < 60) return false;
+      }
+      
       return true;
     });
-  }, [filters]);
+
+    // Sort
+    result.sort((a, b) => {
+      if (sortBy === 'price-asc') return a.price.ttc - b.price.ttc;
+      if (sortBy === 'price-desc') return b.price.ttc - a.price.ttc;
+      return a.name.fr.localeCompare(b.name.fr);
+    });
+
+    return result;
+  }, [filters, sortBy]);
 
   const pageTitle = {
     fr: 'Nos Parquets',
@@ -60,15 +85,21 @@ export default function ProductsPage() {
   };
 
   const pageSubtitle = {
-    fr: 'Découvrez notre collection de parquets premium européens',
-    de: 'Entdecken Sie unsere Kollektion europäischer Premium-Parkette',
-    en: 'Discover our collection of premium European parquets'
+    fr: 'Parquets chêne européen de qualité premium, livrés directement de Pologne',
+    de: 'Europäische Premium-Eichenparkette, direkt aus Polen geliefert',
+    en: 'Premium European oak parquets, delivered directly from Poland'
   };
 
   const resultsText = {
     fr: `${filteredProducts.length} produit${filteredProducts.length > 1 ? 's' : ''}`,
     de: `${filteredProducts.length} Produkt${filteredProducts.length > 1 ? 'e' : ''}`,
     en: `${filteredProducts.length} product${filteredProducts.length > 1 ? 's' : ''}`
+  };
+
+  const sortLabels = {
+    'price-asc': { fr: 'Prix croissant', de: 'Preis aufsteigend', en: 'Price: Low to High' },
+    'price-desc': { fr: 'Prix décroissant', de: 'Preis absteigend', en: 'Price: High to Low' },
+    'name': { fr: 'Nom', de: 'Name', en: 'Name' },
   };
 
   return (
@@ -91,6 +122,14 @@ export default function ProductsPage() {
           <p className="text-lg md:text-xl opacity-90 max-w-2xl mx-auto">
             {pageSubtitle[locale]}
           </p>
+          
+          {/* Price badge */}
+          <div className="mt-6 inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full">
+            <span className="text-amber-300">★</span>
+            <span className="text-sm">
+              {locale === 'fr' ? 'À partir de 45 €/m² TTC' : locale === 'de' ? 'Ab 45 €/m² inkl. MwSt.' : 'From €45/m² incl. VAT'}
+            </span>
+          </div>
         </div>
       </section>
 
@@ -109,14 +148,25 @@ export default function ProductsPage() {
             {/* Products Grid */}
             <div className="flex-1">
               {/* Toolbar */}
-              <div className="flex items-center justify-between mb-8 pb-4 border-b border-natura-100">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 pb-4 border-b border-natura-100 gap-4">
                 <p className="text-natura-600">
                   {resultsText[locale]}
                 </p>
                 
                 <div className="flex items-center gap-4">
+                  {/* Sort */}
+                  <select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
+                    className="px-3 py-2 border border-natura-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-natura-500"
+                  >
+                    <option value="price-asc">{sortLabels['price-asc'][locale]}</option>
+                    <option value="price-desc">{sortLabels['price-desc'][locale]}</option>
+                    <option value="name">{sortLabels['name'][locale]}</option>
+                  </select>
+                  
                   {/* View Mode Toggle */}
-                  <div className="flex items-center gap-1 bg-natura-100 rounded-lg p-1">
+                  <div className="hidden sm:flex items-center gap-1 bg-natura-100 rounded-lg p-1">
                     <button
                       onClick={() => setViewMode('grid')}
                       className={`p-2 rounded transition-colors ${
@@ -149,7 +199,7 @@ export default function ProductsPage() {
                     : 'grid-cols-1'
                 }`}>
                   {filteredProducts.map((product) => (
-                    <ProductCard key={product.id} product={product} />
+                    <ProductCard key={product.id} product={product} viewMode={viewMode} />
                   ))}
                 </div>
               ) : (
@@ -167,7 +217,7 @@ export default function ProductsPage() {
                   </p>
                   <button
                     onClick={() => setFilters({})}
-                    className="px-6 py-2 bg-natura-900 text-white text-sm font-medium hover:bg-natura-800 transition-colors"
+                    className="px-6 py-2 bg-natura-900 text-white text-sm font-medium hover:bg-natura-800 transition-colors rounded-lg"
                   >
                     {locale === 'fr' ? 'Réinitialiser les filtres' : locale === 'de' ? 'Filter zurücksetzen' : 'Reset filters'}
                   </button>
@@ -175,6 +225,31 @@ export default function ProductsPage() {
               )}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16 px-6 bg-natura-100">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="font-display text-3xl text-natura-900 mb-4">
+            {locale === 'fr' ? 'Besoin de conseils ?' : locale === 'de' ? 'Brauchen Sie Beratung?' : 'Need advice?'}
+          </h2>
+          <p className="text-natura-600 mb-8 max-w-2xl mx-auto">
+            {locale === 'fr' 
+              ? 'Notre guide vous aide à choisir le parquet idéal pour votre projet. Dimensions, finitions, pose... tout y est !'
+              : locale === 'de'
+              ? 'Unser Leitfaden hilft Ihnen bei der Auswahl des idealen Parketts für Ihr Projekt.'
+              : 'Our guide helps you choose the ideal parquet for your project.'}
+          </p>
+          <a
+            href={`/${locale}/guide-parquet`}
+            className="inline-flex items-center gap-2 px-8 py-4 bg-natura-900 text-white font-medium hover:bg-natura-800 transition-colors rounded-lg"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+            {locale === 'fr' ? 'Lire le guide' : locale === 'de' ? 'Leitfaden lesen' : 'Read the guide'}
+          </a>
         </div>
       </section>
 

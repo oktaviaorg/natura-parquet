@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTranslations, useLocale } from 'next-intl';
+import CartButton from './CartButton';
 
 export default function Navigation() {
   const t = useTranslations('nav');
@@ -23,7 +24,8 @@ export default function Navigation() {
   const navLinks = [
     { href: `/${locale}`, label: t('home') },
     { href: `/${locale}/produits`, label: t('products') },
-    { href: `/${locale}/devenir-partenaire`, label: t('partners') },
+    { href: `/${locale}/guide-parquet`, label: locale === 'fr' ? 'Guide' : locale === 'de' ? 'Leitfaden' : 'Guide' },
+    { href: `/${locale}/contact`, label: locale === 'fr' ? 'Contact' : 'Kontakt' },
   ];
 
   const locales = ['fr', 'de', 'en'];
@@ -83,6 +85,11 @@ export default function Navigation() {
                   {loc}
                 </Link>
               ))}
+            </div>
+
+            {/* Cart Button */}
+            <div className={`ml-4 ${isScrolled ? '' : 'invert'}`}>
+              <CartButton />
             </div>
           </div>
 

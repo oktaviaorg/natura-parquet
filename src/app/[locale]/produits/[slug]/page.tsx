@@ -1,21 +1,26 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import Link from 'next/link';
-import { useTranslations, useLocale } from 'next-intl';
+import { useLocale } from 'next-intl';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import ProductCard from '@/components/ProductCard';
-import DownloadPDFButton from '@/components/ProductPDF';
 import ImageLightbox from '@/components/ImageLightbox';
+import SurfaceCalculator from '@/components/SurfaceCalculator';
+import AddToCartButton from '@/components/AddToCartButton';
 import { products, getProductBySlug, type Product } from '@/data/products';
 
 export default function ProductPage({ params }: { params: { slug: string; locale: string } }) {
-  const t = useTranslations();
   const locale = useLocale() as 'fr' | 'de' | 'en';
   const product = getProductBySlug(params.slug);
   const [selectedImage, setSelectedImage] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [selectedSurface, setSelectedSurface] = useState(10);
+
+  const handleSurfaceChange = useCallback((m2: number) => {
+    setSelectedSurface(m2);
+  }, []);
 
   if (!product) {
     return (
@@ -36,26 +41,33 @@ export default function ProductPage({ params }: { params: { slug: string; locale
     );
   }
 
-  const categoryLabels = {
-    engineered: { fr: 'Parquet Contrecollé', de: 'Mehrschichtparkett', en: 'Engineered Parquet' },
-    solid: { fr: 'Parquet Massif', de: 'Massivparkett', en: 'Solid Parquet' },
-    industrial: { fr: 'Parquet Industriel', de: 'Industrieparkett', en: 'Industrial Parquet' },
+  const labels = {
+    breadcrumb: { fr: 'Accueil', de: 'Startseite', en: 'Home' },
+    products: { fr: 'Produits', de: 'Produkte', en: 'Products' },
+    freeShipping: { fr: 'Livraison gratuite France', de: 'Kostenloser Versand Frankreich', en: 'Free shipping France' },
+    delivery: { fr: 'Délai de livraison', de: 'Lieferzeit', en: 'Delivery time' },
+    dimensions: { fr: 'Dimensions', de: 'Maße', en: 'Dimensions' },
+    width: { fr: 'Largeur', de: 'Breite', en: 'Width' },
+    length: { fr: 'Longueur', de: 'Länge', en: 'Length' },
+    thickness: { fr: 'Épaisseur', de: 'Stärke', en: 'Thickness' },
+    finish: { fr: 'Finition', de: 'Oberfläche', en: 'Finish' },
+    woodType: { fr: 'Essence', de: 'Holzart', en: 'Wood' },
+    features: { fr: 'Caractéristiques', de: 'Eigenschaften', en: 'Features' },
+    requestQuote: { fr: 'Demander un devis', de: 'Angebot anfordern', en: 'Request a quote' },
+    freeSample: { fr: 'Échantillon gratuit', de: 'Kostenloses Muster', en: 'Free sample' },
+    related: { fr: 'Produits similaires', de: 'Ähnliche Produkte', en: 'Related products' },
+    stock: {
+      disponible: { fr: 'En stock', de: 'Auf Lager', en: 'In stock' },
+      sur_commande: { fr: 'Sur commande', de: 'Auf Bestellung', en: 'On order' },
+      premier_choix: { fr: 'Premier choix', de: 'Erste Wahl', en: 'First choice' },
+      sur_mesure: { fr: 'Sur mesure', de: 'Maßanfertigung', en: 'Custom' },
+    },
+    guide: { fr: 'Consulter le guide', de: 'Leitfaden lesen', en: 'Read the guide' },
   };
 
-  const gradeLabels = {
-    select: { fr: 'Select', de: 'Select', en: 'Select' },
-    natur: { fr: 'Natur', de: 'Natur', en: 'Natur' },
-    rustic: { fr: 'Rustique', de: 'Rustikal', en: 'Rustic' },
-  };
-
-  const woodLabels = {
-    oak: { fr: 'Chêne', de: 'Eiche', en: 'Oak' },
-    ash: { fr: 'Frêne', de: 'Esche', en: 'Ash' },
-  };
-
-  // Get related products (same category, different product)
+  // Get related products (same gamme, different product)
   const relatedProducts = products
-    .filter(p => p.category === product.category && p.id !== product.id)
+    .filter(p => p.gamme === product.gamme && p.id !== product.id)
     .slice(0, 3);
 
   return (
@@ -67,11 +79,11 @@ export default function ProductPage({ params }: { params: { slug: string; locale
         <div className="max-w-7xl mx-auto">
           <nav className="flex items-center gap-2 text-sm text-natura-600">
             <Link href={`/${locale}`} className="hover:text-natura-900 transition-colors">
-              {t('nav.home')}
+              {labels.breadcrumb[locale]}
             </Link>
             <span>/</span>
             <Link href={`/${locale}/produits`} className="hover:text-natura-900 transition-colors">
-              {t('nav.products')}
+              {labels.products[locale]}
             </Link>
             <span>/</span>
             <span className="text-natura-900">{product.name[locale]}</span>
@@ -87,7 +99,7 @@ export default function ProductPage({ params }: { params: { slug: string; locale
             <div className="space-y-4">
               {/* Main Image */}
               <div 
-                className="aspect-[4/3] overflow-hidden bg-natura-100 cursor-zoom-in relative group"
+                className="aspect-[4/3] overflow-hidden bg-natura-100 cursor-zoom-in relative group rounded-lg"
                 onClick={() => setLightboxOpen(true)}
               >
                 <img
@@ -101,36 +113,56 @@ export default function ProductPage({ params }: { params: { slug: string; locale
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
                   </svg>
                 </div>
+                {/* Badge gamme */}
+                <span className={`absolute top-4 left-4 px-3 py-1 text-sm font-medium rounded ${
+                  product.gamme === 'Exclusive' 
+                    ? 'bg-amber-100 text-amber-800' 
+                    : 'bg-natura-100 text-natura-700'
+                }`}>
+                  {product.gamme}
+                </span>
               </div>
               
               {/* Thumbnails */}
-              <div className="flex gap-4">
-                {product.images.map((image, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setSelectedImage(index)}
-                    className={`w-24 h-24 overflow-hidden transition-all ${
-                      selectedImage === index 
-                        ? 'ring-2 ring-natura-900' 
-                        : 'opacity-60 hover:opacity-100'
-                    }`}
-                  >
-                    <img
-                      src={image}
-                      alt={`${product.name[locale]} ${index + 1}`}
-                      className="w-full h-full object-cover"
-                    />
-                  </button>
-                ))}
-              </div>
+              {product.images.length > 1 && (
+                <div className="flex gap-4">
+                  {product.images.map((image, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setSelectedImage(index)}
+                      className={`w-24 h-24 overflow-hidden rounded transition-all ${
+                        selectedImage === index 
+                          ? 'ring-2 ring-natura-900' 
+                          : 'opacity-60 hover:opacity-100'
+                      }`}
+                    >
+                      <img
+                        src={image}
+                        alt={`${product.name[locale]} ${index + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Product Info */}
             <div className="lg:py-8">
-              {/* Category Badge */}
-              <div className="mb-4">
-                <span className="inline-block px-3 py-1 bg-natura-100 text-natura-700 text-xs font-medium uppercase tracking-wider">
-                  {categoryLabels[product.category][locale]}
+              {/* Stock Status */}
+              <div className="mb-4 flex items-center gap-3">
+                <span className={`inline-flex items-center gap-1.5 px-3 py-1 text-sm font-medium rounded-full ${
+                  product.stockStatus === 'disponible' 
+                    ? 'bg-green-100 text-green-800' 
+                    : 'bg-amber-100 text-amber-800'
+                }`}>
+                  <span className={`w-2 h-2 rounded-full ${
+                    product.stockStatus === 'disponible' ? 'bg-green-500' : 'bg-amber-500'
+                  }`} />
+                  {labels.stock[product.stockStatus][locale]}
+                </span>
+                <span className="text-sm text-natura-500">
+                  {labels.delivery[locale]}: {product.delaiLivraison}
                 </span>
               </div>
 
@@ -144,93 +176,124 @@ export default function ProductPage({ params }: { params: { slug: string; locale
                 {product.description[locale]}
               </p>
 
-              {/* Price */}
-              <div className="mb-8 p-4 bg-natura-50 border border-natura-200 rounded-lg">
+              {/* Price Badge */}
+              <div className="mb-6 p-4 bg-gradient-to-r from-natura-100 to-natura-50 border border-natura-200 rounded-lg">
                 <div className="flex items-baseline gap-2">
                   <span className="text-3xl font-display text-natura-900">
-                    {product.price.display}
+                    {product.price.ttc} €
                   </span>
-                  <span className="text-natura-600">TTC</span>
+                  <span className="text-natura-600">/m² TTC</span>
                 </div>
-                <p className="text-sm text-natura-500 mt-1">
-                  {locale === 'fr' ? 'Prix au m² - Livraison incluse en France' : 
-                   locale === 'de' ? 'Preis pro m² inkl. MwSt. - Lieferung nach Frankreich inklusive' : 
-                   'Price per m² incl. VAT - Delivery included in France'}
-                </p>
+                <div className="flex items-center gap-4 mt-2 text-sm">
+                  <span className="text-natura-500">
+                    {product.price.ht.toFixed(2)} € HT
+                  </span>
+                  <span className="text-green-600 flex items-center gap-1">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    {labels.freeShipping[locale]}
+                  </span>
+                </div>
               </div>
 
               {/* Quick Specs */}
-              <div className="flex flex-wrap gap-4 mb-8">
-                <div className="px-4 py-2 bg-natura-50 border border-natura-100">
-                  <span className="text-xs text-natura-500 block">
-                    {locale === 'fr' ? 'Essence' : locale === 'de' ? 'Holzart' : 'Wood'}
-                  </span>
-                  <span className="font-medium text-natura-900">
-                    {woodLabels[product.woodType][locale]}
-                  </span>
+              <div className="flex flex-wrap gap-3 mb-6">
+                <div className="px-4 py-2 bg-natura-50 border border-natura-100 rounded-lg">
+                  <span className="text-xs text-natura-500 block">{labels.dimensions[locale]}</span>
+                  <span className="font-medium text-natura-900">{product.dimensions}</span>
                 </div>
-                <div className="px-4 py-2 bg-natura-50 border border-natura-100">
-                  <span className="text-xs text-natura-500 block">
-                    {locale === 'fr' ? 'Sélection' : locale === 'de' ? 'Auswahl' : 'Grade'}
-                  </span>
-                  <span className="font-medium text-natura-900">
-                    {gradeLabels[product.grade][locale]}
-                  </span>
+                <div className="px-4 py-2 bg-natura-50 border border-natura-100 rounded-lg">
+                  <span className="text-xs text-natura-500 block">{labels.finish[locale]}</span>
+                  <span className="font-medium text-natura-900">{product.finition}</span>
                 </div>
-                <div className="px-4 py-2 bg-natura-50 border border-natura-100">
-                  <span className="text-xs text-natura-500 block">
-                    {locale === 'fr' ? 'Finition' : locale === 'de' ? 'Finish' : 'Finish'}
-                  </span>
+                <div className="px-4 py-2 bg-natura-50 border border-natura-100 rounded-lg">
+                  <span className="text-xs text-natura-500 block">{labels.woodType[locale]}</span>
                   <span className="font-medium text-natura-900">
-                    {product.finish}
+                    {locale === 'fr' ? 'Chêne européen' : locale === 'de' ? 'Europäische Eiche' : 'European oak'}
                   </span>
                 </div>
               </div>
 
+              {/* Surface Calculator */}
+              <div className="mb-6">
+                <SurfaceCalculator
+                  priceHT={product.price.ht}
+                  priceTTC={product.price.ttc}
+                  onSurfaceChange={handleSurfaceChange}
+                />
+              </div>
+
+              {/* Add to Cart Button */}
+              <AddToCartButton
+                product={{
+                  id: product.id,
+                  slug: product.slug,
+                  name: product.name[locale],
+                  price_ht: product.price.ht,
+                  price_ttc: product.price.ttc,
+                  image: product.images[0],
+                  dimensions: product.dimensions,
+                }}
+                quantity_m2={selectedSurface}
+                className="w-full mb-4"
+              />
+
+              {/* Secondary CTAs */}
+              <div className="flex flex-col sm:flex-row gap-4 mb-6">
+                <Link
+                  href={`/${locale}/contact?product=${encodeURIComponent(product.name[locale])}&type=devis`}
+                  className="flex-1 px-6 py-3 border border-natura-300 text-natura-700 text-center font-medium hover:bg-natura-50 transition-colors rounded-lg"
+                >
+                  {labels.requestQuote[locale]}
+                </Link>
+                <Link
+                  href={`/${locale}/contact?product=${encodeURIComponent(product.name[locale])}&type=echantillon`}
+                  className="flex-1 px-6 py-3 border border-natura-300 text-natura-700 text-center font-medium hover:bg-natura-50 transition-colors flex items-center justify-center gap-2 rounded-lg"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                  </svg>
+                  {labels.freeSample[locale]}
+                </Link>
+              </div>
+
               {/* Detailed Specifications */}
-              <div className="border-t border-natura-200 pt-8 mb-8">
+              <div className="border-t border-natura-200 pt-6 mb-6">
                 <h3 className="font-display text-xl text-natura-900 mb-4">
-                  {locale === 'fr' ? 'Dimensions' : locale === 'de' ? 'Maße' : 'Dimensions'}
+                  {labels.dimensions[locale]}
                 </h3>
                 <table className="w-full">
                   <tbody className="divide-y divide-natura-100">
                     <tr>
-                      <td className="py-3 text-natura-600">
-                        {locale === 'fr' ? 'Largeur' : locale === 'de' ? 'Breite' : 'Width'}
-                      </td>
-                      <td className="py-3 text-natura-900 font-medium text-right">
-                        {product.dimensions.width}
-                      </td>
+                      <td className="py-3 text-natura-600">{labels.thickness[locale]}</td>
+                      <td className="py-3 text-natura-900 font-medium text-right">{product.epaisseur} mm</td>
                     </tr>
                     <tr>
-                      <td className="py-3 text-natura-600">
-                        {locale === 'fr' ? 'Longueur' : locale === 'de' ? 'Länge' : 'Length'}
-                      </td>
-                      <td className="py-3 text-natura-900 font-medium text-right">
-                        {product.dimensions.length}
-                      </td>
+                      <td className="py-3 text-natura-600">{labels.width[locale]}</td>
+                      <td className="py-3 text-natura-900 font-medium text-right">{product.largeur} mm</td>
                     </tr>
                     <tr>
-                      <td className="py-3 text-natura-600">
-                        {locale === 'fr' ? 'Épaisseur' : locale === 'de' ? 'Stärke' : 'Thickness'}
-                      </td>
-                      <td className="py-3 text-natura-900 font-medium text-right">
-                        {product.dimensions.thickness}
-                      </td>
+                      <td className="py-3 text-natura-600">{labels.length[locale]}</td>
+                      <td className="py-3 text-natura-900 font-medium text-right">{product.longueur} mm</td>
+                    </tr>
+                    <tr>
+                      <td className="py-3 text-natura-600">{labels.finish[locale]}</td>
+                      <td className="py-3 text-natura-900 font-medium text-right">{product.finition}</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
 
               {/* Features */}
-              <div className="border-t border-natura-200 pt-8 mb-8">
+              <div className="border-t border-natura-200 pt-6 mb-6">
                 <h3 className="font-display text-xl text-natura-900 mb-4">
-                  {locale === 'fr' ? 'Caractéristiques' : locale === 'de' ? 'Eigenschaften' : 'Features'}
+                  {labels.features[locale]}
                 </h3>
                 <ul className="space-y-3">
                   {product.features.map((feature, index) => (
                     <li key={index} className="flex items-start gap-3">
-                      <svg className="w-5 h-5 text-natura-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
                       <span className="text-natura-700">{feature}</span>
@@ -239,42 +302,16 @@ export default function ProductPage({ params }: { params: { slug: string; locale
                 </ul>
               </div>
 
-              {/* CTA Buttons */}
-              <div className="flex flex-col gap-4">
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Link
-                    href={`/${locale}/contact?product=${encodeURIComponent(product.name[locale])}&type=devis`}
-                    className="flex-1 px-8 py-4 bg-natura-900 text-white text-center font-medium hover:bg-natura-800 transition-colors"
-                  >
-                    {locale === 'fr' ? 'Demander un devis' : locale === 'de' ? 'Angebot anfordern' : 'Request a quote'}
-                  </Link>
-                  <Link
-                    href={`/${locale}/contact?product=${encodeURIComponent(product.name[locale])}&type=echantillon`}
-                    className="flex-1 px-8 py-4 bg-natura-700 text-white text-center font-medium hover:bg-natura-600 transition-colors flex items-center justify-center gap-2"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                    </svg>
-                    {locale === 'fr' ? 'Échantillon A4 gratuit' : locale === 'de' ? 'Kostenloses A4-Muster' : 'Free A4 sample'}
-                  </Link>
-                </div>
-                <DownloadPDFButton
-                  product={{
-                    name: product.name[locale],
-                    category: product.category,
-                    description: product.description[locale],
-                    wood: woodLabels[product.woodType][locale],
-                    grade: gradeLabels[product.grade][locale],
-                    finish: product.finish,
-                    width: parseInt(product.dimensions.width),
-                    length: parseInt(product.dimensions.length),
-                    thickness: parseInt(product.dimensions.thickness),
-                    features: product.features,
-                  }}
-                  locale={locale}
-                  className="w-full justify-center"
-                />
-              </div>
+              {/* Guide Link */}
+              <Link
+                href={`/${locale}/guide-parquet`}
+                className="flex items-center gap-2 text-natura-600 hover:text-natura-900 transition-colors"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+                {labels.guide[locale]}
+              </Link>
             </div>
           </div>
         </div>
@@ -285,7 +322,7 @@ export default function ProductPage({ params }: { params: { slug: string; locale
         <section className="py-16 px-6 bg-natura-50">
           <div className="max-w-7xl mx-auto">
             <h2 className="font-display text-3xl text-natura-900 mb-8">
-              {locale === 'fr' ? 'Produits similaires' : locale === 'de' ? 'Ähnliche Produkte' : 'Related products'}
+              {labels.related[locale]}
             </h2>
             <div className="grid md:grid-cols-3 gap-8">
               {relatedProducts.map((p) => (

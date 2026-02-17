@@ -2,6 +2,8 @@ import { Inter, Playfair_Display } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
+import { CartProvider } from '@/contexts/CartContext';
+import CartDrawer from '@/components/CartDrawer';
 import '../globals.css';
 
 const inter = Inter({ 
@@ -40,7 +42,10 @@ export default async function LocaleLayout({
     <html lang={locale} className="scroll-smooth">
       <body className={`${inter.variable} ${playfair.variable} font-sans antialiased`}>
         <NextIntlClientProvider messages={messages}>
-          {children}
+          <CartProvider>
+            {children}
+            <CartDrawer />
+          </CartProvider>
         </NextIntlClientProvider>
       </body>
     </html>

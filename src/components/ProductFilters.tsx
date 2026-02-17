@@ -2,159 +2,215 @@
 
 import { useLocale } from 'next-intl';
 
-interface FilterOption {
-  value: string;
-  label: { fr: string; de: string; en: string };
-}
-
 interface ProductFiltersProps {
   activeFilters: {
-    category?: string;
-    color?: string;
-    woodType?: string;
-    grade?: string;
+    gamme?: 'Exclusive' | 'Elegance';
+    finition?: string;
+    largeur?: number;
+    priceRange?: string;
   };
-  onFilterChange: (filterType: string, value: string | undefined) => void;
+  onFilterChange: (filterType: string, value: string | number | undefined) => void;
 }
-
-const categoryOptions: FilterOption[] = [
-  { value: 'engineered', label: { fr: 'Contrecollé', de: 'Mehrschicht', en: 'Engineered' } },
-  { value: 'solid', label: { fr: 'Massif', de: 'Massiv', en: 'Solid' } },
-  { value: 'industrial', label: { fr: 'Industriel', de: 'Industrie', en: 'Industrial' } },
-];
-
-const colorOptions: FilterOption[] = [
-  { value: 'light', label: { fr: 'Clair', de: 'Hell', en: 'Light' } },
-  { value: 'natural', label: { fr: 'Naturel', de: 'Natürlich', en: 'Natural' } },
-  { value: 'medium', label: { fr: 'Moyen', de: 'Mittel', en: 'Medium' } },
-  { value: 'dark', label: { fr: 'Foncé', de: 'Dunkel', en: 'Dark' } },
-];
-
-const woodTypeOptions: FilterOption[] = [
-  { value: 'oak', label: { fr: 'Chêne', de: 'Eiche', en: 'Oak' } },
-  { value: 'ash', label: { fr: 'Frêne', de: 'Esche', en: 'Ash' } },
-];
-
-const gradeOptions: FilterOption[] = [
-  { value: 'select', label: { fr: 'Select', de: 'Select', en: 'Select' } },
-  { value: 'natur', label: { fr: 'Natur', de: 'Natur', en: 'Natur' } },
-  { value: 'rustic', label: { fr: 'Rustique', de: 'Rustikal', en: 'Rustic' } },
-];
 
 export default function ProductFilters({ activeFilters, onFilterChange }: ProductFiltersProps) {
   const locale = useLocale() as 'fr' | 'de' | 'en';
 
-  const filterLabels = {
-    category: { fr: 'Type', de: 'Typ', en: 'Type' },
-    color: { fr: 'Couleur', de: 'Farbe', en: 'Color' },
-    woodType: { fr: 'Essence', de: 'Holzart', en: 'Wood' },
-    grade: { fr: 'Sélection', de: 'Auswahl', en: 'Grade' },
+  const labels = {
+    filters: { fr: 'Filtres', de: 'Filter', en: 'Filters' },
+    gamme: { fr: 'Gamme', de: 'Kollektion', en: 'Range' },
+    finition: { fr: 'Finition', de: 'Oberfläche', en: 'Finish' },
+    largeur: { fr: 'Largeur de lame', de: 'Dielenbreite', en: 'Plank width' },
+    price: { fr: 'Budget', de: 'Budget', en: 'Budget' },
     all: { fr: 'Tous', de: 'Alle', en: 'All' },
     reset: { fr: 'Réinitialiser', de: 'Zurücksetzen', en: 'Reset' },
   };
 
-  const colorSwatches: Record<string, string> = {
-    light: '#f5efe6',
-    natural: '#d4c4a8',
-    medium: '#b8a07a',
-    dark: '#6b5344',
-  };
+  const gammes = [
+    { value: 'Exclusive', label: { fr: 'Exclusive', de: 'Exclusive', en: 'Exclusive' }, desc: { fr: 'Premium', de: 'Premium', en: 'Premium' } },
+    { value: 'Elegance', label: { fr: 'Élégance', de: 'Eleganz', en: 'Elegance' }, desc: { fr: 'Rapport qualité-prix', de: 'Preis-Leistung', en: 'Value' } },
+  ];
 
-  const renderFilterGroup = (
-    filterType: string,
-    options: FilterOption[],
-    isColorFilter = false
-  ) => {
-    const activeValue = activeFilters[filterType as keyof typeof activeFilters];
+  const finitions = [
+    { value: 'vernis', label: { fr: 'Vernis', de: 'Lackiert', en: 'Varnished' } },
+    { value: 'huile', label: { fr: 'Huilé', de: 'Geölt', en: 'Oiled' } },
+    { value: 'brut', label: { fr: 'Brut', de: 'Roh', en: 'Raw' } },
+  ];
 
-    return (
-      <div className="space-y-3">
-        <h4 className="text-xs font-medium uppercase tracking-wider text-natura-500">
-          {filterLabels[filterType as keyof typeof filterLabels][locale]}
-        </h4>
-        <div className={`flex flex-wrap gap-2 ${isColorFilter ? 'gap-3' : ''}`}>
-          {/* All option */}
-          <button
-            onClick={() => onFilterChange(filterType, undefined)}
-            className={`transition-all ${
-              isColorFilter
-                ? `w-8 h-8 rounded-full border-2 flex items-center justify-center ${
-                    !activeValue ? 'border-natura-900' : 'border-natura-200'
-                  }`
-                : `px-3 py-1.5 text-sm border transition-colors ${
-                    !activeValue
-                      ? 'border-natura-900 bg-natura-900 text-white'
-                      : 'border-natura-200 hover:border-natura-400'
-                  }`
-            }`}
-          >
-            {isColorFilter ? (
-              <span className="text-xs">∞</span>
-            ) : (
-              filterLabels.all[locale]
-            )}
-          </button>
+  const largeurs = [
+    { value: 70, label: '70mm', desc: { fr: 'Compact', de: 'Kompakt', en: 'Compact' } },
+    { value: 100, label: '100mm', desc: { fr: 'Chevron', de: 'Fischgrät', en: 'Chevron' } },
+    { value: 120, label: '120mm', desc: { fr: 'Standard', de: 'Standard', en: 'Standard' } },
+    { value: 150, label: '150mm', desc: { fr: 'Large', de: 'Breit', en: 'Wide' } },
+  ];
 
-          {options.map((option) => (
-            <button
-              key={option.value}
-              onClick={() => onFilterChange(filterType, option.value)}
-              className={`transition-all ${
-                isColorFilter
-                  ? `w-8 h-8 rounded-full border-2 transition-all ${
-                      activeValue === option.value
-                        ? 'border-natura-900 scale-110'
-                        : 'border-transparent hover:scale-105'
-                    }`
-                  : `px-3 py-1.5 text-sm border transition-colors ${
-                      activeValue === option.value
-                        ? 'border-natura-900 bg-natura-900 text-white'
-                        : 'border-natura-200 hover:border-natura-400'
-                    }`
-              }`}
-              style={
-                isColorFilter
-                  ? { backgroundColor: colorSwatches[option.value] }
-                  : undefined
-              }
-              title={option.label[locale]}
-            >
-              {!isColorFilter && option.label[locale]}
-            </button>
-          ))}
-        </div>
-      </div>
-    );
-  };
+  const priceRanges = [
+    { value: '0-50', label: { fr: 'Moins de 50€/m²', de: 'Unter 50€/m²', en: 'Under €50/m²' } },
+    { value: '50-60', label: { fr: '50-60€/m²', de: '50-60€/m²', en: '€50-60/m²' } },
+    { value: '60+', label: { fr: 'Plus de 60€/m²', de: 'Über 60€/m²', en: 'Over €60/m²' } },
+  ];
 
   const hasActiveFilters = Object.values(activeFilters).some(v => v !== undefined);
 
   return (
-    <div className="bg-white border border-natura-100 p-6 sticky top-24">
+    <div className="bg-white rounded-lg p-6 shadow-sm">
       <div className="flex items-center justify-between mb-6">
-        <h3 className="font-display text-lg text-natura-900">
-          {locale === 'fr' ? 'Filtres' : locale === 'de' ? 'Filter' : 'Filters'}
-        </h3>
+        <h2 className="font-display text-lg text-natura-900">
+          {labels.filters[locale]}
+        </h2>
         {hasActiveFilters && (
           <button
             onClick={() => {
-              onFilterChange('category', undefined);
-              onFilterChange('color', undefined);
-              onFilterChange('woodType', undefined);
-              onFilterChange('grade', undefined);
+              onFilterChange('gamme', undefined);
+              onFilterChange('finition', undefined);
+              onFilterChange('largeur', undefined);
+              onFilterChange('priceRange', undefined);
             }}
-            className="text-xs text-natura-500 hover:text-natura-900 transition-colors"
+            className="text-sm text-natura-600 hover:text-natura-900 underline"
           >
-            {filterLabels.reset[locale]}
+            {labels.reset[locale]}
           </button>
         )}
       </div>
 
-      <div className="space-y-6">
-        {renderFilterGroup('category', categoryOptions)}
-        {renderFilterGroup('color', colorOptions, true)}
-        {renderFilterGroup('woodType', woodTypeOptions)}
-        {renderFilterGroup('grade', gradeOptions)}
+      {/* Gamme */}
+      <div className="mb-6">
+        <h3 className="text-sm font-medium text-natura-700 mb-3">
+          {labels.gamme[locale]}
+        </h3>
+        <div className="space-y-2">
+          <button
+            onClick={() => onFilterChange('gamme', undefined)}
+            className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
+              !activeFilters.gamme
+                ? 'bg-natura-900 text-white'
+                : 'bg-natura-50 text-natura-700 hover:bg-natura-100'
+            }`}
+          >
+            {labels.all[locale]}
+          </button>
+          {gammes.map((g) => (
+            <button
+              key={g.value}
+              onClick={() => onFilterChange('gamme', activeFilters.gamme === g.value ? undefined : g.value)}
+              className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
+                activeFilters.gamme === g.value
+                  ? 'bg-natura-900 text-white'
+                  : 'bg-natura-50 text-natura-700 hover:bg-natura-100'
+              }`}
+            >
+              <span className="font-medium">{g.label[locale]}</span>
+              <span className="text-xs opacity-70 ml-2">{g.desc[locale]}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Finition */}
+      <div className="mb-6">
+        <h3 className="text-sm font-medium text-natura-700 mb-3">
+          {labels.finition[locale]}
+        </h3>
+        <div className="space-y-2">
+          <button
+            onClick={() => onFilterChange('finition', undefined)}
+            className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
+              !activeFilters.finition
+                ? 'bg-natura-900 text-white'
+                : 'bg-natura-50 text-natura-700 hover:bg-natura-100'
+            }`}
+          >
+            {labels.all[locale]}
+          </button>
+          {finitions.map((f) => (
+            <button
+              key={f.value}
+              onClick={() => onFilterChange('finition', activeFilters.finition === f.value ? undefined : f.value)}
+              className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
+                activeFilters.finition === f.value
+                  ? 'bg-natura-900 text-white'
+                  : 'bg-natura-50 text-natura-700 hover:bg-natura-100'
+              }`}
+            >
+              {f.label[locale]}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Largeur */}
+      <div className="mb-6">
+        <h3 className="text-sm font-medium text-natura-700 mb-3">
+          {labels.largeur[locale]}
+        </h3>
+        <div className="grid grid-cols-2 gap-2">
+          <button
+            onClick={() => onFilterChange('largeur', undefined)}
+            className={`px-3 py-2 rounded-lg text-sm transition-colors ${
+              !activeFilters.largeur
+                ? 'bg-natura-900 text-white'
+                : 'bg-natura-50 text-natura-700 hover:bg-natura-100'
+            }`}
+          >
+            {labels.all[locale]}
+          </button>
+          {largeurs.map((l) => (
+            <button
+              key={l.value}
+              onClick={() => onFilterChange('largeur', activeFilters.largeur === l.value ? undefined : l.value)}
+              className={`px-3 py-2 rounded-lg text-sm transition-colors ${
+                activeFilters.largeur === l.value
+                  ? 'bg-natura-900 text-white'
+                  : 'bg-natura-50 text-natura-700 hover:bg-natura-100'
+              }`}
+            >
+              {l.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Budget */}
+      <div className="mb-6">
+        <h3 className="text-sm font-medium text-natura-700 mb-3">
+          {labels.price[locale]}
+        </h3>
+        <div className="space-y-2">
+          <button
+            onClick={() => onFilterChange('priceRange', undefined)}
+            className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
+              !activeFilters.priceRange
+                ? 'bg-natura-900 text-white'
+                : 'bg-natura-50 text-natura-700 hover:bg-natura-100'
+            }`}
+          >
+            {labels.all[locale]}
+          </button>
+          {priceRanges.map((p) => (
+            <button
+              key={p.value}
+              onClick={() => onFilterChange('priceRange', activeFilters.priceRange === p.value ? undefined : p.value)}
+              className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
+                activeFilters.priceRange === p.value
+                  ? 'bg-natura-900 text-white'
+                  : 'bg-natura-50 text-natura-700 hover:bg-natura-100'
+              }`}
+            >
+              {p.label[locale]}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Info délais */}
+      <div className="mt-8 p-4 bg-amber-50 rounded-lg border border-amber-200">
+        <h4 className="font-medium text-amber-800 text-sm mb-2">
+          {locale === 'fr' ? '📦 Délais de livraison' : locale === 'de' ? '📦 Lieferzeiten' : '📦 Delivery times'}
+        </h4>
+        <ul className="text-xs text-amber-700 space-y-1">
+          <li>• {locale === 'fr' ? 'Standard : 2 semaines' : locale === 'de' ? 'Standard: 2 Wochen' : 'Standard: 2 weeks'}</li>
+          <li>• {locale === 'fr' ? 'Premier choix : 3-4 semaines' : locale === 'de' ? 'Erste Wahl: 3-4 Wochen' : 'First choice: 3-4 weeks'}</li>
+          <li>• {locale === 'fr' ? 'Sur-mesure : 6-8 semaines' : locale === 'de' ? 'Sonderanfertigung: 6-8 Wochen' : 'Custom: 6-8 weeks'}</li>
+        </ul>
       </div>
     </div>
   );
