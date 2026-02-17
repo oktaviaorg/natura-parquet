@@ -3,25 +3,90 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Natura Parquets Brand Colors */
+  --natura-primary: #5D4037;
+  --natura-secondary: #8D6E63;
+  --natura-accent: #D7CCC8;
+  --natura-background: #EFEBE9;
+  --natura-text: #3E2723;
+  --natura-gold: #C9A962;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), 'Inter', system-ui, sans-serif;
+  background-color: var(--natura-background);
+  color: var(--natura-text);
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-playfair), 'Playfair Display', Georgia, serif;
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-natura-primary hover:bg-natura-secondary text-white px-6 py-3 rounded-lg font-medium transition-all duration-200 shadow-md hover:shadow-lg;
   }
+  
+  .btn-secondary {
+    @apply bg-gold-400 hover:bg-gold-500 text-natura-text px-6 py-3 rounded-lg font-medium transition-all duration-200 shadow-md hover:shadow-lg;
+  }
+  
+  .btn-outline {
+    @apply border-2 border-natura-primary text-natura-primary hover:bg-natura-primary hover:text-white px-6 py-3 rounded-lg font-medium transition-all duration-200;
+  }
+  
+  .card {
+    @apply bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden;
+  }
+  
+  .input {
+    @apply w-full px-4 py-3 border border-cream-200 rounded-lg focus:ring-2 focus:ring-natura-primary focus:border-transparent outline-none transition-all bg-white;
+  }
+  
+  .section-title {
+    @apply font-serif text-3xl md:text-4xl font-bold text-natura-primary mb-8 text-center;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animate-slideUp {
+  animation: slideUp 0.8s ease-out forwards;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--natura-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--natura-secondary);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--natura-primary);
+}
+
+/* Selection */
+::selection {
+  background-color: var(--natura-gold);
+  color: var(--natura-text);
 }
