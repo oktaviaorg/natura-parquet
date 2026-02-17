@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <!-- Arbre chêne stylisé - plus organique -->
+  <g fill="none" stroke="#5D4037" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Couronne de l'arbre - feuilles de chêne stylisées -->
+    <path d="M50 8
+             C40 12, 32 18, 28 28
+             C24 38, 28 45, 32 50
+             C26 52, 18 58, 18 70
+             C18 80, 30 88, 50 88
+             C70 88, 82 80, 82 70
+             C82 58, 74 52, 68 50
+             C72 45, 76 38, 72 28
+             C68 18, 60 12, 50 8Z"/>
+    <!-- Détails feuillage -->
+    <path d="M38 35 C42 32, 48 30, 50 28"/>
+    <path d="M62 35 C58 32, 52 30, 50 28"/>
+    <path d="M32 55 C38 52, 45 50, 50 48"/>
+    <path d="M68 55 C62 52, 55 50, 50 48"/>
+    <!-- Tronc robuste -->
+    <path d="M44 88 L44 96 Q44 98 42 98 L38 98"/>
+    <path d="M56 88 L56 96 Q56 98 58 98 L62 98"/>
+    <!-- Ligne centrale tronc -->
+    <path d="M50 70 L50 88"/>
+  </g>
+</svg>

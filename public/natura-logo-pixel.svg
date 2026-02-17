@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="128" height="128">
+  <!-- Arbre pixel art -->
+  <style>
+    .tree { fill: #5D4037; }
+  </style>
+  <!-- Feuillage -->
+  <rect class="tree" x="14" y="4" width="4" height="2"/>
+  <rect class="tree" x="12" y="6" width="8" height="2"/>
+  <rect class="tree" x="10" y="8" width="12" height="2"/>
+  <rect class="tree" x="8" y="10" width="16" height="2"/>
+  <rect class="tree" x="10" y="12" width="12" height="2"/>
+  <rect class="tree" x="6" y="14" width="20" height="2"/>
+  <rect class="tree" x="8" y="16" width="16" height="2"/>
+  <rect class="tree" x="4" y="18" width="24" height="2"/>
+  <rect class="tree" x="6" y="20" width="20" height="2"/>
+  <!-- Tronc -->
+  <rect class="tree" x="14" y="22" width="4" height="6"/>
+  <!-- Base -->
+  <rect class="tree" x="10" y="28" width="12" height="2"/>
+</svg>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <!-- Arbre minimaliste - contour nature -->
+  <g fill="none" stroke="#5D4037" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Feuillage - forme organique -->
+    <path d="M50 10 
+             C35 15, 25 25, 25 35
+             C25 42, 30 48, 35 52
+             C28 55, 20 62, 20 72
+             C20 82, 32 88, 50 88
+             C68 88, 80 82, 80 72
+             C80 62, 72 55, 65 52
+             C70 48, 75 42, 75 35
+             C75 25, 65 15, 50 10Z"/>
+    <!-- Tronc -->
+    <path d="M45 88 L45 98 M55 88 L55 98"/>
+    <!-- Racines -->
+    <path d="M42 98 C38 100, 35 98, 32 100"/>
+    <path d="M58 98 C62 100, 65 98, 68 100"/>
+  </g>
+</svg>
