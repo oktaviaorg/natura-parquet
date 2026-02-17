@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="200" height="200">
+  <!-- Arbre stylisé mais reconnaissable -->
+  <g fill="none" stroke="#5D4037" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Couronne ronde et feuillue -->
+    <ellipse cx="50" cy="38" rx="32" ry="30"/>
+    <!-- Texture feuillage -->
+    <path d="M30 35 Q35 30, 40 35"/>
+    <path d="M45 28 Q50 23, 55 28"/>
+    <path d="M60 35 Q65 30, 70 35"/>
+    <path d="M35 45 Q40 40, 45 45"/>
+    <path d="M55 45 Q60 40, 65 45"/>
+    <!-- Tronc -->
+    <path d="M44 68 L44 95"/>
+    <path d="M56 68 L56 95"/>
+    <!-- Connection tronc-couronne -->
+    <path d="M44 68 Q50 65 56 68"/>
+    <!-- Sol/racines -->
+    <path d="M35 95 L65 95"/>
+  </g>
+</svg>

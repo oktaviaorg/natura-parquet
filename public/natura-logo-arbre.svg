@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="200" height="200">
+  <!-- Vrai arbre reconnaissable -->
+  <g fill="none" stroke="#5D4037" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Tronc -->
+    <path d="M50 95 L50 55"/>
+    <!-- Branches principales -->
+    <path d="M50 55 L50 30"/>
+    <path d="M50 50 Q35 45, 25 50"/>
+    <path d="M50 50 Q65 45, 75 50"/>
+    <path d="M50 40 Q30 32, 20 38"/>
+    <path d="M50 40 Q70 32, 80 38"/>
+    <path d="M50 30 Q38 20, 30 25"/>
+    <path d="M50 30 Q62 20, 70 25"/>
+    <!-- Cime -->
+    <path d="M50 30 Q45 15, 50 10 Q55 15, 50 30"/>
+    <!-- Petites branches -->
+    <path d="M25 50 Q20 48, 18 52"/>
+    <path d="M75 50 Q80 48, 82 52"/>
+    <path d="M20 38 Q15 35, 12 40"/>
+    <path d="M80 38 Q85 35, 88 40"/>
+    <path d="M30 25 Q25 22, 22 27"/>
+    <path d="M70 25 Q75 22, 78 27"/>
+  </g>
+</svg>
