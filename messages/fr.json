@@ -11,7 +11,8 @@
     "inspirations": "Inspirations",
     "partners": "Devenir partenaire",
     "contact": "Contact",
-    "about": "À propos"
+    "about": "À propos",
+    "faq": "FAQ"
   },
   "hero": {
     "title": "L'authenticité du bois européen",
@@ -279,5 +280,81 @@
     "quote": "Demander un devis",
     "contact": "Nous contacter",
     "partner": "Devenir partenaire"
+  },
+  "faq": {
+    "title": "Questions Fréquentes",
+    "subtitle": "Tout ce que vous devez savoir sur nos parquets premium européens",
+    "categories": {
+      "delivery": {
+        "title": "Livraison & Délais",
+        "items": {
+          "delays": {
+            "question": "Quels sont les délais de livraison ?",
+            "answer": "Nos délais varient selon le type de produit :\n\n• Standard : 2 semaines\n• Premier choix : 3 à 4 semaines\n• Sur-mesure : 6 à 8 semaines\n\nCes délais s'entendent à partir de la confirmation de commande."
+          },
+          "zones": {
+            "question": "Dans quelles zones livrez-vous ?",
+            "answer": "Nous livrons dans toute l'Europe, notamment :\n\n• France (métropole)\n• Allemagne\n• Belgique\n• Suisse\n• Luxembourg\n\nLa livraison s'effectue par palettes complètes via notre partenaire logistique."
+          },
+          "shipping": {
+            "question": "Comment se passe la livraison ?",
+            "answer": "La livraison s'effectue par transporteur spécialisé en palettes. Le chauffeur vous contacte pour convenir d'un créneau. Prévoyez un accès adapté (transpalette recommandé) ou déchargement manuel possible avec aide."
+          }
+        }
+      },
+      "products": {
+        "title": "Produits & Qualité",
+        "items": {
+          "origin": {
+            "question": "D'où viennent vos parquets ?",
+            "answer": "Nos parquets sont fabriqués en Europe (Pologne) à partir de chênes et frênes issus de forêts européennes certifiées. Nous privilégions les circuits courts et une traçabilité complète du bois."
+          },
+          "heating": {
+            "question": "Vos parquets sont-ils compatibles avec le chauffage au sol ?",
+            "answer": "Oui, nos parquets contrecollés sont parfaitement compatibles avec le chauffage au sol basse température (max 28°C en surface). Le parquet massif est déconseillé sur plancher chauffant."
+          },
+          "samples": {
+            "question": "Puis-je recevoir des échantillons ?",
+            "answer": "Absolument ! Contactez-nous via le formulaire pour recevoir des échantillons de nos différentes essences et finitions. Service gratuit pour les professionnels."
+          }
+        }
+      },
+      "ordering": {
+        "title": "Commande & Paiement",
+        "items": {
+          "minimum": {
+            "question": "Y a-t-il un minimum de commande ?",
+            "answer": "Pour optimiser les coûts de transport, nous recommandons une commande minimum de 30 m². Pour les commandes inférieures, des frais de port supplémentaires peuvent s'appliquer."
+          },
+          "quote": {
+            "question": "Comment obtenir un devis ?",
+            "answer": "Remplissez notre formulaire de contact en précisant le produit souhaité et la surface estimée. Nous vous envoyons un devis détaillé sous 24-48h."
+          },
+          "payment": {
+            "question": "Quelles sont les modalités de paiement ?",
+            "answer": "Acompte de 30% à la commande, solde à la livraison. Virement bancaire ou prélèvement SEPA. Conditions spécifiques pour les partenaires professionnels."
+          }
+        }
+      },
+      "pro": {
+        "title": "Professionnels",
+        "items": {
+          "partner": {
+            "question": "Comment devenir partenaire Natura Parquet ?",
+            "answer": "Rendez-vous sur notre page 'Devenir Partenaire' et remplissez le formulaire de candidature. Nous étudions chaque demande et revenons vers vous sous 48h pour discuter des conditions de partenariat."
+          },
+          "prices": {
+            "question": "Proposez-vous des tarifs professionnels ?",
+            "answer": "Oui, nous proposons des conditions avantageuses pour les professionnels (revendeurs, artisans, architectes). Tarifs dégressifs selon volume et possibilité d'exclusivité territoriale. Contactez-nous pour en discuter."
+          }
+        }
+      }
+    },
+    "cta": {
+      "title": "Une autre question ?",
+      "subtitle": "Notre équipe est à votre disposition pour répondre à toutes vos questions",
+      "contact": "Nous contacter",
+      "partner": "Devenir partenaire"
+    }
   }
 }

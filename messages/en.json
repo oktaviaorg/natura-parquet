@@ -11,7 +11,8 @@
     "inspirations": "Inspirations",
     "partners": "Become a partner",
     "contact": "Contact",
-    "about": "About"
+    "about": "About",
+    "faq": "FAQ"
   },
   "hero": {
     "title": "Authentic European Wood",
@@ -192,5 +193,81 @@
     "quote": "Request a quote",
     "contact": "Contact us",
     "partner": "Become a partner"
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Everything you need to know about our premium European parquet",
+    "categories": {
+      "delivery": {
+        "title": "Delivery & Lead Times",
+        "items": {
+          "delays": {
+            "question": "What are the delivery times?",
+            "answer": "Our lead times vary by product type:\n\n• Standard: 2 weeks\n• First choice: 3 to 4 weeks\n• Custom: 6 to 8 weeks\n\nThese times apply from order confirmation."
+          },
+          "zones": {
+            "question": "Where do you deliver?",
+            "answer": "We deliver throughout Europe, including:\n\n• France (mainland)\n• Germany\n• Belgium\n• Switzerland\n• Luxembourg\n\nDelivery is by full pallets via our logistics partner."
+          },
+          "shipping": {
+            "question": "How does delivery work?",
+            "answer": "Delivery is made by specialized pallet carrier. The driver will contact you to arrange a time slot. Please ensure suitable access (pallet jack recommended) or manual unloading possible with assistance."
+          }
+        }
+      },
+      "products": {
+        "title": "Products & Quality",
+        "items": {
+          "origin": {
+            "question": "Where do your parquets come from?",
+            "answer": "Our parquets are manufactured in Europe (Poland) from oak and ash sourced from certified European forests. We prioritize short supply chains and complete wood traceability."
+          },
+          "heating": {
+            "question": "Are your parquets compatible with underfloor heating?",
+            "answer": "Yes, our engineered parquets are perfectly compatible with low-temperature underfloor heating (max 28°C surface). Solid parquet is not recommended for underfloor heating."
+          },
+          "samples": {
+            "question": "Can I receive samples?",
+            "answer": "Absolutely! Contact us via the form to receive samples of our different species and finishes. Free service for professionals."
+          }
+        }
+      },
+      "ordering": {
+        "title": "Ordering & Payment",
+        "items": {
+          "minimum": {
+            "question": "Is there a minimum order?",
+            "answer": "To optimize shipping costs, we recommend a minimum order of 30 m². For smaller orders, additional shipping fees may apply."
+          },
+          "quote": {
+            "question": "How do I get a quote?",
+            "answer": "Fill out our contact form specifying the desired product and estimated area. We'll send you a detailed quote within 24-48 hours."
+          },
+          "payment": {
+            "question": "What are the payment terms?",
+            "answer": "30% deposit on order, balance on delivery. Bank transfer or SEPA direct debit. Special terms for professional partners."
+          }
+        }
+      },
+      "pro": {
+        "title": "Professionals",
+        "items": {
+          "partner": {
+            "question": "How do I become a Natura Parquet partner?",
+            "answer": "Visit our 'Become a Partner' page and fill out the application form. We review each request and get back to you within 48 hours to discuss partnership terms."
+          },
+          "prices": {
+            "question": "Do you offer professional pricing?",
+            "answer": "Yes, we offer attractive terms for professionals (resellers, craftsmen, architects). Volume-based pricing and possibility of territorial exclusivity. Contact us to discuss."
+          }
+        }
+      }
+    },
+    "cta": {
+      "title": "Have another question?",
+      "subtitle": "Our team is here to answer all your questions",
+      "contact": "Contact us",
+      "partner": "Become a partner"
+    }
   }
 }
