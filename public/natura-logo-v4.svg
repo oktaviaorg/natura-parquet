@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <!-- Arbre épuré V4 - Plus gros et sympathique -->
+  <g fill="none" stroke="#5D4037" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Couronne arrondie et accueillante -->
+    <path d="M60 8
+             C35 20, 22 40, 28 58
+             C18 65, 12 80, 22 95
+             C32 108, 50 112, 60 112
+             C70 112, 88 108, 98 95
+             C108 80, 102 65, 92 58
+             C98 40, 85 20, 60 8"/>
+    <!-- Tronc robuste -->
+    <line x1="60" y1="90" x2="60" y2="118"/>
+    <!-- Petites racines sympathiques -->
+    <path d="M52 118 C48 116, 45 118, 42 116"/>
+    <path d="M68 118 C72 116, 75 118, 78 116"/>
+  </g>
+</svg>

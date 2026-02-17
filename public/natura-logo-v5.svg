@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="150" height="150">
+  <!-- Arbre sympathique V5 - Courbes douces, accueillant -->
+  <g fill="none" stroke="#5D4037" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Feuillage en forme de nuage doux -->
+    <path d="M50 5
+             Q30 15, 25 30
+             Q15 35, 18 50
+             Q10 55, 15 70
+             Q18 85, 35 90
+             Q45 95, 50 95
+             Q55 95, 65 90
+             Q82 85, 85 70
+             Q90 55, 82 50
+             Q85 35, 75 30
+             Q70 15, 50 5"/>
+    <!-- Tronc avec légère courbe naturelle -->
+    <path d="M50 75 Q48 85, 50 98"/>
+    <!-- Racines accueillantes -->
+    <path d="M50 98 Q42 96, 35 98"/>
+    <path d="M50 98 Q58 96, 65 98"/>
+  </g>
+</svg>
