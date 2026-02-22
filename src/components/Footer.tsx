@@ -110,6 +110,9 @@ export default function Footer() {
             <Link href={`/${locale}/confidentialite`} className="text-natura-500 hover:text-white transition-colors text-sm">
               {labels.privacy[locale]}
             </Link>
+            <Link href={`/${locale}/espace-pro`} className="text-natura-600 hover:text-white transition-colors text-sm">
+              Pro
+            </Link>
           </div>
         </div>
       </div>
