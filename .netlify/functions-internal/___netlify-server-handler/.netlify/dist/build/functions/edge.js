@@ -405,7 +405,7 @@ var require_dist = __commonJS({
 // src/build/functions/edge.ts
 var import_fast_glob = __toESM(require_out(), 1);
 var import_path_to_regexp = __toESM(require_dist(), 1);
-import { cp, mkdir, readdir, readFile, rm, stat, writeFile } from "node:fs/promises";
+import { cp, lstat, mkdir, readdir, readFile, readlink, rm, writeFile } from "node:fs/promises";
 import { dirname, join, relative } from "node:path/posix";
 import { EDGE_HANDLER_NAME } from "../plugin-context.js";
 function nodeMiddlewareDefinitionHasMatcher(definition) {
@@ -562,15 +562,20 @@ Check https://docs.netlify.com/build/frameworks/framework-setup-guides/nextjs/ov
     );
   }
   const commonPrefix = relative(join(srcDir, maxParentDirectoriesPath), srcDir);
-  parts.push(`const virtualModules = new Map();`);
+  parts.push(`const virtualModules = new Map();`, `const virtualSymlinks = new Map();`);
   const handleFileOrDirectory = async (fileOrDir) => {
     const srcPath = join(srcDir, fileOrDir);
-    const stats = await stat(srcPath);
+    const stats = await lstat(srcPath);
     if (stats.isDirectory()) {
       const filesInDir = await readdir(srcPath);
       for (const fileInDir of filesInDir) {
         await handleFileOrDirectory(join(fileOrDir, fileInDir));
       }
+    } else if (stats.isSymbolicLink()) {
+      const symlinkTarget = await readlink(srcPath);
+      parts.push(
+        `virtualSymlinks.set(${JSON.stringify(join(commonPrefix, fileOrDir))}, ${JSON.stringify(symlinkTarget)});`
+      );
     } else {
       const content = await readFile(srcPath, "utf8");
       parts.push(
@@ -581,7 +586,7 @@ Check https://docs.netlify.com/build/frameworks/framework-setup-guides/nextjs/ov
   for (const file of files) {
     await handleFileOrDirectory(file);
   }
-  parts.push(`registerCJSModules(import.meta.url, virtualModules);
+  parts.push(`registerCJSModules(import.meta.url, virtualModules, virtualSymlinks);
 
     const require = createRequire(import.meta.url);
     const handlerMod = require("./${join(commonPrefix, entry)}");

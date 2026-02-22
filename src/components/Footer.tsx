@@ -21,6 +21,7 @@ export default function Footer() {
     
     // Products
     allParquets: { fr: 'Tous les parquets', de: 'Alle Parkette', en: 'All parquets' },
+    catalogue: { fr: 'Catalogue PDF', de: 'PDF-Katalog', en: 'PDF Catalog' },
     exclusive: { fr: 'Gamme Exclusive', de: 'Exclusive Kollektion', en: 'Exclusive Range' },
     elegance: { fr: 'Gamme Élégance', de: 'Eleganz Kollektion', en: 'Elegance Range' },
     rustic: { fr: 'Gamme Rustic', de: 'Rustic Kollektion', en: 'Rustic Range' },
@@ -35,10 +36,12 @@ export default function Footer() {
     // Company
     about: { fr: 'À propos', de: 'Über uns', en: 'About us' },
     partners: { fr: 'Devenir partenaire', de: 'Partner werden', en: 'Become a partner' },
+    findPartner: { fr: 'Trouver un revendeur', de: 'Händler finden', en: 'Find a retailer' },
     proSpace: { fr: 'Espace professionnel', de: 'Profi-Bereich', en: 'Professional area' },
     
     // Help
     guide: { fr: 'Guide du parquet', de: 'Parkettratgeber', en: 'Parquet guide' },
+    articles: { fr: 'Articles & Conseils', de: 'Artikel & Tipps', en: 'Articles & Tips' },
     faq: { fr: 'Questions fréquentes', de: 'Häufige Fragen', en: 'FAQ' },
     contact: { fr: 'Nous contacter', de: 'Kontakt', en: 'Contact us' },
     samples: { fr: 'Échantillons gratuits', de: 'Kostenlose Muster', en: 'Free samples' },
@@ -124,6 +127,14 @@ export default function Footer() {
                   {labels.country[locale]}
                 </Link>
               </li>
+              <li>
+                <Link href={`/${locale}/catalogue`} className="text-natura-400 hover:text-white transition-colors text-sm flex items-center gap-1">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3M6 20h12a2 2 0 002-2V8l-6-6H6a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                  </svg>
+                  {labels.catalogue[locale]}
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -173,6 +184,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href={`/${locale}/partenaires`} className="text-natura-400 hover:text-white transition-colors text-sm">
+                  {labels.findPartner[locale]}
+                </Link>
+              </li>
+              <li>
                 <Link href={`/${locale}/devenir-partenaire`} className="text-natura-400 hover:text-white transition-colors text-sm">
                   {labels.partners[locale]}
                 </Link>
@@ -196,6 +212,11 @@ export default function Footer() {
               {labels.help[locale]}
             </h4>
             <ul className="space-y-2.5">
+              <li>
+                <Link href={`/${locale}/articles`} className="text-natura-400 hover:text-white transition-colors text-sm">
+                  {labels.articles[locale]}
+                </Link>
+              </li>
               <li>
                 <Link href={`/${locale}/echantillon`} className="text-natura-400 hover:text-white transition-colors text-sm">
                   {labels.samples[locale]}

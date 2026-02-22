@@ -1,0 +1,36 @@
+# Natura Parquets - robots.txt
+# https://natura-parquets.fr
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://natura-parquets.fr/sitemap.xml
+
+# Disallow admin/api routes
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+
+# Allow crawlers to index all content
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+# Crawl delay for less important bots
+User-agent: *
+Crawl-delay: 1

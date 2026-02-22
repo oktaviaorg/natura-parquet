@@ -28,13 +28,30 @@ export default function HomePage() {
     trustBadge1: { fr: 'Livraison directe', de: 'Direktlieferung', en: 'Direct delivery' },
     trustBadge2: { fr: 'Chêne européen FSC', de: 'FSC-Eiche', en: 'FSC European oak' },
     trustBadge3: { fr: 'Prix fabricant', de: 'Herstellerpreis', en: 'Factory price' },
-    collectionTitle: { fr: 'Nos collections', de: 'Unsere Kollektionen', en: 'Our collections' },
+    featuredTitle: { fr: 'Nos coups de cœur', de: 'Unsere Favoriten', en: 'Our favorites' },
+    featuredSubtitle: { 
+      fr: 'Sélection de nos parquets les plus populaires et nouveautés exclusives.',
+      de: 'Auswahl unserer beliebtesten Parkette und exklusiven Neuheiten.',
+      en: 'Selection of our most popular parquets and exclusive new arrivals.'
+    },
+    collectionTitle: { fr: 'Explorer par style de pose', de: 'Nach Verlegemuster entdecken', en: 'Explore by laying style' },
     collectionSubtitle: { 
-      fr: 'Parquets contrecollés chêne, fabriqués en Pologne avec le meilleur bois européen.',
-      de: 'Mehrschichtparkett aus Eiche, hergestellt in Polen aus dem besten europäischen Holz.',
-      en: 'Engineered oak parquets, made in Poland with the finest European wood.'
+      fr: 'Lames classiques, bâton rompu, chevron ou point de Hongrie : trouvez votre style.',
+      de: 'Klassische Dielen, Fischgrät, Chevron oder Ungarisch: Finden Sie Ihren Stil.',
+      en: 'Classic planks, herringbone, chevron or Hungarian point: find your style.'
     },
     viewAll: { fr: 'Voir tous les parquets', de: 'Alle Parkette ansehen', en: 'View all parquets' },
+    poseStyles: {
+      lame: { fr: 'Lames', de: 'Dielen', en: 'Planks' },
+      'baton-rompu': { fr: 'Bâton rompu', de: 'Fischgrät', en: 'Herringbone' },
+      'chevron-45': { fr: 'Chevron 45°', de: 'Chevron 45°', en: 'Chevron 45°' },
+      'chevron-60': { fr: 'Chevron 60°', de: 'Chevron 60°', en: 'Chevron 60°' },
+      'point-hongrie': { fr: 'Point de Hongrie', de: 'Ungarisch', en: 'Hungarian' },
+    },
+    gammes: {
+      title: { fr: 'Nos gammes', de: 'Unsere Sortimente', en: 'Our ranges' },
+      subtitle: { fr: 'Du plus épuré au plus authentique, choisissez le caractère qui vous ressemble.', de: 'Vom schlichtesten bis zum authentischsten, wählen Sie den Charakter, der zu Ihnen passt.', en: 'From the most refined to the most authentic, choose the character that suits you.' },
+    },
     whyTitle: { fr: 'Pourquoi Natura ?', de: 'Warum Natura?', en: 'Why Natura?' },
     whyItems: [
       {
@@ -62,10 +79,38 @@ export default function HomePage() {
     ctaSubtitle: { fr: 'Demandez un devis gratuit ou contactez-nous pour des conseils personnalisés.', de: 'Fordern Sie ein kostenloses Angebot an oder kontaktieren Sie uns für eine persönliche Beratung.', en: 'Request a free quote or contact us for personalized advice.' },
     ctaQuote: { fr: 'Demander un devis', de: 'Angebot anfordern', en: 'Request a quote' },
     ctaContact: { fr: 'Nous contacter', de: 'Kontaktieren Sie uns', en: 'Contact us' },
+    bestsellersTitle: { fr: '🔥 Nos meilleures ventes', de: '🔥 Unsere meistverkauften', en: '🔥 Our Best Sellers' },
+    bestsellersSubtitle: { fr: 'Les parquets préférés de nos clients', de: 'Die Lieblingsparkette unserer Kunden', en: 'Our customers\' favorite parquets' },
   };
 
-  // Featured products (first 6)
-  const featuredProducts = products.slice(0, 6);
+  // Featured products (those with featured flag, fallback to first 6)
+  const featuredProducts = products.filter(p => p.featured).slice(0, 6);
+  
+  // Best-sellers random selection (shuffle and pick 4, fill with other products if needed)
+  const bestsellerProducts = products.filter(p => p.badge === 'bestseller' || p.featured);
+  const otherProducts = products.filter(p => !p.badge && !p.featured);
+  const allForBestsellers = [...bestsellerProducts, ...otherProducts];
+  const bestsellers = allForBestsellers
+    .sort(() => Math.random() - 0.5)
+    .slice(0, 4);
+  
+  // Products by pose style (1 representative per style)
+  const poseStyles = ['lame', 'baton-rompu', 'chevron-45', 'chevron-60', 'point-hongrie'] as const;
+  const productsByPose = poseStyles.map(pose => ({
+    pose,
+    count: products.filter(p => p.pose === pose).length,
+    minPrice: Math.min(...products.filter(p => p.pose === pose).map(p => p.price.ttc)),
+    image: products.find(p => p.pose === pose && p.badge === 'bestseller')?.images[0] 
+      || products.find(p => p.pose === pose)?.images[0],
+  }));
+  
+  // Gammes summary
+  const gammes = ['Exclusive', 'Elegance', 'Rustic', 'Country'] as const;
+  const gammeData = gammes.map(gamme => ({
+    name: gamme,
+    count: products.filter(p => p.gamme === gamme).length,
+    minPrice: Math.min(...products.filter(p => p.gamme === gamme).map(p => p.price.ttc)),
+  }));
 
   return (
     <main className="min-h-screen bg-natura-50">
@@ -131,19 +176,43 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Collections Section */}
-      <section className="py-24 px-6 bg-white">
+      {/* Best-sellers Section */}
+      <section className="py-16 px-6 bg-gradient-to-b from-amber-50 to-white">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="font-display text-4xl md:text-5xl text-natura-900">
-              {labels.collectionTitle[locale]}
+          <div className="text-center mb-10">
+            <h2 className="font-display text-3xl md:text-4xl text-natura-900">
+              {labels.bestsellersTitle[locale]}
             </h2>
-            <p className="mt-4 text-natura-600 max-w-2xl mx-auto">
-              {labels.collectionSubtitle[locale]}
+            <p className="mt-2 text-natura-600">
+              {labels.bestsellersSubtitle[locale]}
             </p>
           </div>
 
-          {/* Products Grid */}
+          {/* Best-sellers horizontal scroll on mobile, grid on desktop */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            {bestsellers.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Products Section */}
+      <section className="py-24 px-6 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <span className="inline-block px-4 py-1.5 bg-amber-100 text-amber-800 text-sm font-medium rounded-full mb-4">
+              ⭐ {locale === 'fr' ? 'Sélection' : locale === 'de' ? 'Auswahl' : 'Selection'}
+            </span>
+            <h2 className="font-display text-4xl md:text-5xl text-natura-900">
+              {labels.featuredTitle[locale]}
+            </h2>
+            <p className="mt-4 text-natura-600 max-w-2xl mx-auto">
+              {labels.featuredSubtitle[locale]}
+            </p>
+          </div>
+
+          {/* Featured Products Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {featuredProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
@@ -161,6 +230,93 @@ export default function HomePage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Styles de pose Section */}
+      <section className="py-24 px-6 bg-natura-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="font-display text-4xl md:text-5xl text-natura-900">
+              {labels.collectionTitle[locale]}
+            </h2>
+            <p className="mt-4 text-natura-600 max-w-2xl mx-auto">
+              {labels.collectionSubtitle[locale]}
+            </p>
+          </div>
+
+          {/* Pose styles grid */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {productsByPose.map(({ pose, count, minPrice, image }) => (
+              <Link
+                key={pose}
+                href={`/${locale}/produits?pose=${pose}`}
+                className="group relative aspect-square rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-all"
+              >
+                <img
+                  src={image || `${SUPABASE_STORAGE}/ambiance/gammes-teintes-05.jpg`}
+                  alt={labels.poseStyles[pose][locale]}
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-natura-900/80 via-natura-900/20 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+                  <h3 className="font-display text-lg">{labels.poseStyles[pose][locale]}</h3>
+                  <p className="text-sm text-white/70">{count} {locale === 'fr' ? 'références' : 'products'}</p>
+                  <p className="text-sm font-medium mt-1">
+                    {locale === 'fr' ? 'Dès' : 'From'} {minPrice.toFixed(0)}€/m²
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Gammes Section */}
+      <section className="py-24 px-6 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="font-display text-4xl md:text-5xl text-natura-900">
+              {labels.gammes.title[locale]}
+            </h2>
+            <p className="mt-4 text-natura-600 max-w-2xl mx-auto">
+              {labels.gammes.subtitle[locale]}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {gammeData.map(({ name, count, minPrice }) => {
+              const colors = {
+                Exclusive: 'from-natura-800 to-natura-900',
+                Elegance: 'from-natura-600 to-natura-700',
+                Rustic: 'from-amber-600 to-amber-700',
+                Country: 'from-orange-500 to-orange-600',
+              };
+              const descriptions = {
+                Exclusive: { fr: 'Sans nœuds, épuré', de: 'Ohne Äste, schlicht', en: 'No knots, refined' },
+                Elegance: { fr: 'Petits nœuds discrets', de: 'Kleine Äste', en: 'Small knots' },
+                Rustic: { fr: 'Caractère authentique', de: 'Authentisch', en: 'Authentic character' },
+                Country: { fr: 'Maximum de charme', de: 'Maximaler Charme', en: 'Maximum charm' },
+              };
+              return (
+                <Link
+                  key={name}
+                  href={`/${locale}/produits?gamme=${name}`}
+                  className={`group relative p-6 rounded-xl bg-gradient-to-br ${colors[name]} text-white hover:scale-[1.02] transition-transform shadow-lg`}
+                >
+                  <h3 className="font-display text-2xl">{name}</h3>
+                  <p className="text-white/70 text-sm mt-1">{descriptions[name][locale]}</p>
+                  <div className="mt-4 pt-4 border-t border-white/20">
+                    <p className="text-sm">{count} {locale === 'fr' ? 'produits' : 'products'}</p>
+                    <p className="text-lg font-semibold">{locale === 'fr' ? 'Dès' : 'From'} {minPrice.toFixed(0)}€/m²</p>
+                  </div>
+                  <svg className="absolute bottom-4 right-4 w-6 h-6 opacity-50 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>

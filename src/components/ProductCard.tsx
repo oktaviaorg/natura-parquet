@@ -26,6 +26,16 @@ export default function ProductCard({ product, viewMode = 'grid' }: ProductCardP
     rustic: { fr: 'Rustique', de: 'Rustikal', en: 'Rustic' },
     country: { fr: 'Country', de: 'Country', en: 'Country' },
     newBadge: { fr: 'Nouveau', de: 'Neu', en: 'New' },
+    bestseller: { fr: '⭐ Best-seller', de: '⭐ Bestseller', en: '⭐ Bestseller' },
+    nouveau: { fr: '✨ Nouveau', de: '✨ Neu', en: '✨ New' },
+    promo: { fr: '🔥 Promo', de: '🔥 Aktion', en: '🔥 Sale' },
+  };
+
+  // Badge styles
+  const badgeStyles = {
+    bestseller: 'bg-amber-500 text-white',
+    nouveau: 'bg-forest-500 text-white',
+    promo: 'bg-red-500 text-white',
   };
 
   // Get image URL from Supabase or fallback
@@ -125,8 +135,15 @@ export default function ProductCard({ product, viewMode = 'grid' }: ProductCardP
           }`}
         />
         
-        {/* Gamme Badge */}
-        <div className="absolute top-3 left-3 z-10">
+        {/* Badges */}
+        <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5">
+          {/* Badge produit (bestseller, nouveau, promo) */}
+          {product.badge && (
+            <span className={`px-2.5 py-1 text-xs font-bold rounded-full shadow-md ${badgeStyles[product.badge]}`}>
+              {labels[product.badge][locale]}
+            </span>
+          )}
+          {/* Gamme Badge */}
           <span className={`px-2.5 py-1 text-xs font-medium rounded-full ${gammeColor}`}>
             {getGammeLabel()}
           </span>
@@ -134,7 +151,7 @@ export default function ProductCard({ product, viewMode = 'grid' }: ProductCardP
 
         {/* Quick view overlay */}
         <div className={`absolute inset-0 bg-natura-900/20 flex items-center justify-center transition-opacity duration-300 z-10 ${
-          isHovered ? 'opacity-100' : 'opacity-0'
+          isHovered ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}>
           <Link
             href={`/${locale}/produits/${product.slug}`}

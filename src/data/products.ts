@@ -23,6 +23,8 @@ export interface Product {
   refAxemark: string;
   delaiLivraison: string;
   stockStatus: 'disponible' | 'sur_commande';
+  badge?: 'bestseller' | 'nouveau' | 'promo';
+  featured?: boolean;
 }
 
 // Prix de base (achat) + suppléments finition
@@ -246,6 +248,38 @@ const poseNames: Record<string, { fr: string; de: string; en: string }> = {
   'lame': { fr: 'Lame', de: 'Diele', en: 'Plank' },
 };
 
+// Produits best-sellers (combinaisons populaires)
+const BESTSELLERS = [
+  'baton-rompu-70-elegance-huile-chanfrein',
+  'baton-rompu-120-exclusive-verni-chanfrein',
+  'chevron-45-90-elegance-huile-chanfrein',
+  'lame-120-rustic-huile-chanfrein',
+  'lame-150-elegance-verni-chanfrein',
+];
+
+// Produits nouveaux (nouveautés 2026)
+const NOUVEAUX = [
+  'chevron-60-90-exclusive-huile-blanche-chanfrein',
+  'point-hongrie-90-elegance-2x-huile-chanfrein',
+  'lame-190-exclusive-huile-chanfrein',
+];
+
+// Produits en promo (à afficher avec badge promo)
+const PROMOS = [
+  'lame-120-country-brut-chanfrein',
+  'baton-rompu-70-rustic-brut-chanfrein',
+];
+
+// Produits à mettre en avant sur la page d'accueil
+const FEATURED_PRODUCTS = [
+  'baton-rompu-70-elegance-huile-chanfrein',
+  'baton-rompu-120-exclusive-verni-chanfrein',
+  'chevron-45-90-elegance-huile-chanfrein',
+  'lame-120-rustic-huile-chanfrein',
+  'chevron-60-90-exclusive-huile-blanche-chanfrein',
+  'point-hongrie-90-elegance-2x-huile-chanfrein',
+];
+
 // Générer tous les produits
 function generateProducts(): Product[] {
   const products: Product[] = [];
@@ -257,13 +291,22 @@ function generateProducts(): Product[] {
         // Avec chanfrein
         counter++;
         const baseId = `${format.pose}-${format.largeur}-${gradeInfo.grade.toLowerCase()}-${finition.toLowerCase().replace(/\s+/g, '-')}`;
+        const productId = `${baseId}-chanfrein`;
         
         const poseName = poseNames[format.pose];
         const finLabel = finitionLabels[finition];
         
+        // Déterminer le badge
+        let badge: 'bestseller' | 'nouveau' | 'promo' | undefined;
+        if (BESTSELLERS.includes(productId)) badge = 'bestseller';
+        else if (NOUVEAUX.includes(productId)) badge = 'nouveau';
+        else if (PROMOS.includes(productId)) badge = 'promo';
+        
+        const featured = FEATURED_PRODUCTS.includes(productId);
+        
         products.push({
-          id: `${baseId}-chanfrein`,
-          slug: `${baseId}-chanfrein`,
+          id: productId,
+          slug: productId,
           gamme: gradeInfo.grade,
           name: {
             fr: `${poseName.fr} ${format.largeur}mm ${gradeInfo.grade} ${finLabel.fr}`,
@@ -295,6 +338,8 @@ function generateProducts(): Product[] {
           refAxemark: `Axe ${gradeInfo.grade} ${format.dimensions.replace(/\s/g, '')} ${finition}`,
           delaiLivraison: format.delai,
           stockStatus: format.stock,
+          badge,
+          featured,
         });
 
         // Sans chanfrein (seulement pour certaines finitions)

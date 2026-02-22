@@ -44,7 +44,7 @@ try {
 
 ;// Concatenated file: prerender-manifest.js 
 
-self.__PRERENDER_MANIFEST="{\"version\":4,\"routes\":{},\"dynamicRoutes\":{},\"notFoundRoutes\":[],\"preview\":{\"previewModeId\":\"930ef710b3ef352e19d2f005f801dba0\",\"previewModeSigningKey\":\"b564c0c6448c004262b70cebae0c87db1cf8591b4fbb1c537983e6cabe05835e\",\"previewModeEncryptionKey\":\"1439a9ebaf53d2841a5a56f5f8484b959c37cbd81ece7a3be6f9446be1148ddb\"}}"
+self.__PRERENDER_MANIFEST="{\"version\":4,\"routes\":{\"/sitemap.xml\":{\"initialHeaders\":{\"cache-control\":\"public, max-age=0, must-revalidate\",\"content-type\":\"application/xml\",\"x-next-cache-tags\":\"_N_T_/layout,_N_T_/sitemap.xml/layout,_N_T_/sitemap.xml/route,_N_T_/sitemap.xml\"},\"experimentalBypassFor\":[{\"type\":\"header\",\"key\":\"Next-Action\"},{\"type\":\"header\",\"key\":\"content-type\",\"value\":\"multipart/form-data\"}],\"initialRevalidateSeconds\":false,\"srcRoute\":\"/sitemap.xml\",\"dataRoute\":null}},\"dynamicRoutes\":{},\"notFoundRoutes\":[],\"preview\":{\"previewModeId\":\"a1c881fc6a89b88f0ee5372d598239a2\",\"previewModeSigningKey\":\"79981ba6109b95d52c42552ce5cda0343f7dc1c436601fafb34ac3ec46799b7a\",\"previewModeEncryptionKey\":\"51a7342d0dcc1473289c16f3ca81f5eea78e9623b57b989b12a52609300057f5\"}}"
 ;// Concatenated file: server/edge-runtime-webpack.js 
 
 /******/ (() => { // webpackBootstrap

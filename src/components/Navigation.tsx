@@ -27,6 +27,7 @@ export default function Navigation() {
   const navLinks = [
     { href: `/${locale}/produits`, label: { fr: 'Parquets', de: 'Parkette', en: 'Parquets' } },
     { href: `/${locale}/guide-parquet`, label: { fr: 'Guide', de: 'Ratgeber', en: 'Guide' } },
+    { href: `/${locale}/articles`, label: { fr: 'Conseils', de: 'Tipps', en: 'Tips' } },
     { href: `/${locale}/devenir-partenaire`, label: { fr: 'Professionnels', de: 'Fachleute', en: 'Professionals' } },
     { href: `/${locale}/contact`, label: { fr: 'Contact', de: 'Kontakt', en: 'Contact' } },
   ];
@@ -40,8 +41,8 @@ export default function Navigation() {
     <>
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled 
-          ? 'bg-white/95 backdrop-blur-md shadow-soft' 
-          : 'bg-transparent'
+          ? 'bg-white shadow-soft' 
+          : 'bg-white/90 backdrop-blur-md'
       }`}>
         <nav className="max-w-7xl mx-auto px-6">
           <div className="flex items-center justify-between h-20">
@@ -51,10 +52,10 @@ export default function Navigation() {
                 <span className="text-white font-display text-xl font-bold">N</span>
               </div>
               <div className="hidden sm:block">
-                <span className={`font-display text-xl font-semibold ${isScrolled ? 'text-natura-900' : 'text-white'} transition-colors`}>
+                <span className="font-display text-xl font-semibold text-natura-900 transition-colors">
                   Natura
                 </span>
-                <span className={`font-display text-xl ${isScrolled ? 'text-natura-500' : 'text-white/70'} transition-colors`}>
+                <span className="font-display text-xl text-natura-500 transition-colors">
                   {' '}Parquets
                 </span>
               </div>
@@ -68,10 +69,8 @@ export default function Navigation() {
                   href={link.href}
                   className={`text-sm font-medium transition-colors ${
                     pathname === link.href
-                      ? isScrolled ? 'text-forest-600' : 'text-white'
-                      : isScrolled 
-                        ? 'text-natura-600 hover:text-natura-900' 
-                        : 'text-white/80 hover:text-white'
+                      ? 'text-forest-600'
+                      : 'text-natura-600 hover:text-natura-900'
                   }`}
                 >
                   {link.label[locale as 'fr' | 'de' | 'en']}

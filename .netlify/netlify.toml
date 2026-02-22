@@ -2,7 +2,7 @@ headersOrigin = "inline"
 redirectsOrigin = "inline"
 
 [images]
-remote_images = ["^(?:http(?:s)?:\\/\\/axemarkwood\\.com(?:\\/(?!\\.)(?:(?:(?!(?:^|\\/)\\.).)*?)|$))$", "^(?:http(?:s)?:\\/\\/i0\\.wp\\.com(?:\\/(?!\\.)(?:(?:(?!(?:^|\\/)\\.).)*?)|$))$"]
+remote_images = ["^(?:https:\\/\\/images\\.unsplash\\.com(?:\\/(?!\\.)(?:(?:(?!(?:^|\\/)\\.).)*?)|$))$", "^(?:https:\\/\\/axemarkwood\\.com(?:\\/(?!\\.)(?:(?:(?!(?:^|\\/)\\.).)*?)|$))$", "^(?:https:\\/\\/i0\\.wp\\.com(?:\\/(?!\\.)(?:(?:(?!(?:^|\\/)\\.).)*?)|$))$", "^(?:https:\\/\\/mjuzyqhxifyvebtnlrra\\.supabase\\.co(?:\\/(?!\\.)(?:(?:(?!(?:^|\\/)\\.).)*?)|$))$"]
 
 [functions]
 

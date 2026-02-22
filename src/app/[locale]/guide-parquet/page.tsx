@@ -94,14 +94,22 @@ Tous nos parquets sont en chêne européen de première qualité.`,
 • Sélection de bois premium
 • Nœuds rares et petits
 • Veinage régulier et élégant
-• **Prix : 48 à 70 €/m²**
 
 **Gamme Élégance**
 • Couche noble **2.5mm** (1 ponçage possible)
 • Excellent rapport qualité-prix
 • Aspect naturel avec quelques nœuds
 • Caractère authentique
-• **Prix : 45 à 62 €/m²**`,
+
+**Gamme Rustic**
+• Caractère affirmé avec nœuds apparents
+• Authenticité et charme naturel
+• Idéal pour les ambiances chaleureuses
+
+**Gamme Country**
+• Maximum de caractère et de rusticité
+• Nœuds, aubier et variations naturelles
+• Pour les amoureux du bois brut`,
         },
         {
           title: '6. Compatibilité chauffage au sol',
