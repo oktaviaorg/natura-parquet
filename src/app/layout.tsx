@@ -19,6 +19,9 @@ export const metadata: Metadata = {
   title: "Natura Parquets - Parquets Premium Européens",
   description: "Découvrez notre collection de parquets contrecollés européens de haute qualité. Chêne 3,5mm, fabrication responsable en Europe.",
   keywords: "parquet, parquet chêne, parquet premium, parquet européen, parquet contrecollé, revêtement sol bois",
+  verification: {
+    google: "xjg_Ciz1yzaCbiBUFY_T4nQ2sDNPuwgYequZFythGgoa",
+  },
   openGraph: {
     title: "Natura Parquets - La force dans chaque couche de bois",
     description: "Collection exclusive de parquets contrecollés européens haut de gamme. FSC certifié, sans formaldéhyde.",
