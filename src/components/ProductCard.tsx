@@ -24,6 +24,7 @@ export default function ProductCard({ product, viewMode = 'grid' }: ProductCardP
     exclusive: { fr: 'Exclusive', de: 'Exclusive', en: 'Exclusive' },
     elegance: { fr: 'Élégance', de: 'Eleganz', en: 'Elegance' },
     rustic: { fr: 'Rustique', de: 'Rustikal', en: 'Rustic' },
+    country: { fr: 'Country', de: 'Country', en: 'Country' },
     newBadge: { fr: 'Nouveau', de: 'Neu', en: 'New' },
   };
 
@@ -45,6 +46,8 @@ export default function ProductCard({ product, viewMode = 'grid' }: ProductCardP
     ? 'bg-natura-800 text-white' 
     : product.gamme === 'Rustic'
     ? 'bg-amber-100 text-amber-800'
+    : product.gamme === 'Country'
+    ? 'bg-orange-100 text-orange-800'
     : 'bg-natura-200 text-natura-700';
 
   if (viewMode === 'list') {
