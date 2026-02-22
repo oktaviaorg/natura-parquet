@@ -1,19 +1,13 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
 import { useState, useEffect } from 'react';
+import { useLocale } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
-import { createClient } from '@supabase/supabase-js';
-import Link from 'next/link';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+import Navigation from '@/components/Navigation';
+import Footer from '@/components/Footer';
 
 export default function ContactPage() {
-  const t = useTranslations('contact');
-  const tNav = useTranslations('nav');
+  const locale = useLocale() as 'fr' | 'de' | 'en';
   const searchParams = useSearchParams();
   
   const [formData, setFormData] = useState({
@@ -25,8 +19,9 @@ export default function ContactPage() {
     surface: '',
     message: ''
   });
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
-  // Pré-remplir le formulaire avec les paramètres URL
+  // Pre-fill from URL params
   useEffect(() => {
     const productParam = searchParams.get('product');
     const typeParam = searchParams.get('type');
@@ -35,47 +30,59 @@ export default function ContactPage() {
       setFormData(prev => ({
         ...prev,
         product: productParam || prev.product,
-        subject: typeParam || prev.subject,
+        subject: typeParam === 'echantillon' ? 'echantillon' : typeParam || prev.subject,
       }));
     }
   }, [searchParams]);
-  
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+
+  const labels = {
+    title: { fr: 'Contactez-nous', de: 'Kontaktieren Sie uns', en: 'Contact us' },
+    subtitle: { 
+      fr: 'Demande de devis, échantillons ou informations. Nous répondons sous 24h.',
+      de: 'Angebot, Muster oder Informationen anfordern. Wir antworten innerhalb von 24h.',
+      en: 'Request a quote, samples or information. We respond within 24h.'
+    },
+    name: { fr: 'Nom complet', de: 'Vollständiger Name', en: 'Full name' },
+    email: { fr: 'Email', de: 'E-Mail', en: 'Email' },
+    phone: { fr: 'Téléphone', de: 'Telefon', en: 'Phone' },
+    subject: { fr: 'Type de demande', de: 'Art der Anfrage', en: 'Request type' },
+    subjects: {
+      devis: { fr: 'Demande de devis', de: 'Angebot anfordern', en: 'Quote request' },
+      echantillon: { fr: 'Demande d\'échantillons', de: 'Muster anfordern', en: 'Sample request' },
+      info: { fr: 'Informations produit', de: 'Produktinformationen', en: 'Product information' },
+      autre: { fr: 'Autre', de: 'Andere', en: 'Other' },
+    },
+    product: { fr: 'Produit concerné', de: 'Betroffenes Produkt', en: 'Related product' },
+    surface: { fr: 'Surface estimée (m²)', de: 'Geschätzte Fläche (m²)', en: 'Estimated surface (m²)' },
+    message: { fr: 'Votre message', de: 'Ihre Nachricht', en: 'Your message' },
+    send: { fr: 'Envoyer', de: 'Senden', en: 'Send' },
+    sending: { fr: 'Envoi...', de: 'Senden...', en: 'Sending...' },
+    success: { fr: 'Message envoyé ! Nous vous répondrons sous 24h.', de: 'Nachricht gesendet! Wir antworten innerhalb von 24h.', en: 'Message sent! We will respond within 24h.' },
+    error: { fr: 'Erreur lors de l\'envoi. Veuillez réessayer.', de: 'Fehler beim Senden. Bitte versuchen Sie es erneut.', en: 'Error sending. Please try again.' },
+    contactInfo: { fr: 'Nos coordonnées', de: 'Unsere Kontaktdaten', en: 'Our contact details' },
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('loading');
     
     try {
-      const { error } = await supabase
-        .from('contact_messages')
-        .insert([{
-          name: formData.name,
-          email: formData.email,
-          subject: `[${formData.subject.toUpperCase()}] ${formData.product || 'Demande générale'}`,
-          message: `Téléphone: ${formData.phone || 'Non renseigné'}
+      // Send via mailto for now (simple solution)
+      const subject = encodeURIComponent(`[${formData.subject.toUpperCase()}] ${formData.product || 'Natura Parquets'}`);
+      const body = encodeURIComponent(`
+Nom: ${formData.name}
+Email: ${formData.email}
+Téléphone: ${formData.phone || 'Non renseigné'}
 Surface estimée: ${formData.surface || 'Non renseignée'}
 Produit: ${formData.product || 'Non spécifié'}
 
 Message:
-${formData.message}`,
-          locale: 'fr'
-        }]);
+${formData.message}
+      `);
       
-      if (error) throw error;
-      
+      window.location.href = `mailto:contact@natura-parquets.fr?subject=${subject}&body=${body}`;
       setStatus('success');
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        subject: 'devis',
-        product: '',
-        surface: '',
-        message: ''
-      });
     } catch (err) {
-      console.error('Error:', err);
       setStatus('error');
     }
   };
@@ -88,201 +95,235 @@ ${formData.message}`,
   };
 
   return (
-    <main className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="bg-white shadow-sm sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="font-display text-2xl text-natura-900">
-            Natura Parquet
-          </Link>
-          <nav className="hidden md:flex items-center gap-8">
-            <Link href="/" className="text-natura-600 hover:text-natura-900">{tNav('home')}</Link>
-            <Link href="/produits" className="text-natura-600 hover:text-natura-900">{tNav('products')}</Link>
-            <Link href="/contact" className="text-natura-900 font-medium">{tNav('contact')}</Link>
-            <Link href="/devenir-partenaire" className="text-natura-600 hover:text-natura-900">{tNav('partners')}</Link>
-          </nav>
-        </div>
-      </header>
+    <main className="min-h-screen bg-natura-50">
+      <Navigation />
 
-      {/* Hero Section */}
-      <section className="bg-natura-900 text-white py-16 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="font-display text-4xl md:text-5xl mb-4">{t('title')}</h1>
-          <p className="text-xl opacity-90">{t('subtitle')}</p>
-        </div>
-      </section>
-
-      {/* Contact Info + Form */}
-      <section className="py-16 px-4">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-12">
-          
-          {/* Contact Info */}
-          <div className="space-y-8">
-            <div>
-              <h3 className="font-display text-xl text-natura-900 mb-4">{t('info.title')}</h3>
-              <div className="space-y-4 text-natura-600">
-                <p className="flex items-start gap-3">
-                  <span className="text-xl">📧</span>
-                  <span>contact@natura-parquets.fr</span>
+      <section className="py-16 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-3 gap-12">
+            {/* Contact Form */}
+            <div className="lg:col-span-2">
+              <div className="bg-white rounded-2xl shadow-soft p-8">
+                <h1 className="font-display text-3xl text-natura-900 mb-2">
+                  {labels.title[locale]}
+                </h1>
+                <p className="text-natura-600 mb-8">
+                  {labels.subtitle[locale]}
                 </p>
-                <p className="flex items-start gap-3">
-                  <span className="text-xl">📍</span>
-                  <span>Alsace, France</span>
-                </p>
-              </div>
-            </div>
-            
-            <div>
-              <h3 className="font-display text-xl text-natura-900 mb-4">{t('info.hours')}</h3>
-              <p className="text-natura-600">
-                Lun - Ven : 9h - 18h<br />
-                Sam : Sur rendez-vous
-              </p>
-            </div>
-            
-            <div className="bg-natura-50 p-6 rounded-lg">
-              <h3 className="font-display text-lg text-natura-900 mb-2">{t('info.pro')}</h3>
-              <p className="text-natura-600 text-sm mb-4">{t('info.pro_desc')}</p>
-              <Link 
-                href="/devenir-partenaire"
-                className="text-natura-700 font-medium hover:text-natura-900 underline"
-              >
-                {tNav('partners')} →
-              </Link>
-            </div>
-          </div>
 
-          {/* Form */}
-          <div className="md:col-span-2">
-            {status === 'success' ? (
-              <div className="bg-green-50 border border-green-200 rounded-lg p-8 text-center">
-                <span className="text-4xl mb-4 block">✅</span>
-                <h3 className="font-display text-xl text-green-800 mb-2">{t('form.success.title')}</h3>
-                <p className="text-green-700">{t('form.success.message')}</p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="bg-natura-50 p-8 rounded-lg space-y-6">
-                <h2 className="font-display text-2xl text-natura-900 mb-6">{t('form.title')}</h2>
-                
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-natura-700 mb-2 font-medium">{t('form.name')} *</label>
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 border border-natura-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-natura-500 bg-white"
-                    />
+                {status === 'success' ? (
+                  <div className="p-6 bg-forest-50 rounded-xl border border-forest-200">
+                    <div className="flex items-center gap-3">
+                      <svg className="w-6 h-6 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <p className="text-forest-800 font-medium">{labels.success[locale]}</p>
+                    </div>
                   </div>
-                  
-                  <div>
-                    <label className="block text-natura-700 mb-2 font-medium">{t('form.email')} *</label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 border border-natura-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-natura-500 bg-white"
-                    />
-                  </div>
-                </div>
-                
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-natura-700 mb-2 font-medium">{t('form.phone')}</label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 border border-natura-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-natura-500 bg-white"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-natura-700 mb-2 font-medium">{t('form.subject')}</label>
-                    <select
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 border border-natura-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-natura-500 bg-white"
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="grid sm:grid-cols-2 gap-6">
+                      <div>
+                        <label className="block text-sm font-medium text-natura-700 mb-2">
+                          {labels.name[locale]} *
+                        </label>
+                        <input
+                          type="text"
+                          name="name"
+                          required
+                          value={formData.name}
+                          onChange={handleChange}
+                          className="w-full px-4 py-3 border border-natura-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-forest-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-natura-700 mb-2">
+                          {labels.email[locale]} *
+                        </label>
+                        <input
+                          type="email"
+                          name="email"
+                          required
+                          value={formData.email}
+                          onChange={handleChange}
+                          className="w-full px-4 py-3 border border-natura-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-forest-500"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid sm:grid-cols-2 gap-6">
+                      <div>
+                        <label className="block text-sm font-medium text-natura-700 mb-2">
+                          {labels.phone[locale]}
+                        </label>
+                        <input
+                          type="tel"
+                          name="phone"
+                          value={formData.phone}
+                          onChange={handleChange}
+                          className="w-full px-4 py-3 border border-natura-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-forest-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-natura-700 mb-2">
+                          {labels.subject[locale]}
+                        </label>
+                        <select
+                          name="subject"
+                          value={formData.subject}
+                          onChange={handleChange}
+                          className="w-full px-4 py-3 border border-natura-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-forest-500 bg-white"
+                        >
+                          <option value="devis">{labels.subjects.devis[locale]}</option>
+                          <option value="echantillon">{labels.subjects.echantillon[locale]}</option>
+                          <option value="info">{labels.subjects.info[locale]}</option>
+                          <option value="autre">{labels.subjects.autre[locale]}</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div className="grid sm:grid-cols-2 gap-6">
+                      <div>
+                        <label className="block text-sm font-medium text-natura-700 mb-2">
+                          {labels.product[locale]}
+                        </label>
+                        <input
+                          type="text"
+                          name="product"
+                          value={formData.product}
+                          onChange={handleChange}
+                          placeholder={locale === 'fr' ? 'Ex: Bâton Rompu Exclusive 120mm' : 'Ex: Herringbone Exclusive 120mm'}
+                          className="w-full px-4 py-3 border border-natura-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-forest-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-natura-700 mb-2">
+                          {labels.surface[locale]}
+                        </label>
+                        <input
+                          type="text"
+                          name="surface"
+                          value={formData.surface}
+                          onChange={handleChange}
+                          placeholder="Ex: 45"
+                          className="w-full px-4 py-3 border border-natura-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-forest-500"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-natura-700 mb-2">
+                        {labels.message[locale]} *
+                      </label>
+                      <textarea
+                        name="message"
+                        required
+                        rows={5}
+                        value={formData.message}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 border border-natura-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-forest-500 resize-none"
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={status === 'loading'}
+                      className="w-full py-4 bg-forest-500 text-white font-medium rounded-lg hover:bg-forest-600 transition-colors disabled:opacity-50"
                     >
-                      <option value="devis">{t('form.subjects.quote')}</option>
-                      <option value="info">{t('form.subjects.info')}</option>
-                      <option value="echantillon">{t('form.subjects.sample')}</option>
-                      <option value="autre">{t('form.subjects.other')}</option>
-                    </select>
-                  </div>
-                </div>
-                
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-natura-700 mb-2 font-medium">{t('form.product')}</label>
-                    <input
-                      type="text"
-                      name="product"
-                      value={formData.product}
-                      onChange={handleChange}
-                      placeholder={t('form.product_placeholder')}
-                      className="w-full px-4 py-3 border border-natura-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-natura-500 bg-white"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-natura-700 mb-2 font-medium">{t('form.surface')}</label>
-                    <input
-                      type="text"
-                      name="surface"
-                      value={formData.surface}
-                      onChange={handleChange}
-                      placeholder={t('form.surface_placeholder')}
-                      className="w-full px-4 py-3 border border-natura-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-natura-500 bg-white"
-                    />
-                  </div>
-                </div>
-                
-                <div>
-                  <label className="block text-natura-700 mb-2 font-medium">{t('form.message')} *</label>
-                  <textarea
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    rows={5}
-                    placeholder={t('form.message_placeholder')}
-                    className="w-full px-4 py-3 border border-natura-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-natura-500 bg-white"
-                  />
-                </div>
-                
-                {status === 'error' && (
-                  <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700">
-                    {t('form.error')}
-                  </div>
+                      {status === 'loading' ? labels.sending[locale] : labels.send[locale]}
+                    </button>
+
+                    {status === 'error' && (
+                      <p className="text-red-600 text-sm text-center">{labels.error[locale]}</p>
+                    )}
+                  </form>
                 )}
+              </div>
+            </div>
+
+            {/* Contact Info */}
+            <div>
+              <div className="bg-natura-900 text-white rounded-2xl p-8">
+                <h2 className="font-display text-xl mb-6">{labels.contactInfo[locale]}</h2>
                 
-                <button
-                  type="submit"
-                  disabled={status === 'loading'}
-                  className="w-full py-4 bg-natura-900 text-white font-medium rounded-lg hover:bg-natura-800 transition-colors disabled:opacity-50"
-                >
-                  {status === 'loading' ? t('form.sending') : t('form.submit')}
-                </button>
-              </form>
-            )}
+                <div className="space-y-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-white/60 text-sm">Email</p>
+                      <a href="mailto:contact@natura-parquets.fr" className="hover:text-forest-300 transition-colors">
+                        contact@natura-parquets.fr
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-white/60 text-sm">{locale === 'fr' ? 'Téléphone' : 'Phone'}</p>
+                      <a href="tel:+33757821306" className="hover:text-forest-300 transition-colors">
+                        07 57 82 13 06
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-white/60 text-sm">{locale === 'fr' ? 'Adresse' : 'Address'}</p>
+                      <p>6 rue du Commerce</p>
+                      <p>68420 Herrlisheim-près-Colmar</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-8 pt-6 border-t border-white/10">
+                  <p className="text-white/60 text-sm mb-2">
+                    {locale === 'fr' ? 'Horaires' : 'Hours'}
+                  </p>
+                  <p className="text-sm">
+                    {locale === 'fr' ? 'Lun - Ven : 8h - 18h' : 'Mon - Fri: 8am - 6pm'}
+                  </p>
+                </div>
+              </div>
+
+              {/* Delivery info */}
+              <div className="mt-6 bg-forest-50 rounded-xl p-6 border border-forest-100">
+                <div className="flex items-start gap-3">
+                  <svg className="w-6 h-6 text-forest-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+                  </svg>
+                  <div>
+                    <p className="font-medium text-forest-800">
+                      {locale === 'fr' ? 'Échantillons gratuits' : 'Free samples'}
+                    </p>
+                    <p className="text-sm text-forest-600 mt-1">
+                      {locale === 'fr' 
+                        ? 'Recevez jusqu\'à 3 échantillons gratuits pour vous aider dans votre choix.'
+                        : 'Receive up to 3 free samples to help you choose.'}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-natura-900 text-white py-12 px-4">
-        <div className="max-w-6xl mx-auto text-center">
-          <p className="font-display text-2xl mb-4">Natura Parquet</p>
-          <p className="opacity-70">© 2026 Natura Parquet. Tous droits réservés.</p>
-        </div>
-      </footer>
+      <Footer />
     </main>
   );
 }
