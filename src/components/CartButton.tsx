@@ -2,18 +2,26 @@
 
 import { useCart } from '@/contexts/CartContext';
 
-export default function CartButton() {
+interface CartButtonProps {
+  isScrolled?: boolean;
+}
+
+export default function CartButton({ isScrolled = true }: CartButtonProps) {
   const { toggleCart, getItemCount, getSubtotalTTC } = useCart();
   const itemCount = getItemCount();
   
   return (
     <button
       onClick={toggleCart}
-      className="relative p-2 hover:bg-natura-100 rounded-full transition-colors group"
+      className={`relative p-2 rounded-full transition-colors group ${
+        isScrolled 
+          ? 'hover:bg-natura-100 text-natura-700 hover:text-natura-900' 
+          : 'hover:bg-white/10 text-white/80 hover:text-white'
+      }`}
       aria-label="Panier"
     >
       <svg 
-        className="w-6 h-6 text-natura-700 group-hover:text-natura-900" 
+        className="w-6 h-6" 
         fill="none" 
         stroke="currentColor" 
         viewBox="0 0 24 24"

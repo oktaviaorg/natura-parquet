@@ -152,7 +152,7 @@ Livraison gratuite en France métropolitaine, sur rendez-vous.
       contact: {
         title: 'Besoin d\'un conseil personnalisé ?',
         text: 'Notre équipe est à votre disposition pour vous guider dans votre choix.',
-        phone: '06 04 44 09 03',
+        phone: '06 12 78 61 85',
         email: 'contact@natura-parquets.fr',
       },
     },
@@ -189,7 +189,7 @@ Livraison gratuite en France métropolitaine, sur rendez-vous.
       contact: {
         title: 'Brauchen Sie persönliche Beratung?',
         text: 'Unser Team steht Ihnen gerne zur Verfügung.',
-        phone: '06 04 44 09 03',
+        phone: '06 12 78 61 85',
         email: 'contact@natura-parquets.fr',
       },
     },
@@ -226,7 +226,7 @@ Livraison gratuite en France métropolitaine, sur rendez-vous.
       contact: {
         title: 'Need personalized advice?',
         text: 'Our team is available to guide you.',
-        phone: '06 04 44 09 03',
+        phone: '06 12 78 61 85',
         email: 'contact@natura-parquets.fr',
       },
     },

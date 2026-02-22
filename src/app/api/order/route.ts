@@ -153,7 +153,7 @@ Banque: ${bankDetails.banque}
 Dès réception de votre paiement, nous préparerons votre commande.
 Délai de livraison estimé: 2-4 semaines.
 
-Une question ? Répondez à cet email ou appelez-nous au 06 04 44 09 03.
+Une question ? Répondez à cet email ou appelez-nous au 06 12 78 61 85.
 
 À bientôt,
 L'équipe Natura Parquets

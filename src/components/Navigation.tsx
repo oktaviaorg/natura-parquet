@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
 import { usePathname, useRouter } from 'next/navigation';
 import CartButton from './CartButton';
+import SearchBar from './SearchBar';
+import { products } from '@/data/products';
 
 export default function Navigation() {
   const locale = useLocale();
@@ -12,6 +14,7 @@ export default function Navigation() {
   const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -78,6 +81,21 @@ export default function Navigation() {
 
             {/* Right side */}
             <div className="flex items-center gap-4">
+              {/* Search button */}
+              <button
+                onClick={() => setIsSearchOpen(true)}
+                className={`p-2 rounded-lg transition-colors ${
+                  isScrolled 
+                    ? 'text-natura-600 hover:text-natura-900 hover:bg-natura-100' 
+                    : 'text-white/80 hover:text-white hover:bg-white/10'
+                }`}
+                aria-label="Rechercher"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </button>
+
               {/* Language switcher */}
               <div className="hidden md:flex items-center gap-1 bg-natura-100/50 rounded-full p-1">
                 {['fr', 'de', 'en'].map((lang) => (
@@ -169,6 +187,42 @@ export default function Navigation() {
       
       {/* Spacer for fixed header */}
       <div className="h-20" />
+
+      {/* Search Modal */}
+      {isSearchOpen && (
+        <div className="fixed inset-0 z-[100] flex items-start justify-center pt-24 px-4">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-natura-900/60 backdrop-blur-sm"
+            onClick={() => setIsSearchOpen(false)}
+          />
+          
+          {/* Search container */}
+          <div className="relative w-full max-w-2xl animate-in fade-in slide-in-from-top-4 duration-200">
+            <div className="bg-white rounded-2xl shadow-2xl p-4">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-display text-lg text-natura-900">
+                  {locale === 'fr' ? 'Rechercher un parquet' : locale === 'de' ? 'Parkett suchen' : 'Search flooring'}
+                </h3>
+                <button
+                  onClick={() => setIsSearchOpen(false)}
+                  className="p-2 text-natura-400 hover:text-natura-600 rounded-lg hover:bg-natura-100"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              <SearchBar products={products} className="w-full" />
+              <p className="mt-3 text-xs text-natura-400 text-center">
+                {locale === 'fr' ? 'Tapez au moins 2 caractères pour rechercher' : 
+                 locale === 'de' ? 'Mindestens 2 Zeichen eingeben' : 
+                 'Type at least 2 characters to search'}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

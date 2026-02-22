@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useLocale } from 'next-intl';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
@@ -102,10 +103,14 @@ export default function ProductPage({ params }: { params: { slug: string; locale
                 className="aspect-[4/3] overflow-hidden bg-natura-100 cursor-zoom-in relative group rounded-lg"
                 onClick={() => setLightboxOpen(true)}
               >
-                <img
+                <Image
                   src={product.images[selectedImage]}
                   alt={product.name[locale]}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  quality={90}
+                  priority
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
                 {/* Zoom icon overlay */}
                 <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/20 transition-colors">
@@ -130,16 +135,19 @@ export default function ProductPage({ params }: { params: { slug: string; locale
                     <button
                       key={index}
                       onClick={() => setSelectedImage(index)}
-                      className={`w-24 h-24 overflow-hidden rounded transition-all ${
+                      className={`w-24 h-24 overflow-hidden rounded transition-all relative ${
                         selectedImage === index 
                           ? 'ring-2 ring-natura-900' 
                           : 'opacity-60 hover:opacity-100'
                       }`}
                     >
-                      <img
+                      <Image
                         src={image}
                         alt={`${product.name[locale]} ${index + 1}`}
-                        className="w-full h-full object-cover"
+                        fill
+                        sizes="96px"
+                        quality={75}
+                        className="object-cover"
                       />
                     </button>
                   ))}

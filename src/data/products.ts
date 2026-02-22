@@ -346,5 +346,21 @@ function generateProducts(): Product[] {
 export const products: Product[] = generateProducts();
 export default products;
 
+// Helper: Get product by slug
+export function getProductBySlug(slug: string): Product | undefined {
+  return products.find(p => p.slug === slug);
+}
+
+// Bank details for payment
+export const bankDetails = {
+  bankName: 'Crédit Mutuel',
+  banque: 'Crédit Mutuel',
+  iban: 'FR76 1027 8060 0000 0206 4640 127',
+  bic: 'CMCIFR2A',
+  accountHolder: 'RENO\'LINE SARL',
+  beneficiaire: 'RENO\'LINE SARL',
+  address: '6 rue du Commerce, 68420 Herrlisheim-près-Colmar',
+};
+
 // Stats
 console.log(`Catalogue généré: ${products.length} produits`);

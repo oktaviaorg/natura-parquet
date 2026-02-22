@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useLocale } from 'next-intl';
 import Link from 'next/link';
+import Image from 'next/image';
 import type { Product } from '@/data/products';
 
 interface ProductCardProps {
@@ -15,7 +16,6 @@ const SUPABASE_STORAGE = 'https://mjuzyqhxifyvebtnlrra.supabase.co/storage/v1/ob
 export default function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
   const locale = useLocale() as 'fr' | 'de' | 'en';
   const [isHovered, setIsHovered] = useState(false);
-  const [imageLoaded, setImageLoaded] = useState(false);
 
   const labels = {
     viewProduct: { fr: 'Voir le produit', de: 'Produkt ansehen', en: 'View product' },
@@ -50,20 +50,32 @@ export default function ProductCard({ product, viewMode = 'grid' }: ProductCardP
     ? 'bg-orange-100 text-orange-800'
     : 'bg-natura-200 text-natura-700';
 
+  // Get gamme label safely
+  const getGammeLabel = () => {
+    const key = product.gamme.toLowerCase() as keyof typeof labels;
+    if (key in labels && typeof labels[key] === 'object') {
+      return (labels[key] as { fr: string; de: string; en: string })[locale];
+    }
+    return product.gamme;
+  };
+
   if (viewMode === 'list') {
     return (
       <div className="flex gap-6 p-4 bg-white rounded-lg shadow-card hover:shadow-card-hover transition-shadow duration-300">
-        <div className="w-48 h-48 flex-shrink-0 overflow-hidden rounded-lg bg-natura-100">
-          <img
+        <div className="w-48 h-48 flex-shrink-0 overflow-hidden rounded-lg bg-natura-100 relative">
+          <Image
             src={getImageUrl()}
             alt={product.name[locale]}
-            className="w-full h-full object-cover"
+            fill
+            sizes="192px"
+            quality={85}
+            className="object-cover"
           />
         </div>
         <div className="flex-1 flex flex-col justify-between py-2">
           <div>
             <span className={`inline-block px-2 py-0.5 text-xs font-medium rounded ${gammeColor}`}>
-              {labels[product.gamme.toLowerCase() as 'exclusive' | 'elegance'][locale]}
+              {getGammeLabel()}
             </span>
             <h3 className="font-display text-xl text-natura-900 mt-2">
               {product.name[locale]}
@@ -102,27 +114,26 @@ export default function ProductCard({ product, viewMode = 'grid' }: ProductCardP
     >
       {/* Image Container */}
       <div className="relative aspect-[4/3] overflow-hidden bg-natura-100">
-        {!imageLoaded && (
-          <div className="absolute inset-0 bg-natura-100 animate-pulse" />
-        )}
-        <img
+        <Image
           src={getImageUrl()}
           alt={product.name[locale]}
-          className={`w-full h-full object-cover transition-transform duration-500 ${
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          quality={85}
+          className={`object-cover transition-transform duration-500 ${
             isHovered ? 'scale-105' : 'scale-100'
-          } ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
-          onLoad={() => setImageLoaded(true)}
+          }`}
         />
         
         {/* Gamme Badge */}
-        <div className="absolute top-3 left-3">
+        <div className="absolute top-3 left-3 z-10">
           <span className={`px-2.5 py-1 text-xs font-medium rounded-full ${gammeColor}`}>
-            {labels[product.gamme.toLowerCase() as 'exclusive' | 'elegance'][locale]}
+            {getGammeLabel()}
           </span>
         </div>
 
         {/* Quick view overlay */}
-        <div className={`absolute inset-0 bg-natura-900/20 flex items-center justify-center transition-opacity duration-300 ${
+        <div className={`absolute inset-0 bg-natura-900/20 flex items-center justify-center transition-opacity duration-300 z-10 ${
           isHovered ? 'opacity-100' : 'opacity-0'
         }`}>
           <Link
