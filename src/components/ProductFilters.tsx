@@ -5,7 +5,7 @@ import { useLocale } from 'next-intl';
 
 interface ProductFiltersProps {
   activeFilters: {
-    gamme?: 'Exclusive' | 'Elegance';
+    gamme?: 'Exclusive' | 'Elegance' | 'Rustic';
     finition?: string;
     largeur?: number;
     priceRange?: string;
@@ -41,8 +41,9 @@ export default function ProductFilters({ activeFilters, onFilterChange }: Produc
   };
 
   const gammes = [
-    { value: 'Exclusive', label: { fr: 'Exclusive', de: 'Exclusive', en: 'Exclusive' }, count: 12 },
-    { value: 'Elegance', label: { fr: 'Élégance', de: 'Eleganz', en: 'Elegance' }, count: 8 },
+    { value: 'Exclusive', label: { fr: 'Exclusive', de: 'Exclusive', en: 'Exclusive' }, count: 6 },
+    { value: 'Elegance', label: { fr: 'Élégance', de: 'Eleganz', en: 'Elegance' }, count: 7 },
+    { value: 'Rustic', label: { fr: 'Rustique', de: 'Rustikal', en: 'Rustic' }, count: 3 },
   ];
 
   const poses = [

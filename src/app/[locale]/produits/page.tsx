@@ -18,14 +18,14 @@ export default function ProductsPage() {
   const initialGamme = searchParams.get('gamme') as Product['gamme'] | null;
   
   const [filters, setFilters] = useState<{
-    gamme?: Product['gamme'];
+    gamme?: 'Exclusive' | 'Elegance' | 'Rustic';
     finition?: string;
     largeur?: number;
     priceRange?: string;
     pose?: string;
     color?: string;
   }>({
-    gamme: initialGamme || undefined
+    gamme: (initialGamme as 'Exclusive' | 'Elegance' | 'Rustic') || undefined
   });
   
   const [showFilters, setShowFilters] = useState(true);

@@ -1,415 +1,455 @@
-// Product data - Natura Parquets B2C
-// Prix = Départ Pologne × 1.8 = Prix public TTC
+// Natura Parquets - Catalogue avec prix Axemark 2026
+// Formule: Prix HT = (Prix achat × 2) + 2€ | Prix TTC = Prix HT × 1.20
 
 export interface Product {
   id: string;
   slug: string;
-  gamme: 'Exclusive' | 'Elegance';
-  name: {
-    fr: string;
-    de: string;
-    en: string;
-  };
-  description: {
-    fr: string;
-    de: string;
-    en: string;
-  };
+  gamme: 'Exclusive' | 'Elegance' | 'Rustic';
+  name: { fr: string; de: string; en: string; };
+  description: { fr: string; de: string; en: string; };
   dimensions: string;
   epaisseur: number;
   largeur: number;
   longueur: string;
   finition: string;
+  pose: 'lame' | 'baton-rompu' | 'chevron-45' | 'chevron-60' | 'point-hongrie';
   woodType: 'oak';
   color: 'light' | 'medium' | 'dark' | 'natural';
   features: string[];
   images: string[];
   price: {
-    achat: number; // Prix d'achat départ Pologne
-    ht: number;    // Prix vente HT
-    ttc: number;   // Prix vente TTC (TVA 20%)
+    achat: number;
+    ht: number;
+    ttc: number;
     display: string;
   };
+  refAxemark: string;
   delaiLivraison: string;
-  stockStatus: 'disponible' | 'sur_commande' | 'premier_choix' | 'sur_mesure';
+  stockStatus: 'disponible' | 'sur_commande';
 }
 
-// Images showroom et ambiance
+// Helper to calculate prices
+const calcPrice = (achat: number) => {
+  const ht = (achat * 2) + 2;
+  const ttc = Math.round(ht * 1.20 * 100) / 100;
+  return { achat, ht, ttc, display: `${ttc.toFixed(0)}€/m²` };
+};
+
+// Supabase storage URL
+const STORAGE = 'https://mjuzyqhxifyvebtnlrra.supabase.co/storage/v1/object/public/natura-parquets';
+
 export const heroImages = {
-  main: '/images/showroom/mosaique-echantillons.jpg',
-  engineered: '/images/showroom/structure-couches.jpg',
-  solid: '/images/showroom/artisan-atelier-1.jpg',
-  industrial: '/images/showroom/usine-palettes.jpg',
-  ambiance1: '/images/showroom/assemblage-chevron.jpg',
-  ambiance2: '/images/showroom/parquet-escalier.jpg',
-  ambiance3: '/images/showroom/artisan-atelier-2.jpg',
-  mosaique: '/images/showroom/mosaique-echantillons.jpg',
-  usine: '/images/showroom/usine-palettes.jpg',
-  artisan1: '/images/showroom/artisan-atelier-1.jpg',
-  artisan2: '/images/showroom/artisan-atelier-2.jpg',
-  structure: '/images/showroom/structure-couches.jpg',
-  escalier: '/images/showroom/parquet-escalier.jpg',
-  chevron: '/images/showroom/assemblage-chevron.jpg',
+  main: `${STORAGE}/ambiance/artisan-chevron-01.jpg`,
+  ambiance1: `${STORAGE}/ambiance/artisan-lames-02.jpg`,
+  ambiance2: `${STORAGE}/ambiance/escalier-chene-06.jpg`,
+  structure: `${STORAGE}/ambiance/coupe-structure-07.jpg`,
+  teintes: `${STORAGE}/ambiance/gammes-teintes-05.jpg`,
+  usine: `${STORAGE}/ambiance/usine-stock-04.jpg`,
 };
 
-export const productImages = {
-  kashmir: '/images/products/kashmir.jpg',
-  kashmirDetail: '/images/products/kashmir-detail.jpg',
-  raw: '/images/products/raw.jpg',
-  rawDetail: '/images/products/raw-detail.jpg',
-  julia: '/images/products/julia.jpg',
-  juliaDetail: '/images/products/julia-detail.jpg',
-  brown: '/images/products/brown.jpg',
-  brownDetail: '/images/products/brown-detail.jpg',
-  nude: '/images/products/nude.jpg',
-  nudeDetail: '/images/products/nude-detail.jpg',
-  naturalOil: '/images/products/natural-oil.jpg',
-  naturalOilDetail: '/images/products/natural-oil-detail.jpg',
-  chevron: '/images/products/chevron.jpg',
-  chevronDetail: '/images/products/chevron-detail.jpg',
-  showroom1: '/images/showroom/lames-sol-1.jpg',
-  showroom2: '/images/showroom/showroom-complet.jpg',
-};
-
-// Délais de livraison
-export const delaisLivraison = {
-  standard: '2 semaines',
-  premier_choix: '3-4 semaines',
-  sur_mesure: '6-8 semaines',
-};
-
-// PRODUITS - Grille tarifaire officielle
 export const products: Product[] = [
-  // === GAMME EXCLUSIVE ===
+  // =============================================
+  // BÂTON ROMPU 11x70x490mm
+  // =============================================
   {
-    id: 'chevron-exclusive-14x100x720-brut',
-    slug: 'chevron-exclusive-brut',
+    id: 'br-70-exclusive',
+    slug: 'baton-rompu-70-exclusive',
     gamme: 'Exclusive',
-    name: {
-      fr: 'Chevron Exclusive Brut',
-      de: 'Chevron Exclusive Roh',
-      en: 'Chevron Exclusive Raw'
+    name: { fr: 'Bâton Rompu Exclusive 70mm', de: 'Fischgrät Exclusive 70mm', en: 'Herringbone Exclusive 70mm' },
+    description: { 
+      fr: 'Parquet bâton rompu chêne premium, grade exclusive sans nœuds. Format 11x70x490mm.',
+      de: 'Premium Eichen-Fischgrätparkett, Exclusive-Qualität ohne Äste. Format 11x70x490mm.',
+      en: 'Premium oak herringbone parquet, exclusive grade without knots. Format 11x70x490mm.'
     },
-    description: {
-      fr: 'Parquet chevron en chêne européen premium, qualité Exclusive. Idéal pour une pose en point de Hongrie traditionnelle. Livré brut pour une finition personnalisée sur place.',
-      de: 'Premium europäisches Eichenparkett im Fischgrätmuster, Exclusive Qualität. Ideal für traditionelle ungarische Spitzmusterverlegung. Roh geliefert für individuelle Oberflächenbehandlung.',
-      en: 'Premium European oak chevron parquet, Exclusive quality. Ideal for traditional Hungarian point pattern. Delivered raw for custom on-site finishing.'
-    },
-    dimensions: '14×100×720mm',
-    epaisseur: 14,
-    largeur: 100,
-    longueur: '720',
-    finition: 'Brut à finir',
+    dimensions: '11 × 70 × 490 mm',
+    epaisseur: 11,
+    largeur: 70,
+    longueur: '490mm',
+    finition: 'Brut',
+    pose: 'baton-rompu',
     woodType: 'oak',
     color: 'natural',
-    features: ['Pose chevron/point de Hongrie', 'Chauffage au sol compatible', 'Couche noble 4mm', 'Chanfreins 4 côtés'],
-    images: [productImages.chevron, productImages.chevronDetail, heroImages.ambiance1],
-    price: { achat: 39, ht: 58.33, ttc: 70, display: '70 €/m²' },
-    delaiLivraison: delaisLivraison.standard,
-    stockStatus: 'sur_commande'
+    features: ['Sans nœuds', 'Chêne européen FSC', 'Compatible plancher chauffant'],
+    images: [`${STORAGE}/products/herringbone-exclusive-11x70x490-01.jpg`],
+    price: calcPrice(26.80),
+    refAxemark: 'Axe Exclusive Neutre 11x70x490',
+    delaiLivraison: '2-3 semaines',
+    stockStatus: 'disponible',
   },
   {
-    id: 'exclusive-11x70x490-vernis',
-    slug: 'exclusive-compact-vernis',
-    gamme: 'Exclusive',
-    name: {
-      fr: 'Exclusive Compact Vernis',
-      de: 'Exclusive Kompakt Lackiert',
-      en: 'Exclusive Compact Varnished'
+    id: 'br-70-elegance',
+    slug: 'baton-rompu-70-elegance',
+    gamme: 'Elegance',
+    name: { fr: 'Bâton Rompu Élégance 70mm', de: 'Fischgrät Eleganz 70mm', en: 'Herringbone Elegance 70mm' },
+    description: { 
+      fr: 'Parquet bâton rompu chêne naturel, grade élégance avec petits nœuds discrets. Format 11x70x490mm.',
+      de: 'Natürliches Eichen-Fischgrätparkett, Eleganz-Qualität mit kleinen dezenten Ästen. Format 11x70x490mm.',
+      en: 'Natural oak herringbone parquet, elegance grade with small discrete knots. Format 11x70x490mm.'
     },
-    description: {
-      fr: 'Parquet contrecollé chêne européen gamme Exclusive, format compact 70×490mm. Finition vernie UV ultra-résistante, idéale pour les pièces à fort passage.',
-      de: 'Mehrschichtparkett europäische Eiche, Exclusive Linie, Kompaktformat 70×490mm. UV-lackierte Oberfläche, extrem strapazierfähig, ideal für stark frequentierte Räume.',
-      en: 'Engineered European oak parquet, Exclusive range, compact format 70×490mm. UV varnish finish, ultra-resistant, ideal for high-traffic areas.'
-    },
-    dimensions: '11×70×490mm',
+    dimensions: '11 × 70 × 490 mm',
     epaisseur: 11,
     largeur: 70,
-    longueur: '490',
-    finition: 'Vernis UV',
+    longueur: '490mm',
+    finition: 'Brut',
+    pose: 'baton-rompu',
     woodType: 'oak',
-    color: 'light',
-    features: ['Vernis UV ultra-résistant', 'Chauffage au sol compatible', 'Couche noble 3.5mm', 'Pose clipsable'],
-    images: [productImages.kashmir, productImages.kashmirDetail, heroImages.ambiance2],
-    price: { achat: 26.4, ht: 40, ttc: 48, display: '48 €/m²' },
-    delaiLivraison: delaisLivraison.standard,
-    stockStatus: 'sur_commande'
+    color: 'natural',
+    features: ['Petits nœuds discrets', 'Chêne européen FSC', 'Compatible plancher chauffant'],
+    images: [`${STORAGE}/products/herringbone-elegance-neutral-11x70x490-01.jpg`],
+    price: calcPrice(25.40),
+    refAxemark: 'Axe Elegance Neutre 11x70x490',
+    delaiLivraison: '2-3 semaines',
+    stockStatus: 'disponible',
   },
   {
-    id: 'exclusive-11x70x490-huile',
-    slug: 'exclusive-compact-huile',
-    gamme: 'Exclusive',
-    name: {
-      fr: 'Exclusive Compact Huilé',
-      de: 'Exclusive Kompakt Geölt',
-      en: 'Exclusive Compact Oiled'
+    id: 'br-70-rustic',
+    slug: 'baton-rompu-70-rustic',
+    gamme: 'Rustic',
+    name: { fr: 'Bâton Rompu Rustique 70mm', de: 'Fischgrät Rustikal 70mm', en: 'Herringbone Rustic 70mm' },
+    description: { 
+      fr: 'Parquet bâton rompu chêne caractère, grade rustique avec nœuds apparents. Format 11x70x490mm.',
+      de: 'Charakter Eichen-Fischgrätparkett, rustikale Qualität mit sichtbaren Ästen. Format 11x70x490mm.',
+      en: 'Character oak herringbone parquet, rustic grade with visible knots. Format 11x70x490mm.'
     },
-    description: {
-      fr: 'Parquet contrecollé chêne européen gamme Exclusive, format compact 70×490mm. Finition huilée naturelle pour un toucher authentique du bois et une rénovation facile.',
-      de: 'Mehrschichtparkett europäische Eiche, Exclusive Linie, Kompaktformat 70×490mm. Natürliche Ölbehandlung für authentisches Holzgefühl und einfache Renovierung.',
-      en: 'Engineered European oak parquet, Exclusive range, compact format 70×490mm. Natural oil finish for authentic wood feel and easy renovation.'
-    },
-    dimensions: '11×70×490mm',
+    dimensions: '11 × 70 × 490 mm',
     epaisseur: 11,
     largeur: 70,
-    longueur: '490',
-    finition: 'Huile naturelle',
+    longueur: '490mm',
+    finition: 'Brut',
+    pose: 'baton-rompu',
     woodType: 'oak',
-    color: 'medium',
-    features: ['Huile naturelle', 'Rénovation locale possible', 'Chauffage au sol compatible', 'Couche noble 3.5mm'],
-    images: [productImages.naturalOil, productImages.naturalOilDetail, heroImages.ambiance3],
-    price: { achat: 26.4, ht: 40, ttc: 48, display: '48 €/m²' },
-    delaiLivraison: delaisLivraison.standard,
-    stockStatus: 'sur_commande'
-  },
-  {
-    id: 'exclusive-11x120x600-huile',
-    slug: 'exclusive-large-huile',
-    gamme: 'Exclusive',
-    name: {
-      fr: 'Exclusive Large Huilé',
-      de: 'Exclusive Breit Geölt',
-      en: 'Exclusive Wide Oiled'
-    },
-    description: {
-      fr: 'Parquet contrecollé chêne européen gamme Exclusive, lame large 120mm. Finition huilée pour un rendu naturel et chaleureux, parfait pour les intérieurs contemporains.',
-      de: 'Mehrschichtparkett europäische Eiche, Exclusive Linie, breite Diele 120mm. Ölfinish für natürliche und warme Optik, perfekt für zeitgenössische Innenräume.',
-      en: 'Engineered European oak parquet, Exclusive range, wide plank 120mm. Oil finish for natural and warm look, perfect for contemporary interiors.'
-    },
-    dimensions: '11×120×600mm',
-    epaisseur: 11,
-    largeur: 120,
-    longueur: '600',
-    finition: 'Huile naturelle',
-    woodType: 'oak',
-    color: 'medium',
-    features: ['Lame large 120mm', 'Huile naturelle', 'Chauffage au sol compatible', 'Couche noble 3.5mm'],
-    images: [productImages.julia, productImages.juliaDetail, heroImages.ambiance1],
-    price: { achat: 32, ht: 48.33, ttc: 58, display: '58 €/m²' },
-    delaiLivraison: delaisLivraison.standard,
-    stockStatus: 'sur_commande'
-  },
-  {
-    id: 'exclusive-11x150x1200-vernis',
-    slug: 'exclusive-xl-vernis',
-    gamme: 'Exclusive',
-    name: {
-      fr: 'Exclusive XL Vernis',
-      de: 'Exclusive XL Lackiert',
-      en: 'Exclusive XL Varnished'
-    },
-    description: {
-      fr: 'Parquet contrecollé chêne européen gamme Exclusive, grande lame 150×1200mm. Finition vernie UV pour espaces contemporains d\'exception.',
-      de: 'Mehrschichtparkett europäische Eiche, Exclusive Linie, große Diele 150×1200mm. UV-Lackfinish für außergewöhnliche zeitgenössische Räume.',
-      en: 'Engineered European oak parquet, Exclusive range, large plank 150×1200mm. UV varnish finish for exceptional contemporary spaces.'
-    },
-    dimensions: '11×150×1200mm',
-    epaisseur: 11,
-    largeur: 150,
-    longueur: '1200',
-    finition: 'Vernis UV',
-    woodType: 'oak',
-    color: 'light',
-    features: ['Grande lame XL', 'Vernis UV premium', 'Chauffage au sol compatible', 'Couche noble 3.5mm'],
-    images: [productImages.raw, productImages.rawDetail, heroImages.ambiance2],
-    price: { achat: 37.8, ht: 56.67, ttc: 68, display: '68 €/m²' },
-    delaiLivraison: delaisLivraison.premier_choix,
-    stockStatus: 'premier_choix'
-  },
-  {
-    id: 'exclusive-11x150x1200-huile',
-    slug: 'exclusive-xl-huile',
-    gamme: 'Exclusive',
-    name: {
-      fr: 'Exclusive XL Huilé',
-      de: 'Exclusive XL Geölt',
-      en: 'Exclusive XL Oiled'
-    },
-    description: {
-      fr: 'Parquet contrecollé chêne européen gamme Exclusive, grande lame 150×1200mm. Finition huilée naturelle luxueuse pour intérieurs haut de gamme.',
-      de: 'Mehrschichtparkett europäische Eiche, Exclusive Linie, große Diele 150×1200mm. Luxuriöse natürliche Ölbehandlung für gehobene Innenräume.',
-      en: 'Engineered European oak parquet, Exclusive range, large plank 150×1200mm. Luxurious natural oil finish for high-end interiors.'
-    },
-    dimensions: '11×150×1200mm',
-    epaisseur: 11,
-    largeur: 150,
-    longueur: '1200',
-    finition: 'Huile naturelle',
-    woodType: 'oak',
-    color: 'medium',
-    features: ['Grande lame XL', 'Huile naturelle premium', 'Chauffage au sol compatible', 'Couche noble 3.5mm'],
-    images: [productImages.nude, productImages.nudeDetail, heroImages.ambiance3],
-    price: { achat: 37.8, ht: 56.67, ttc: 68, display: '68 €/m²' },
-    delaiLivraison: delaisLivraison.premier_choix,
-    stockStatus: 'premier_choix'
+    color: 'natural',
+    features: ['Nœuds apparents', 'Chêne européen FSC', 'Compatible plancher chauffant'],
+    images: [`${STORAGE}/products/herringbone-elegance-neutral-11x70x490-02.jpg`],
+    price: calcPrice(24.46),
+    refAxemark: 'Axe Rustic Neutre 11x70x490',
+    delaiLivraison: '2-3 semaines',
+    stockStatus: 'disponible',
   },
 
-  // === GAMME ELEGANCE ===
+  // =============================================
+  // BÂTON ROMPU 11x120x600mm
+  // =============================================
   {
-    id: 'elegance-11x70x490-vernis',
-    slug: 'elegance-compact-vernis',
-    gamme: 'Elegance',
-    name: {
-      fr: 'Élégance Compact Vernis',
-      de: 'Eleganz Kompakt Lackiert',
-      en: 'Elegance Compact Varnished'
+    id: 'br-120-exclusive',
+    slug: 'baton-rompu-120-exclusive',
+    gamme: 'Exclusive',
+    name: { fr: 'Bâton Rompu Exclusive 120mm', de: 'Fischgrät Exclusive 120mm', en: 'Herringbone Exclusive 120mm' },
+    description: { 
+      fr: 'Parquet bâton rompu chêne premium grand format, grade exclusive. Format 11x120x600mm.',
+      de: 'Premium Großformat Eichen-Fischgrätparkett, Exclusive-Qualität. Format 11x120x600mm.',
+      en: 'Premium large format oak herringbone parquet, exclusive grade. Format 11x120x600mm.'
     },
-    description: {
-      fr: 'Parquet contrecollé chêne européen gamme Élégance, excellent rapport qualité-prix. Format compact 70×490mm avec finition vernie durable.',
-      de: 'Mehrschichtparkett europäische Eiche, Eleganz Linie, hervorragendes Preis-Leistungs-Verhältnis. Kompaktformat 70×490mm mit strapazierfähiger Lackierung.',
-      en: 'Engineered European oak parquet, Elegance range, excellent value for money. Compact format 70×490mm with durable varnish finish.'
-    },
-    dimensions: '11×70×490mm',
-    epaisseur: 11,
-    largeur: 70,
-    longueur: '490',
-    finition: 'Vernis UV',
-    woodType: 'oak',
-    color: 'light',
-    features: ['Excellent rapport qualité-prix', 'Vernis UV résistant', 'Chauffage au sol compatible', 'Couche noble 2.5mm'],
-    images: [productImages.brown, productImages.brownDetail, heroImages.ambiance1],
-    price: { achat: 24.9, ht: 37.50, ttc: 45, display: '45 €/m²' },
-    delaiLivraison: delaisLivraison.standard,
-    stockStatus: 'sur_commande'
-  },
-  {
-    id: 'elegance-11x70x490-huile',
-    slug: 'elegance-compact-huile',
-    gamme: 'Elegance',
-    name: {
-      fr: 'Élégance Compact Huilé',
-      de: 'Eleganz Kompakt Geölt',
-      en: 'Elegance Compact Oiled'
-    },
-    description: {
-      fr: 'Parquet contrecollé chêne européen gamme Élégance, excellent rapport qualité-prix. Format compact 70×490mm avec finition huilée naturelle.',
-      de: 'Mehrschichtparkett europäische Eiche, Eleganz Linie, hervorragendes Preis-Leistungs-Verhältnis. Kompaktformat 70×490mm mit natürlicher Ölbehandlung.',
-      en: 'Engineered European oak parquet, Elegance range, excellent value for money. Compact format 70×490mm with natural oil finish.'
-    },
-    dimensions: '11×70×490mm',
-    epaisseur: 11,
-    largeur: 70,
-    longueur: '490',
-    finition: 'Huile naturelle',
-    woodType: 'oak',
-    color: 'medium',
-    features: ['Excellent rapport qualité-prix', 'Huile naturelle', 'Chauffage au sol compatible', 'Couche noble 2.5mm'],
-    images: [productImages.naturalOil, heroImages.ambiance2],
-    price: { achat: 24.9, ht: 37.50, ttc: 45, display: '45 €/m²' },
-    delaiLivraison: delaisLivraison.standard,
-    stockStatus: 'sur_commande'
-  },
-  {
-    id: 'elegance-11x120x590',
-    slug: 'elegance-medium',
-    gamme: 'Elegance',
-    name: {
-      fr: 'Élégance Medium',
-      de: 'Eleganz Medium',
-      en: 'Elegance Medium'
-    },
-    description: {
-      fr: 'Parquet contrecollé chêne européen gamme Élégance, format intermédiaire 120×590mm. Polyvalent et élégant, parfait pour tout type d\'intérieur.',
-      de: 'Mehrschichtparkett europäische Eiche, Eleganz Linie, mittleres Format 120×590mm. Vielseitig und elegant, perfekt für jeden Innenraum.',
-      en: 'Engineered European oak parquet, Elegance range, medium format 120×590mm. Versatile and elegant, perfect for any interior.'
-    },
-    dimensions: '11×120×590mm',
+    dimensions: '11 × 120 × 600 mm',
     epaisseur: 11,
     largeur: 120,
-    longueur: '590',
-    finition: 'Vernis ou Huile',
-    woodType: 'oak',
-    color: 'light',
-    features: ['Format polyvalent', 'Choix vernis ou huile', 'Chauffage au sol compatible', 'Couche noble 2.5mm'],
-    images: [productImages.kashmir, productImages.kashmirDetail, heroImages.ambiance3],
-    price: { achat: 27.9, ht: 41.67, ttc: 50, display: '50 €/m²' },
-    delaiLivraison: delaisLivraison.standard,
-    stockStatus: 'sur_commande'
-  },
-  {
-    id: 'elegance-11x120x1200',
-    slug: 'elegance-long',
-    gamme: 'Elegance',
-    name: {
-      fr: 'Élégance Long',
-      de: 'Eleganz Lang',
-      en: 'Elegance Long'
-    },
-    description: {
-      fr: 'Parquet contrecollé chêne européen gamme Élégance, grande longueur 1200mm pour espaces généreux. Effet visuel allongé et moderne.',
-      de: 'Mehrschichtparkett europäische Eiche, Eleganz Linie, lange Dielen 1200mm für großzügige Räume. Verlängernde und moderne Optik.',
-      en: 'Engineered European oak parquet, Elegance range, long plank 1200mm for spacious rooms. Elongating and modern visual effect.'
-    },
-    dimensions: '11×120×1200mm',
-    epaisseur: 11,
-    largeur: 120,
-    longueur: '1200',
-    finition: 'Vernis ou Huile',
-    woodType: 'oak',
-    color: 'medium',
-    features: ['Grande longueur 1200mm', 'Choix vernis ou huile', 'Chauffage au sol compatible', 'Couche noble 2.5mm'],
-    images: [productImages.julia, productImages.juliaDetail, heroImages.ambiance1],
-    price: { achat: 34.5, ht: 51.67, ttc: 62, display: '62 €/m²' },
-    delaiLivraison: delaisLivraison.premier_choix,
-    stockStatus: 'premier_choix'
-  },
-  {
-    id: 'elegance-11x150x1330-brut',
-    slug: 'elegance-xl-brut',
-    gamme: 'Elegance',
-    name: {
-      fr: 'Élégance XL Brut',
-      de: 'Eleganz XL Roh',
-      en: 'Elegance XL Raw'
-    },
-    description: {
-      fr: 'Parquet contrecollé chêne européen gamme Élégance, très grande lame 150×1330mm. Brut à finir sur place selon vos envies : huile, vernis, ou teinture.',
-      de: 'Mehrschichtparkett europäische Eiche, Eleganz Linie, sehr große Diele 150×1330mm. Roh für individuelle Oberflächenbehandlung vor Ort: Öl, Lack oder Beize.',
-      en: 'Engineered European oak parquet, Elegance range, extra-large plank 150×1330mm. Raw for custom on-site finishing: oil, varnish, or stain.'
-    },
-    dimensions: '11×150×1330mm',
-    epaisseur: 11,
-    largeur: 150,
-    longueur: '1330',
-    finition: 'Brut à finir',
+    longueur: '600mm',
+    finition: 'Brut',
+    pose: 'baton-rompu',
     woodType: 'oak',
     color: 'natural',
-    features: ['Très grande lame XL', 'Finition personnalisable', 'Chauffage au sol compatible', 'Couche noble 2.5mm'],
-    images: [productImages.raw, productImages.rawDetail, heroImages.ambiance2],
-    price: { achat: 31, ht: 46.67, ttc: 56, display: '56 €/m²' },
-    delaiLivraison: delaisLivraison.premier_choix,
-    stockStatus: 'premier_choix'
+    features: ['Sans nœuds', 'Grand format', 'Chêne européen FSC'],
+    images: [`${STORAGE}/products/herringbone-exclusive-neutral-11x120x600-01.jpg`],
+    price: calcPrice(33.20),
+    refAxemark: 'Axe Exclusive Neutre 11x120x600',
+    delaiLivraison: '2-3 semaines',
+    stockStatus: 'disponible',
+  },
+  {
+    id: 'br-120-elegance',
+    slug: 'baton-rompu-120-elegance',
+    gamme: 'Elegance',
+    name: { fr: 'Bâton Rompu Élégance 120mm', de: 'Fischgrät Eleganz 120mm', en: 'Herringbone Elegance 120mm' },
+    description: { 
+      fr: 'Parquet bâton rompu chêne grand format, grade élégance. Format 11x120x600mm.',
+      de: 'Großformat Eichen-Fischgrätparkett, Eleganz-Qualität. Format 11x120x600mm.',
+      en: 'Large format oak herringbone parquet, elegance grade. Format 11x120x600mm.'
+    },
+    dimensions: '11 × 120 × 600 mm',
+    epaisseur: 11,
+    largeur: 120,
+    longueur: '600mm',
+    finition: 'Brut',
+    pose: 'baton-rompu',
+    woodType: 'oak',
+    color: 'natural',
+    features: ['Petits nœuds', 'Grand format', 'Chêne européen FSC'],
+    images: [`${STORAGE}/products/herringbone-elegance-neutral-11x120x600-01.jpg`],
+    price: calcPrice(29.40),
+    refAxemark: 'Axe Elegance 11x120x600 Neutre',
+    delaiLivraison: '2-3 semaines',
+    stockStatus: 'disponible',
+  },
+
+  // =============================================
+  // CHEVRON 45°
+  // =============================================
+  {
+    id: 'chevron45-exclusive',
+    slug: 'chevron-45-exclusive',
+    gamme: 'Exclusive',
+    name: { fr: 'Chevron 45° Exclusive', de: 'Chevron 45° Exclusive', en: 'Chevron 45° Exclusive' },
+    description: { 
+      fr: 'Parquet chevron 45° chêne premium laqué, grade exclusive. Format 11x70x410mm.',
+      de: 'Premium lackiertes Eichen-Chevronparkett 45°, Exclusive-Qualität. Format 11x70x410mm.',
+      en: 'Premium lacquered oak chevron 45° parquet, exclusive grade. Format 11x70x410mm.'
+    },
+    dimensions: '11 × 70 × 410 mm',
+    epaisseur: 11,
+    largeur: 70,
+    longueur: '410mm',
+    finition: 'Verni',
+    pose: 'chevron-45',
+    woodType: 'oak',
+    color: 'natural',
+    features: ['Sans nœuds', 'Vernis usine', 'Pose chevron classique'],
+    images: [`${STORAGE}/products/chevron-45-exclusive-lacquer-neutral-01.jpg`],
+    price: calcPrice(42.36),
+    refAxemark: 'Axe Chevron45 Exclusive laque Neutre',
+    delaiLivraison: '3-4 semaines',
+    stockStatus: 'sur_commande',
+  },
+  {
+    id: 'chevron45-elegance',
+    slug: 'chevron-45-elegance',
+    gamme: 'Elegance',
+    name: { fr: 'Chevron 45° Élégance', de: 'Chevron 45° Eleganz', en: 'Chevron 45° Elegance' },
+    description: { 
+      fr: 'Parquet chevron 45° chêne laqué, grade élégance. Format 11x70x410mm.',
+      de: 'Lackiertes Eichen-Chevronparkett 45°, Eleganz-Qualität. Format 11x70x410mm.',
+      en: 'Lacquered oak chevron 45° parquet, elegance grade. Format 11x70x410mm.'
+    },
+    dimensions: '11 × 70 × 410 mm',
+    epaisseur: 11,
+    largeur: 70,
+    longueur: '410mm',
+    finition: 'Verni',
+    pose: 'chevron-45',
+    woodType: 'oak',
+    color: 'natural',
+    features: ['Petits nœuds', 'Vernis usine', 'Pose chevron classique'],
+    images: [`${STORAGE}/products/axe-chevron-45-elegance-lacquer-neutral-01.jpg`],
+    price: calcPrice(40.50),
+    refAxemark: 'Axe Chevron 45 Laque Élégance Neutre',
+    delaiLivraison: '3-4 semaines',
+    stockStatus: 'sur_commande',
+  },
+
+  // =============================================
+  // CHEVRON 60°
+  // =============================================
+  {
+    id: 'chevron60-exclusive',
+    slug: 'chevron-60-exclusive',
+    gamme: 'Exclusive',
+    name: { fr: 'Chevron 60° Exclusive', de: 'Chevron 60° Exclusive', en: 'Chevron 60° Exclusive' },
+    description: { 
+      fr: 'Parquet chevron 60° chêne premium laqué, grade exclusive. Format 11x100x600mm.',
+      de: 'Premium lackiertes Eichen-Chevronparkett 60°, Exclusive-Qualität. Format 11x100x600mm.',
+      en: 'Premium lacquered oak chevron 60° parquet, exclusive grade. Format 11x100x600mm.'
+    },
+    dimensions: '11 × 100 × 600 mm',
+    epaisseur: 11,
+    largeur: 100,
+    longueur: '600mm',
+    finition: 'Verni',
+    pose: 'chevron-60',
+    woodType: 'oak',
+    color: 'natural',
+    features: ['Sans nœuds', 'Vernis usine', 'Grand format'],
+    images: [`${STORAGE}/products/chevron-60-exclusive-11x100x600-01.jpg`],
+    price: calcPrice(47.50),
+    refAxemark: 'Axe Chevron60 Exclusive laque Neutre',
+    delaiLivraison: '3-4 semaines',
+    stockStatus: 'sur_commande',
+  },
+  {
+    id: 'chevron60-elegance',
+    slug: 'chevron-60-elegance',
+    gamme: 'Elegance',
+    name: { fr: 'Chevron 60° Élégance', de: 'Chevron 60° Eleganz', en: 'Chevron 60° Elegance' },
+    description: { 
+      fr: 'Parquet chevron 60° chêne laqué, grade élégance. Format 11x100x600mm.',
+      de: 'Lackiertes Eichen-Chevronparkett 60°, Eleganz-Qualität. Format 11x100x600mm.',
+      en: 'Lacquered oak chevron 60° parquet, elegance grade. Format 11x100x600mm.'
+    },
+    dimensions: '11 × 100 × 600 mm',
+    epaisseur: 11,
+    largeur: 100,
+    longueur: '600mm',
+    finition: 'Verni',
+    pose: 'chevron-60',
+    woodType: 'oak',
+    color: 'natural',
+    features: ['Petits nœuds', 'Vernis usine', 'Grand format'],
+    images: [`${STORAGE}/products/axe-chevron60-elegance-lacquer-neutral-01.jpg`],
+    price: calcPrice(44.10),
+    refAxemark: 'Axe Chevron60 Laque Élégance Neutre',
+    delaiLivraison: '3-4 semaines',
+    stockStatus: 'sur_commande',
+  },
+
+  // =============================================
+  // LAMES 11x150mm
+  // =============================================
+  {
+    id: 'lame-150-exclusive',
+    slug: 'lame-150-exclusive',
+    gamme: 'Exclusive',
+    name: { fr: 'Lame Exclusive 150mm', de: 'Diele Exclusive 150mm', en: 'Plank Exclusive 150mm' },
+    description: { 
+      fr: 'Lame parquet chêne premium, grade exclusive. Format 11x150x1330mm.',
+      de: 'Premium Eichen-Parkettdiele, Exclusive-Qualität. Format 11x150x1330mm.',
+      en: 'Premium oak parquet plank, exclusive grade. Format 11x150x1330mm.'
+    },
+    dimensions: '11 × 150 × 1330 mm',
+    epaisseur: 11,
+    largeur: 150,
+    longueur: '1330mm',
+    finition: 'Brut',
+    pose: 'lame',
+    woodType: 'oak',
+    color: 'natural',
+    features: ['Sans nœuds', 'Longueur standard', 'Chêne européen FSC'],
+    images: [`${STORAGE}/products/herringbone-11x150x665-01.jpg`],
+    price: calcPrice(29.82), // Prix estimé basé sur le tableau
+    refAxemark: 'Axe Exclusif 11x150x1330 Neutre',
+    delaiLivraison: '2-3 semaines',
+    stockStatus: 'disponible',
+  },
+  {
+    id: 'lame-150-elegance',
+    slug: 'lame-150-elegance',
+    gamme: 'Elegance',
+    name: { fr: 'Lame Élégance 150mm', de: 'Diele Eleganz 150mm', en: 'Plank Elegance 150mm' },
+    description: { 
+      fr: 'Lame parquet chêne naturel, grade élégance. Format 11x150x1330mm.',
+      de: 'Natürliche Eichen-Parkettdiele, Eleganz-Qualität. Format 11x150x1330mm.',
+      en: 'Natural oak parquet plank, elegance grade. Format 11x150x1330mm.'
+    },
+    dimensions: '11 × 150 × 1330 mm',
+    epaisseur: 11,
+    largeur: 150,
+    longueur: '1330mm',
+    finition: 'Brut',
+    pose: 'lame',
+    woodType: 'oak',
+    color: 'natural',
+    features: ['Petits nœuds', 'Longueur standard', 'Chêne européen FSC'],
+    images: [`${STORAGE}/products/herringbone-11x150x665-01.jpg`],
+    price: calcPrice(27.35),
+    refAxemark: 'Axe Élégance 11x150x1330 Neutre',
+    delaiLivraison: '2-3 semaines',
+    stockStatus: 'disponible',
+  },
+
+  // =============================================
+  // LAMES 11x190mm (grandes lames)
+  // =============================================
+  {
+    id: 'lame-190-exclusive',
+    slug: 'lame-190-exclusive',
+    gamme: 'Exclusive',
+    name: { fr: 'Grande Lame Exclusive 190mm', de: 'Große Diele Exclusive 190mm', en: 'Wide Plank Exclusive 190mm' },
+    description: { 
+      fr: 'Grande lame parquet chêne premium, grade exclusive. Format 11x190x1800-2000mm.',
+      de: 'Große Premium Eichen-Parkettdiele, Exclusive-Qualität. Format 11x190x1800-2000mm.',
+      en: 'Wide premium oak parquet plank, exclusive grade. Format 11x190x1800-2000mm.'
+    },
+    dimensions: '11 × 190 × 1800-2000 mm',
+    epaisseur: 11,
+    largeur: 190,
+    longueur: '1800-2000mm',
+    finition: 'Brut',
+    pose: 'lame',
+    woodType: 'oak',
+    color: 'natural',
+    features: ['Sans nœuds', 'Extra large', 'Longueurs variables'],
+    images: [`${STORAGE}/products/formpark-exclusive-11x190x570-01.jpg`],
+    price: calcPrice(38.50), // Prix estimé
+    refAxemark: 'Axe Exclusive Neutre 11x190x1800-2000',
+    delaiLivraison: '3-4 semaines',
+    stockStatus: 'sur_commande',
+  },
+  {
+    id: 'lame-190-elegance',
+    slug: 'lame-190-elegance',
+    gamme: 'Elegance',
+    name: { fr: 'Grande Lame Élégance 190mm', de: 'Große Diele Eleganz 190mm', en: 'Wide Plank Elegance 190mm' },
+    description: { 
+      fr: 'Grande lame parquet chêne, grade élégance. Format 11x190x1800-2000mm.',
+      de: 'Große Eichen-Parkettdiele, Eleganz-Qualität. Format 11x190x1800-2000mm.',
+      en: 'Wide oak parquet plank, elegance grade. Format 11x190x1800-2000mm.'
+    },
+    dimensions: '11 × 190 × 1800-2000 mm',
+    epaisseur: 11,
+    largeur: 190,
+    longueur: '1800-2000mm',
+    finition: 'Brut',
+    pose: 'lame',
+    woodType: 'oak',
+    color: 'natural',
+    features: ['Petits nœuds', 'Extra large', 'Longueurs variables'],
+    images: [`${STORAGE}/products/formpark-exclusive-11x190x570-02.jpg`],
+    price: calcPrice(34.50),
+    refAxemark: 'Axe Elegance 11x190x1800-2000 Neutre',
+    delaiLivraison: '3-4 semaines',
+    stockStatus: 'sur_commande',
+  },
+
+  // =============================================
+  // POINT DE HONGRIE 11x100x480mm
+  // =============================================
+  {
+    id: 'ph-100-exclusive',
+    slug: 'point-hongrie-100-exclusive',
+    gamme: 'Exclusive',
+    name: { fr: 'Point de Hongrie Exclusive 100mm', de: 'Ungarischer Punkt Exclusive 100mm', en: 'Hungarian Point Exclusive 100mm' },
+    description: { 
+      fr: 'Parquet point de Hongrie chêne premium, grade exclusive. Format 11x100x480mm.',
+      de: 'Premium Eichen-Ungarischer-Punkt-Parkett, Exclusive-Qualität. Format 11x100x480mm.',
+      en: 'Premium oak Hungarian point parquet, exclusive grade. Format 11x100x480mm.'
+    },
+    dimensions: '11 × 100 × 480 mm',
+    epaisseur: 11,
+    largeur: 100,
+    longueur: '480mm',
+    finition: 'Brut',
+    pose: 'point-hongrie',
+    woodType: 'oak',
+    color: 'natural',
+    features: ['Sans nœuds', 'Pose traditionnelle', 'Effet visuel unique'],
+    images: [`${STORAGE}/products/chevron-60-exclusive-11x100x600-02.jpg`],
+    price: calcPrice(47.50),
+    refAxemark: '11x100x480mm Point de Hongrie 45/60 Exclusive',
+    delaiLivraison: '3-4 semaines',
+    stockStatus: 'sur_commande',
+  },
+  {
+    id: 'ph-100-elegance',
+    slug: 'point-hongrie-100-elegance',
+    gamme: 'Elegance',
+    name: { fr: 'Point de Hongrie Élégance 100mm', de: 'Ungarischer Punkt Eleganz 100mm', en: 'Hungarian Point Elegance 100mm' },
+    description: { 
+      fr: 'Parquet point de Hongrie chêne, grade élégance. Format 11x100x480mm.',
+      de: 'Eichen-Ungarischer-Punkt-Parkett, Eleganz-Qualität. Format 11x100x480mm.',
+      en: 'Oak Hungarian point parquet, elegance grade. Format 11x100x480mm.'
+    },
+    dimensions: '11 × 100 × 480 mm',
+    epaisseur: 11,
+    largeur: 100,
+    longueur: '480mm',
+    finition: 'Brut',
+    pose: 'point-hongrie',
+    woodType: 'oak',
+    color: 'natural',
+    features: ['Petits nœuds', 'Pose traditionnelle', 'Effet visuel unique'],
+    images: [`${STORAGE}/products/axe-chevron60-elegance-lacquer-neutral-02.jpg`],
+    price: calcPrice(44.10),
+    refAxemark: '11x100x480mm Point de Hongrie 45/60 Elegance',
+    delaiLivraison: '3-4 semaines',
+    stockStatus: 'sur_commande',
   },
 ];
 
-// Fonctions utilitaires
-export const getProductBySlug = (slug: string): Product | undefined => {
-  return products.find(p => p.slug === slug);
-};
-
-export const getProductsByGamme = (gamme: Product['gamme']): Product[] => {
-  return products.filter(p => p.gamme === gamme);
-};
-
-export const filterProducts = (filters: {
-  gamme?: Product['gamme'];
-  finition?: string;
-  largeur?: number;
-  priceMax?: number;
-}): Product[] => {
-  return products.filter(p => {
-    if (filters.gamme && p.gamme !== filters.gamme) return false;
-    if (filters.finition && !p.finition.toLowerCase().includes(filters.finition.toLowerCase())) return false;
-    if (filters.largeur && p.largeur !== filters.largeur) return false;
-    if (filters.priceMax && p.price.ttc > filters.priceMax) return false;
-    return true;
-  });
-};
-
-// Informations bancaires pour virement
-export const bankDetails = {
-  beneficiaire: 'RENOLINE SARL',
-  iban: 'FR76 3000 3024 8600 0200 9174 390',
-  bic: 'SOGEFRPP',
-  banque: 'Société Générale',
-};
+export default products;

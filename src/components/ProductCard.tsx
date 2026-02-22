@@ -23,6 +23,7 @@ export default function ProductCard({ product, viewMode = 'grid' }: ProductCardP
     perM2: { fr: 'TTC le m²', de: 'inkl. MwSt./m²', en: 'incl. VAT/m²' },
     exclusive: { fr: 'Exclusive', de: 'Exclusive', en: 'Exclusive' },
     elegance: { fr: 'Élégance', de: 'Eleganz', en: 'Elegance' },
+    rustic: { fr: 'Rustique', de: 'Rustikal', en: 'Rustic' },
     newBadge: { fr: 'Nouveau', de: 'Neu', en: 'New' },
   };
 
@@ -42,6 +43,8 @@ export default function ProductCard({ product, viewMode = 'grid' }: ProductCardP
   // Gamme badge color
   const gammeColor = product.gamme === 'Exclusive' 
     ? 'bg-natura-800 text-white' 
+    : product.gamme === 'Rustic'
+    ? 'bg-amber-100 text-amber-800'
     : 'bg-natura-200 text-natura-700';
 
   if (viewMode === 'list') {
