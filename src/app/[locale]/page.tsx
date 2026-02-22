@@ -86,13 +86,11 @@ export default function HomePage() {
   // Featured products (those with featured flag, fallback to first 6)
   const featuredProducts = products.filter(p => p.featured).slice(0, 6);
   
-  // Best-sellers random selection (shuffle and pick 4, fill with other products if needed)
-  const bestsellerProducts = products.filter(p => p.badge === 'bestseller' || p.featured);
+  // Best-sellers (priorité aux badge bestseller, puis featured, puis autres)
+  const bestsellerProducts = products.filter(p => p.badge === 'bestseller');
+  const featuredNotBestseller = products.filter(p => p.featured && p.badge !== 'bestseller');
   const otherProducts = products.filter(p => !p.badge && !p.featured);
-  const allForBestsellers = [...bestsellerProducts, ...otherProducts];
-  const bestsellers = allForBestsellers
-    .sort(() => Math.random() - 0.5)
-    .slice(0, 4);
+  const bestsellers = [...bestsellerProducts, ...featuredNotBestseller, ...otherProducts].slice(0, 4);
   
   // Products by pose style (1 representative per style)
   const poseStyles = ['lame', 'baton-rompu', 'chevron-45', 'chevron-60', 'point-hongrie'] as const;
