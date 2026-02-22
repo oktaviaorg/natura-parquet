@@ -1,5 +1,6 @@
 'use client';
 
+import { useMemo } from 'react';
 import { useLocale } from 'next-intl';
 import Link from 'next/link';
 import Navigation from '@/components/Navigation';
@@ -83,32 +84,40 @@ export default function HomePage() {
     bestsellersSubtitle: { fr: 'Les parquets préférés de nos clients', de: 'Die Lieblingsparkette unserer Kunden', en: 'Our customers\' favorite parquets' },
   };
 
-  // Featured products (those with featured flag, fallback to first 6)
-  const featuredProducts = products.filter(p => p.featured).slice(0, 6);
+  // Featured products (those with featured flag, fallback to first 6) - MEMOIZED
+  const featuredProducts = useMemo(() => 
+    products.filter(p => p.featured).slice(0, 6), 
+  []);
   
-  // Best-sellers (priorité aux badge bestseller, puis featured, puis autres)
-  const bestsellerProducts = products.filter(p => p.badge === 'bestseller');
-  const featuredNotBestseller = products.filter(p => p.featured && p.badge !== 'bestseller');
-  const otherProducts = products.filter(p => !p.badge && !p.featured);
-  const bestsellers = [...bestsellerProducts, ...featuredNotBestseller, ...otherProducts].slice(0, 4);
+  // Best-sellers (priorité aux badge bestseller, puis featured, puis autres) - MEMOIZED
+  const bestsellers = useMemo(() => {
+    const bestsellerProducts = products.filter(p => p.badge === 'bestseller');
+    const featuredNotBestseller = products.filter(p => p.featured && p.badge !== 'bestseller');
+    const otherProducts = products.filter(p => !p.badge && !p.featured);
+    return [...bestsellerProducts, ...featuredNotBestseller, ...otherProducts].slice(0, 4);
+  }, []);
   
-  // Products by pose style (1 representative per style)
+  // Products by pose style (1 representative per style) - MEMOIZED
   const poseStyles = ['lame', 'baton-rompu', 'chevron-45', 'chevron-60', 'point-hongrie'] as const;
-  const productsByPose = poseStyles.map(pose => ({
-    pose,
-    count: products.filter(p => p.pose === pose).length,
-    minPrice: Math.min(...products.filter(p => p.pose === pose).map(p => p.price.ttc)),
-    image: products.find(p => p.pose === pose && p.badge === 'bestseller')?.images[0] 
-      || products.find(p => p.pose === pose)?.images[0],
-  }));
+  const productsByPose = useMemo(() => 
+    poseStyles.map(pose => ({
+      pose,
+      count: products.filter(p => p.pose === pose).length,
+      minPrice: Math.min(...products.filter(p => p.pose === pose).map(p => p.price.ttc)),
+      image: products.find(p => p.pose === pose && p.badge === 'bestseller')?.images[0] 
+        || products.find(p => p.pose === pose)?.images[0],
+    })),
+  []);
   
-  // Gammes summary
+  // Gammes summary - MEMOIZED
   const gammes = ['Exclusive', 'Elegance', 'Rustic', 'Country'] as const;
-  const gammeData = gammes.map(gamme => ({
-    name: gamme,
-    count: products.filter(p => p.gamme === gamme).length,
-    minPrice: Math.min(...products.filter(p => p.gamme === gamme).map(p => p.price.ttc)),
-  }));
+  const gammeData = useMemo(() => 
+    gammes.map(gamme => ({
+      name: gamme,
+      count: products.filter(p => p.gamme === gamme).length,
+      minPrice: Math.min(...products.filter(p => p.gamme === gamme).map(p => p.price.ttc)),
+    })),
+  []);
 
   return (
     <main className="min-h-screen bg-natura-50">
