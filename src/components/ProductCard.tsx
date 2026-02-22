@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+
 import { useLocale } from 'next-intl';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -15,7 +15,6 @@ const SUPABASE_STORAGE = 'https://mjuzyqhxifyvebtnlrra.supabase.co/storage/v1/ob
 
 export default function ProductCard({ product, viewMode = 'grid' }: ProductCardProps) {
   const locale = useLocale() as 'fr' | 'de' | 'en';
-  const [isHovered, setIsHovered] = useState(false);
 
   const labels = {
     viewProduct: { fr: 'Voir le produit', de: 'Produkt ansehen', en: 'View product' },
@@ -119,8 +118,6 @@ export default function ProductCard({ product, viewMode = 'grid' }: ProductCardP
   return (
     <div
       className="group relative bg-white rounded-xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
       {/* Image Container */}
       <div className="relative aspect-[4/3] overflow-hidden bg-natura-100">
@@ -130,9 +127,7 @@ export default function ProductCard({ product, viewMode = 'grid' }: ProductCardP
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           quality={85}
-          className={`object-cover transition-transform duration-500 ${
-            isHovered ? 'scale-105' : 'scale-100'
-          }`}
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
         
         {/* Badges */}
@@ -149,10 +144,8 @@ export default function ProductCard({ product, viewMode = 'grid' }: ProductCardP
           </span>
         </div>
 
-        {/* Quick view overlay */}
-        <div className={`absolute inset-0 bg-natura-900/20 flex items-center justify-center transition-opacity duration-300 z-10 ${
-          isHovered ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-        }`}>
+        {/* Quick view overlay - hidden on mobile, visible on desktop hover */}
+        <div className="absolute inset-0 bg-natura-900/20 items-center justify-center transition-opacity duration-300 z-10 opacity-0 pointer-events-none hidden md:flex md:group-hover:opacity-100 md:group-hover:pointer-events-auto">
           <Link
             href={`/${locale}/produits/${product.slug}`}
             className="px-5 py-2.5 bg-white text-natura-900 text-sm font-medium rounded-lg hover:bg-natura-50 transition-colors shadow-lg"
