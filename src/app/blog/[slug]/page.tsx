@@ -54,7 +54,15 @@ async function getArticle(slug: string): Promise<Article | null> {
   return data;
 }
 
-async function getRelatedArticles(currentSlug: string): Promise<Article[]> {
+interface RelatedArticle {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string;
+  featured_image: string;
+}
+
+async function getRelatedArticles(currentSlug: string): Promise<RelatedArticle[]> {
   const { data } = await supabase
     .from('articles')
     .select('id, slug, title, excerpt, featured_image')
