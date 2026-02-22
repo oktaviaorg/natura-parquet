@@ -29,6 +29,9 @@ export default function Header() {
             <Link href="/catalogue" className="text-gray-700 hover:text-wood-500 font-medium transition-colors">
               Catalogue
             </Link>
+            <Link href="/blog" className="text-gray-700 hover:text-wood-500 font-medium transition-colors">
+              Blog
+            </Link>
             <Link href="/devis" className="text-gray-700 hover:text-wood-500 font-medium transition-colors">
               Demander un devis
             </Link>
@@ -64,6 +67,9 @@ export default function Header() {
               </Link>
               <Link href="/catalogue" className="text-gray-700 hover:text-wood-500 font-medium" onClick={() => setIsMenuOpen(false)}>
                 Catalogue
+              </Link>
+              <Link href="/blog" className="text-gray-700 hover:text-wood-500 font-medium" onClick={() => setIsMenuOpen(false)}>
+                Blog
               </Link>
               <Link href="/devis" className="text-gray-700 hover:text-wood-500 font-medium" onClick={() => setIsMenuOpen(false)}>
                 Demander un devis
