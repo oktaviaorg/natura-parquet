@@ -287,6 +287,9 @@ export default function Footer() {
               <Link href={`/${locale}/cgv`} className="text-natura-500 hover:text-white transition-colors text-sm">
                 {labels.cgv[locale]}
               </Link>
+              <a href="/admin.html" className="text-natura-600 hover:text-natura-400 transition-colors text-sm">
+                ⚙
+              </a>
             </div>
           </div>
         </div>
