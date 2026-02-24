@@ -169,21 +169,25 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-b from-[#5A4A3A]/95 via-[#7A6550]/90 to-[#8B7355]/85" />
         </div>
         
-        {/* Lignes décoratives dorées style parquet */}
-        <div className="absolute inset-0 pointer-events-none">
-          {/* Ligne horizontale haut */}
-          <div className="absolute top-[22%] left-1/2 -translate-x-1/2 w-[50%] flex items-center gap-2">
-            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#C4A574]/60 to-transparent" />
-          </div>
-          {/* Ligne horizontale bas */}
-          <div className="absolute bottom-[22%] left-1/2 -translate-x-1/2 w-[50%] flex items-center gap-2">
-            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#C4A574]/60 to-transparent" />
-          </div>
-          {/* Petits traits verticaux effet parquet */}
-          <div className="absolute top-[22%] left-[25%] w-px h-4 bg-[#C4A574]/40" />
-          <div className="absolute top-[22%] right-[25%] w-px h-4 bg-[#C4A574]/40" />
-          <div className="absolute bottom-[22%] left-[25%] w-px h-4 bg-[#C4A574]/40" />
-          <div className="absolute bottom-[22%] right-[25%] w-px h-4 bg-[#C4A574]/40" />
+        {/* Effet lames de parquet en bas - lignes verticales */}
+        <div className="absolute bottom-0 left-0 right-0 h-[18%] pointer-events-none overflow-hidden">
+          {/* Lignes verticales simulant les lames de parquet */}
+          <div 
+            className="absolute inset-0"
+            style={{
+              background: `repeating-linear-gradient(
+                to right,
+                transparent,
+                transparent 10px,
+                rgba(196,165,116,0.15) 10px,
+                rgba(196,165,116,0.15) 11px
+              )`,
+            }}
+          />
+          {/* Dégradé de fondu vers le haut */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#8B7355] via-transparent to-transparent" />
+          {/* Ligne de séparation dorée en haut */}
+          <div className="absolute top-0 left-0 right-0 h-px bg-[#C4A574]/40" />
         </div>
 
         {/* Content */}
