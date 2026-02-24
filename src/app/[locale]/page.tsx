@@ -169,20 +169,20 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-b from-[#5A4A3A]/95 via-[#7A6550]/90 to-[#8B7355]/85" />
         </div>
         
-        {/* Effet lames de parquet en bas - lignes verticales fines et serrées */}
-        <div className="absolute bottom-0 left-0 right-0 h-[45%] pointer-events-none overflow-hidden">
-          {/* Fond légèrement plus clair */}
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#9C8570]/30 to-[#A89080]/50" />
-          {/* Lignes verticales très fines et serrées comme des lames de parquet */}
+        {/* Effet lames de parquet en bas - lignes verticales ultra-fines */}
+        <div className="absolute bottom-0 left-0 right-0 h-[40%] pointer-events-none overflow-hidden">
+          {/* Fond légèrement plus chaud */}
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#8B7355]/20" />
+          {/* Lignes verticales ultra-fines espacées de 2px */}
           <div 
             className="absolute inset-0"
             style={{
               background: `repeating-linear-gradient(
                 to right,
                 transparent,
-                transparent 3px,
-                rgba(90,74,58,0.25) 3px,
-                rgba(90,74,58,0.25) 4px
+                transparent 2px,
+                rgba(60,50,40,0.35) 2px,
+                rgba(60,50,40,0.35) 2.5px
               )`,
             }}
           />
