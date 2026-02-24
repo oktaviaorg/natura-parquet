@@ -60,6 +60,13 @@ export default function ProductsPage() {
         if (filters.priceRange === '50-60' && (price < 50 || price >= 60)) return false;
         if (filters.priceRange === '60+' && price < 60) return false;
       }
+      // Filtre Format (pose)
+      if (filters.pose) {
+        if (filters.pose === 'lame' && p.pose !== 'lame') return false;
+        if (filters.pose === 'baton-rompu' && p.pose !== 'baton-rompu') return false;
+        if (filters.pose === 'point-hongrie' && p.pose !== 'point-hongrie') return false;
+        if (filters.pose === 'chevron' && !p.pose.startsWith('chevron')) return false;
+      }
       return true;
     });
 
