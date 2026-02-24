@@ -154,40 +154,60 @@ export default function HomePage() {
       <Navigation />
 
       {/* ============================================
-          HERO SECTION - Style Axemark Premium
+          HERO SECTION - Style Axemark Premium avec texture parquet
           ============================================ */}
-      <section className="relative min-h-screen flex items-center justify-center">
-        {/* Background gradient bronze */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#6B5A4A] via-[#8B7355] to-[#9C8570]" />
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Background avec texture parquet */}
+        <div className="absolute inset-0">
+          {/* Image de fond parquet avec overlay */}
+          <img 
+            src={`${SUPABASE_STORAGE}/ambiance/gammes-teintes-05.jpg`}
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover opacity-30"
+          />
+          {/* Gradient bronze par-dessus */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#5A4A3A]/95 via-[#7A6550]/90 to-[#8B7355]/85" />
+        </div>
         
-        {/* Decorative lines */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-[60%] h-px bg-[#C4A574]/30 absolute top-[25%]" />
-          <div className="w-[60%] h-px bg-[#C4A574]/30 absolute bottom-[25%]" />
+        {/* Lignes décoratives dorées style parquet */}
+        <div className="absolute inset-0 pointer-events-none">
+          {/* Ligne horizontale haut */}
+          <div className="absolute top-[22%] left-1/2 -translate-x-1/2 w-[50%] flex items-center gap-2">
+            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#C4A574]/60 to-transparent" />
+          </div>
+          {/* Ligne horizontale bas */}
+          <div className="absolute bottom-[22%] left-1/2 -translate-x-1/2 w-[50%] flex items-center gap-2">
+            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#C4A574]/60 to-transparent" />
+          </div>
+          {/* Petits traits verticaux effet parquet */}
+          <div className="absolute top-[22%] left-[25%] w-px h-4 bg-[#C4A574]/40" />
+          <div className="absolute top-[22%] right-[25%] w-px h-4 bg-[#C4A574]/40" />
+          <div className="absolute bottom-[22%] left-[25%] w-px h-4 bg-[#C4A574]/40" />
+          <div className="absolute bottom-[22%] right-[25%] w-px h-4 bg-[#C4A574]/40" />
         </div>
 
         {/* Content */}
         <div className="relative z-10 text-center px-6">
-          {/* Tagline */}
-          <p className="text-[#E8DCC8] text-sm tracking-[0.3em] mb-8">
+          {/* Tagline - espacement large */}
+          <p className="text-[#D4C4A8] text-xs md:text-sm tracking-[0.4em] mb-10 font-light">
             {labels.heroTagline[locale]}
           </p>
           
-          {/* Main title */}
-          <h1 className="text-white text-6xl md:text-7xl lg:text-8xl font-light tracking-wide leading-tight whitespace-pre-line">
+          {/* Main title - Police serif élégante Playfair Display */}
+          <h1 className="text-white font-display text-6xl md:text-7xl lg:text-[5.5rem] font-light tracking-[0.05em] leading-[1.1] whitespace-pre-line drop-shadow-lg">
             {labels.heroTitle[locale]}
           </h1>
           
-          {/* Slogan */}
-          <p className="text-white/90 text-xl md:text-2xl italic mt-10">
+          {/* Slogan - italique élégant */}
+          <p className="text-[#E8DCC8] font-display text-lg md:text-xl lg:text-2xl italic mt-12 font-light tracking-wide">
             {labels.heroSlogan[locale]}
           </p>
           
-          {/* CTA Button */}
-          <div className="mt-16">
+          {/* CTA Button - encadré fin style catalogue */}
+          <div className="mt-20">
             <Link
               href={`/${locale}/produits`}
-              className="inline-block px-8 py-3 border border-[#E8DCC8]/50 text-white text-sm tracking-wider hover:bg-white/10 transition-colors"
+              className="inline-block px-10 py-3.5 border border-[#D4C4A8]/50 text-[#E8DCC8] text-sm tracking-[0.15em] hover:bg-[#D4C4A8]/10 hover:border-[#D4C4A8]/70 transition-all duration-300"
             >
               natura-parquets.fr
             </Link>
@@ -195,9 +215,9 @@ export default function HomePage() {
         </div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <svg className="w-6 h-6 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+          <svg className="w-5 h-5 text-[#D4C4A8]/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
           </svg>
         </div>
       </section>
