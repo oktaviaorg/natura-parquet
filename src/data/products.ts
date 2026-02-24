@@ -248,35 +248,35 @@ const poseNames: Record<string, { fr: string; de: string; en: string }> = {
   'lame': { fr: 'Lame', de: 'Diele', en: 'Plank' },
 };
 
-// Produits best-sellers (combinaisons populaires)
+// Produits best-sellers (combinaisons populaires) - DIVERSIFIÉ
 const BESTSELLERS = [
-  'baton-rompu-70-elegance-huile-chanfrein',
-  'baton-rompu-120-exclusive-verni-chanfrein',
-  'chevron-45-90-elegance-huile-chanfrein',
-  'lame-120-rustic-huile-chanfrein',
-  'lame-150-elegance-verni-chanfrein',
+  'lame-150-elegance-verni-chanfrein',      // Lame - top vente
+  'lame-190-exclusive-huile-chanfrein',     // Lame premium
+  'point-hongrie-120-exclusive-verni-chanfrein', // Point de Hongrie
+  'baton-rompu-120-exclusive-verni-chanfrein',   // Bâton rompu
+  'chevron-45-70-elegance-huile-chanfrein', // Chevron
 ];
 
 // Produits nouveaux (nouveautés 2026)
 const NOUVEAUX = [
-  'chevron-60-90-exclusive-huile-blanche-chanfrein',
-  'point-hongrie-90-elegance-2x-huile-chanfrein',
-  'lame-190-exclusive-huile-chanfrein',
+  'chevron-60-100-exclusive-huile-blanche-chanfrein',
+  'point-hongrie-100-elegance-huile-chanfrein',
+  'lame-190-exclusive-huile-blanche-chanfrein',
 ];
 
 // Produits en promo (à afficher avec badge promo)
 const PROMOS = [
-  'lame-120-country-brut-chanfrein',
-  'baton-rompu-70-rustic-brut-chanfrein',
+  'lame-150-rustic-brut-chanfrein',
+  'baton-rompu-120-rustic-brut-chanfrein',
 ];
 
-// Produits à mettre en avant sur la page d'accueil
+// Produits à mettre en avant sur la page d'accueil - DIVERSIFIÉ (lames en premier)
 const FEATURED_PRODUCTS = [
-  'baton-rompu-70-elegance-huile-chanfrein',
-  'baton-rompu-120-exclusive-verni-chanfrein',
-  'chevron-45-90-elegance-huile-chanfrein',
-  'lame-120-rustic-huile-chanfrein',
-  'chevron-60-90-exclusive-huile-blanche-chanfrein',
+  'lame-150-elegance-verni-chanfrein',      // Lame classique
+  'lame-190-exclusive-huile-chanfrein',     // Lame large premium
+  'point-hongrie-120-exclusive-verni-chanfrein', // Point de Hongrie
+  'chevron-45-70-elegance-huile-chanfrein', // Chevron
+  'baton-rompu-120-exclusive-verni-chanfrein',   // Bâton rompu (en dernier)
   'point-hongrie-90-elegance-2x-huile-chanfrein',
 ];
 
