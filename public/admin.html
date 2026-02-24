@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Natura Parquets</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #f5f5f5; min-height: 100vh; }
+    
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, #5D4E37 0%, #3D3225 100%);
+      color: white; padding: 1rem 2rem;
+      display: flex; justify-content: space-between; align-items: center;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .header h1 { font-size: 1.5rem; font-weight: 600; }
+    .header h1 span { color: #C9A962; }
+    .header-actions { display: flex; gap: 1rem; align-items: center; }
+    
+    /* Tabs */
+    .tabs {
+      background: white; border-bottom: 1px solid #e0e0e0;
+      display: flex; padding: 0 2rem;
+    }
+    .tab {
+      padding: 1rem 1.5rem; cursor: pointer; border-bottom: 3px solid transparent;
+      font-weight: 500; color: #666; transition: all 0.2s;
+    }
+    .tab:hover { color: #5D4E37; }
+    .tab.active { color: #5D4E37; border-bottom-color: #C9A962; }
+    
+    /* Container */
+    .container { max-width: 1600px; margin: 0 auto; padding: 2rem; }
+    
+    /* Cards */
+    .card {
+      background: white; border-radius: 12px; padding: 1.5rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 1.5rem;
+    }
+    .card-title {
+      font-size: 1.1rem; font-weight: 600; color: #333;
+      margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;
+    }
+    
+    /* Table */
+    .table-container { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    th { background: #f8f8f8; padding: 0.75rem 1rem; text-align: left; font-weight: 600; color: #555; border-bottom: 2px solid #e0e0e0; }
+    td { padding: 0.75rem 1rem; border-bottom: 1px solid #eee; vertical-align: middle; }
+    tr:hover { background: #fafafa; }
+    
+    /* Inputs */
+    input, select {
+      padding: 0.5rem 0.75rem; border: 1px solid #ddd; border-radius: 6px;
+      font-size: 0.9rem; font-family: inherit; width: 100%;
+    }
+    input:focus, select:focus { outline: none; border-color: #C9A962; }
+    input[type="number"] { width: 100px; text-align: right; }
+    .input-small { width: 80px; }
+    .input-price { 
+      background: #f0f9f0; font-weight: 600; color: #2a7d2a;
+      border-color: #c0e0c0;
+    }
+    
+    /* Buttons */
+    .btn {
+      padding: 0.5rem 1rem; border: none; border-radius: 6px;
+      font-weight: 500; cursor: pointer; transition: all 0.2s;
+      font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.5rem;
+    }
+    .btn-primary { background: #C9A962; color: white; }
+    .btn-primary:hover { background: #b89952; }
+    .btn-secondary { background: #5D4E37; color: white; }
+    .btn-secondary:hover { background: #4d3e27; }
+    .btn-danger { background: #dc3545; color: white; }
+    .btn-danger:hover { background: #c82333; }
+    .btn-success { background: #28a745; color: white; }
+    .btn-success:hover { background: #218838; }
+    .btn-outline { background: white; border: 1px solid #ddd; color: #666; }
+    .btn-outline:hover { background: #f5f5f5; }
+    .btn-sm { padding: 0.3rem 0.6rem; font-size: 0.8rem; }
+    
+    /* Badge */
+    .badge {
+      display: inline-block; padding: 0.25rem 0.5rem; border-radius: 4px;
+      font-size: 0.75rem; font-weight: 600;
+    }
+    .badge-success { background: #d4edda; color: #155724; }
+    .badge-warning { background: #fff3cd; color: #856404; }
+    .badge-danger { background: #f8d7da; color: #721c24; }
+    
+    /* Image preview */
+    .img-preview {
+      width: 60px; height: 60px; object-fit: cover; border-radius: 6px;
+      border: 1px solid #eee;
+    }
+    .img-placeholder {
+      width: 60px; height: 60px; background: #f0f0f0; border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      color: #999; font-size: 1.5rem;
+    }
+    
+    /* Stats */
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+    .stat-card {
+      background: white; border-radius: 12px; padding: 1.5rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    .stat-value { font-size: 2rem; font-weight: 700; color: #5D4E37; }
+    .stat-label { color: #888; font-size: 0.9rem; margin-top: 0.25rem; }
+    
+    /* Filters */
+    .filters { display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .filter-group { display: flex; flex-direction: column; gap: 0.25rem; }
+    .filter-label { font-size: 0.8rem; color: #666; font-weight: 500; }
+    
+    /* Modal */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center;
+      z-index: 1000;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: white; border-radius: 12px; padding: 2rem;
+      max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto;
+    }
+    .modal-title { font-size: 1.3rem; font-weight: 600; margin-bottom: 1.5rem; }
+    .form-group { margin-bottom: 1rem; }
+    .form-label { display: block; font-size: 0.85rem; font-weight: 500; color: #555; margin-bottom: 0.25rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    
+    /* Toast */
+    .toast {
+      position: fixed; bottom: 2rem; right: 2rem; padding: 1rem 1.5rem;
+      background: #333; color: white; border-radius: 8px;
+      display: none; z-index: 2000; animation: slideIn 0.3s;
+    }
+    .toast.success { background: #28a745; }
+    .toast.error { background: #dc3545; }
+    .toast.active { display: block; }
+    @keyframes slideIn { from { transform: translateY(100px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    
+    /* Loading */
+    .loading { text-align: center; padding: 3rem; color: #888; }
+    .spinner { 
+      width: 40px; height: 40px; border: 3px solid #eee; 
+      border-top-color: #C9A962; border-radius: 50%;
+      animation: spin 1s linear infinite; margin: 0 auto 1rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    
+    /* Hidden */
+    .hidden { display: none !important; }
+    
+    /* Calculated price highlight */
+    .price-calculated {
+      background: linear-gradient(135deg, #f0f9f0 0%, #e8f5e8 100%);
+      padding: 0.5rem; border-radius: 6px; text-align: center;
+    }
+    .price-ttc { font-size: 1.1rem; font-weight: 700; color: #28a745; }
+    .price-formula { font-size: 0.75rem; color: #666; margin-top: 0.25rem; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Natura<span>Parquets</span> — Admin</h1>
+    <div class="header-actions">
+      <span id="lastSave" style="font-size: 0.85rem; opacity: 0.8;">—</span>
+      <button class="btn btn-primary" onclick="saveAllPrices()">💾 Sauvegarder les prix</button>
+    </div>
+  </div>
+  
+  <div class="tabs">
+    <div class="tab active" data-tab="tarifs">📊 Tarifs</div>
+    <div class="tab" data-tab="produits">📦 Produits</div>
+    <div class="tab" data-tab="couleurs">🎨 Couleurs</div>
+    <div class="tab" data-tab="formats">📐 Formats</div>
+  </div>
+  
+  <div class="container">
+    <!-- Stats -->
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-value" id="statFormats">—</div>
+        <div class="stat-label">Formats</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statGrades">—</div>
+        <div class="stat-label">Grades</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statColours">—</div>
+        <div class="stat-label">Couleurs</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statPrices">—</div>
+        <div class="stat-label">Prix configurés</div>
+      </div>
+    </div>
+    
+    <!-- Tab: Tarifs -->
+    <div id="tab-tarifs" class="tab-content">
+      <div class="card">
+        <div class="card-title">
+          <span>Grille tarifaire — Prix €/m²</span>
+          <div style="display: flex; gap: 0.5rem;">
+            <button class="btn btn-outline btn-sm" onclick="exportCSV()">📥 Export CSV</button>
+            <button class="btn btn-success btn-sm" onclick="openAddPriceModal()">+ Ajouter un prix</button>
+          </div>
+        </div>
+        
+        <div class="filters">
+          <div class="filter-group">
+            <span class="filter-label">Format</span>
+            <select id="filterFormat" onchange="filterPrices()">
+              <option value="">Tous</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <span class="filter-label">Grade</span>
+            <select id="filterGrade" onchange="filterPrices()">
+              <option value="">Tous</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <span class="filter-label">Finition</span>
+            <select id="filterFinish" onchange="filterPrices()">
+              <option value="">Toutes</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <span class="filter-label">Marge par défaut</span>
+            <input type="number" id="defaultMargin" value="100" style="width: 80px;" onchange="recalculateAll()"> %
+          </div>
+          <div class="filter-group">
+            <span class="filter-label">TVA</span>
+            <input type="number" id="defaultTVA" value="20" style="width: 60px;" onchange="recalculateAll()"> %
+          </div>
+        </div>
+        
+        <div class="table-container">
+          <table id="pricesTable">
+            <thead>
+              <tr>
+                <th>Format</th>
+                <th>Grade</th>
+                <th>Finition</th>
+                <th style="width: 100px;">Prix Achat HT</th>
+                <th style="width: 80px;">Marge %</th>
+                <th style="width: 100px;">Prix Vente HT</th>
+                <th style="width: 100px;">Prix TTC</th>
+                <th style="width: 80px;">Actif</th>
+                <th style="width: 80px;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="pricesBody">
+              <tr><td colspan="9" class="loading"><div class="spinner"></div>Chargement...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Tab: Produits -->
+    <div id="tab-produits" class="tab-content hidden">
+      <div class="card">
+        <div class="card-title">
+          <span>Produits (combinaisons affichées sur le site)</span>
+          <button class="btn btn-success btn-sm" onclick="openAddProductModal()">+ Nouveau produit</button>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Nom</th>
+                <th>Format</th>
+                <th>Grade</th>
+                <th>Couleur</th>
+                <th>Prix TTC</th>
+                <th>Statut</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="productsBody">
+              <tr><td colspan="8" class="loading"><div class="spinner"></div>Chargement...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Tab: Couleurs -->
+    <div id="tab-couleurs" class="tab-content hidden">
+      <div class="card">
+        <div class="card-title">
+          <span>Couleurs disponibles</span>
+          <button class="btn btn-success btn-sm" onclick="openAddColourModal()">+ Ajouter</button>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Aperçu</th>
+                <th>Nom</th>
+                <th>Nom FR</th>
+                <th>Description</th>
+                <th>Code Hex</th>
+                <th>Image</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="coloursBody">
+              <tr><td colspan="7" class="loading"><div class="spinner"></div>Chargement...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Tab: Formats -->
+    <div id="tab-formats" class="tab-content hidden">
+      <div class="card">
+        <div class="card-title">
+          <span>Formats (dimensions)</span>
+          <button class="btn btn-success btn-sm" onclick="openAddFormatModal()">+ Ajouter</button>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Nom</th>
+                <th>Épaisseur</th>
+                <th>Largeur</th>
+                <th>Longueur</th>
+                <th>Type</th>
+                <th>Ordre</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="formatsBody">
+              <tr><td colspan="7" class="loading"><div class="spinner"></div>Chargement...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal Add Price -->
+  <div class="modal-overlay" id="addPriceModal">
+    <div class="modal">
+      <div class="modal-title">Ajouter un prix</div>
+      <form onsubmit="addPrice(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Format *</label>
+            <select id="priceFormat" required></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Grade *</label>
+            <select id="priceGrade" required></select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Finition *</label>
+            <select id="priceFinish" required></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Prix Achat HT (€/m²) *</label>
+            <input type="number" step="0.01" id="priceAchat" required oninput="previewPrice()">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="price-calculated">
+            <div class="price-ttc" id="previewPriceTTC">— €</div>
+            <div class="price-formula">Prix achat × 2 × 1.20 (TVA 20%)</div>
+          </div>
+        </div>
+        <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1.5rem;">
+          <button type="button" class="btn btn-outline" onclick="closeModal('addPriceModal')">Annuler</button>
+          <button type="submit" class="btn btn-primary">Ajouter</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+  
+  <script>
+    // Supabase config
+    const SUPABASE_URL = 'https://mjuzyqhxifyvebtnlrra.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qdXp5cWh4aWZ5dmVidG5scnJhIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0MjgxOTMzMywiZXhwIjoyMDU4Mzk1MzMzfQ.MifUYblRmRAEIHVF1Z7aohfvR99rjVXee_-16Fvt5sY';
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    
+    // Data stores
+    let formats = [];
+    let grades = [];
+    let colours = [];
+    let finishes = [];
+    let prices = [];
+    let products = [];
+    let pendingChanges = {};
+    
+    // Init
+    document.addEventListener('DOMContentLoaded', async () => {
+      await loadAllData();
+      setupTabs();
+    });
+    
+    // Load all data
+    async function loadAllData() {
+      try {
+        const [formatsRes, gradesRes, coloursRes, finishesRes, pricesRes] = await Promise.all([
+          supabase.from('natura_formats').select('*').order('sort_order'),
+          supabase.from('natura_grades').select('*').order('sort_order'),
+          supabase.from('natura_colours').select('*').order('sort_order'),
+          supabase.from('natura_finishes').select('*').order('sort_order'),
+          supabase.from('natura_prices').select('*, format:natura_formats(*), grade:natura_grades(*), finish:natura_finishes(*)').order('id'),
+        ]);
+        
+        formats = formatsRes.data || [];
+        grades = gradesRes.data || [];
+        colours = coloursRes.data || [];
+        finishes = finishesRes.data || [];
+        prices = pricesRes.data || [];
+        
+        // Update stats
+        document.getElementById('statFormats').textContent = formats.length;
+        document.getElementById('statGrades').textContent = grades.length;
+        document.getElementById('statColours').textContent = colours.length;
+        document.getElementById('statPrices').textContent = prices.length;
+        
+        // Populate filters
+        populateFilters();
+        
+        // Render tables
+        renderPricesTable();
+        renderColoursTable();
+        renderFormatsTable();
+        
+      } catch (error) {
+        console.error('Error loading data:', error);
+        showToast('Erreur de chargement', 'error');
+      }
+    }
+    
+    // Populate filter dropdowns
+    function populateFilters() {
+      const formatSelect = document.getElementById('filterFormat');
+      const gradeSelect = document.getElementById('filterGrade');
+      const finishSelect = document.getElementById('filterFinish');
+      
+      formats.forEach(f => {
+        formatSelect.innerHTML += `<option value="${f.id}">${f.name}</option>`;
+      });
+      grades.forEach(g => {
+        gradeSelect.innerHTML += `<option value="${g.id}">${g.name}</option>`;
+      });
+      finishes.forEach(f => {
+        finishSelect.innerHTML += `<option value="${f.id}">${f.name}</option>`;
+      });
+      
+      // Also populate modal selects
+      document.getElementById('priceFormat').innerHTML = formats.map(f => `<option value="${f.id}">${f.name}</option>`).join('');
+      document.getElementById('priceGrade').innerHTML = grades.map(g => `<option value="${g.id}">${g.name}</option>`).join('');
+      document.getElementById('priceFinish').innerHTML = finishes.map(f => `<option value="${f.id}">${f.name}</option>`).join('');
+    }
+    
+    // Render prices table
+    function renderPricesTable(filtered = null) {
+      const data = filtered || prices;
+      const tbody = document.getElementById('pricesBody');
+      
+      if (data.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="9" style="text-align: center; padding: 2rem; color: #888;">Aucun prix configuré. Cliquez sur "+ Ajouter un prix" pour commencer.</td></tr>';
+        return;
+      }
+      
+      tbody.innerHTML = data.map(p => {
+        const prixAchat = p.prix_achat_ht || 0;
+        const marge = p.marge_pct || 100;
+        const tva = p.tva_pct || 20;
+        const prixVenteHT = prixAchat * (1 + marge/100);
+        const prixTTC = prixVenteHT * (1 + tva/100);
+        
+        return `
+          <tr data-id="${p.id}">
+            <td><strong>${p.format?.name || '—'}</strong></td>
+            <td>${p.grade?.name || '—'}</td>
+            <td>${p.finish?.name || '—'}</td>
+            <td>
+              <input type="number" step="0.01" value="${prixAchat}" 
+                     onchange="updatePrice(${p.id}, 'prix_achat_ht', this.value)"
+                     style="width: 90px;">
+            </td>
+            <td>
+              <input type="number" value="${marge}" 
+                     onchange="updatePrice(${p.id}, 'marge_pct', this.value)"
+                     class="input-small">
+            </td>
+            <td style="font-weight: 600;">${prixVenteHT.toFixed(2)} €</td>
+            <td class="input-price" style="font-weight: 700; color: #28a745;">${prixTTC.toFixed(2)} €</td>
+            <td>
+              <label style="cursor: pointer;">
+                <input type="checkbox" ${p.active ? 'checked' : ''} 
+                       onchange="updatePrice(${p.id}, 'active', this.checked)">
+              </label>
+            </td>
+            <td>
+              <button class="btn btn-danger btn-sm" onclick="deletePrice(${p.id})">🗑</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+    
+    // Render colours table
+    function renderColoursTable() {
+      const tbody = document.getElementById('coloursBody');
+      tbody.innerHTML = colours.map(c => `
+        <tr>
+          <td>
+            <div style="width: 40px; height: 40px; border-radius: 6px; background: ${c.hex_color || '#ddd'}; border: 1px solid #ccc;"></div>
+          </td>
+          <td><strong>${c.name}</strong></td>
+          <td>${c.name_fr || '—'}</td>
+          <td>${c.description || '—'}</td>
+          <td><code>${c.hex_color || '—'}</code></td>
+          <td>${c.image_url ? '<span class="badge badge-success">✓</span>' : '<span class="badge badge-warning">—</span>'}</td>
+          <td>
+            <button class="btn btn-outline btn-sm" onclick="editColour(${c.id})">✏️</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+    
+    // Render formats table
+    function renderFormatsTable() {
+      const tbody = document.getElementById('formatsBody');
+      tbody.innerHTML = formats.map(f => `
+        <tr>
+          <td><strong>${f.name}</strong></td>
+          <td>${f.thickness_mm} mm</td>
+          <td>${f.width_mm} mm</td>
+          <td>${f.length_mm}${f.length_max_mm ? '-' + f.length_max_mm : ''} mm</td>
+          <td><span class="badge badge-success">${f.pattern}</span></td>
+          <td>${f.sort_order}</td>
+          <td>
+            <button class="btn btn-outline btn-sm" onclick="editFormat(${f.id})">✏️</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+    
+    // Filter prices
+    function filterPrices() {
+      const formatId = document.getElementById('filterFormat').value;
+      const gradeId = document.getElementById('filterGrade').value;
+      const finishId = document.getElementById('filterFinish').value;
+      
+      let filtered = prices;
+      if (formatId) filtered = filtered.filter(p => p.format_id == formatId);
+      if (gradeId) filtered = filtered.filter(p => p.grade_id == gradeId);
+      if (finishId) filtered = filtered.filter(p => p.finish_id == finishId);
+      
+      renderPricesTable(filtered);
+    }
+    
+    // Update price (mark as pending)
+    function updatePrice(id, field, value) {
+      if (!pendingChanges[id]) pendingChanges[id] = {};
+      
+      if (field === 'active') {
+        pendingChanges[id][field] = value;
+      } else {
+        pendingChanges[id][field] = parseFloat(value) || 0;
+      }
+      
+      // Update local data and recalculate
+      const price = prices.find(p => p.id === id);
+      if (price) {
+        price[field] = pendingChanges[id][field];
+        renderPricesTable();
+      }
+      
+      document.getElementById('lastSave').textContent = '⚠️ Modifications non sauvegardées';
+    }
+    
+    // Save all prices
+    async function saveAllPrices() {
+      const changes = Object.entries(pendingChanges);
+      if (changes.length === 0) {
+        showToast('Aucune modification à sauvegarder', 'warning');
+        return;
+      }
+      
+      try {
+        for (const [id, data] of changes) {
+          data.updated_at = new Date().toISOString();
+          await supabase.from('natura_prices').update(data).eq('id', id);
+        }
+        
+        pendingChanges = {};
+        document.getElementById('lastSave').textContent = '✓ Sauvegardé ' + new Date().toLocaleTimeString();
+        showToast(`${changes.length} prix mis à jour`, 'success');
+        
+      } catch (error) {
+        console.error('Error saving:', error);
+        showToast('Erreur de sauvegarde', 'error');
+      }
+    }
+    
+    // Add price
+    async function addPrice(e) {
+      e.preventDefault();
+      
+      const data = {
+        format_id: parseInt(document.getElementById('priceFormat').value),
+        grade_id: parseInt(document.getElementById('priceGrade').value),
+        finish_id: parseInt(document.getElementById('priceFinish').value),
+        prix_achat_ht: parseFloat(document.getElementById('priceAchat').value),
+        marge_pct: parseFloat(document.getElementById('defaultMargin').value) || 100,
+        tva_pct: parseFloat(document.getElementById('defaultTVA').value) || 20,
+        active: true
+      };
+      
+      try {
+        const { error } = await supabase.from('natura_prices').insert(data);
+        if (error) throw error;
+        
+        closeModal('addPriceModal');
+        showToast('Prix ajouté', 'success');
+        await loadAllData();
+        
+      } catch (error) {
+        console.error('Error adding price:', error);
+        showToast('Erreur: ' + error.message, 'error');
+      }
+    }
+    
+    // Delete price
+    async function deletePrice(id) {
+      if (!confirm('Supprimer ce prix ?')) return;
+      
+      try {
+        await supabase.from('natura_prices').delete().eq('id', id);
+        showToast('Prix supprimé', 'success');
+        await loadAllData();
+      } catch (error) {
+        showToast('Erreur de suppression', 'error');
+      }
+    }
+    
+    // Preview price calculation
+    function previewPrice() {
+      const achat = parseFloat(document.getElementById('priceAchat').value) || 0;
+      const marge = parseFloat(document.getElementById('defaultMargin').value) || 100;
+      const tva = parseFloat(document.getElementById('defaultTVA').value) || 20;
+      const ttc = achat * (1 + marge/100) * (1 + tva/100);
+      document.getElementById('previewPriceTTC').textContent = ttc.toFixed(2) + ' € TTC';
+    }
+    
+    // Recalculate all (when margin/TVA changes)
+    function recalculateAll() {
+      renderPricesTable();
+    }
+    
+    // Export CSV
+    function exportCSV() {
+      const headers = ['Format', 'Grade', 'Finition', 'Prix Achat HT', 'Marge %', 'Prix Vente HT', 'Prix TTC'];
+      const rows = prices.map(p => {
+        const prixVenteHT = (p.prix_achat_ht || 0) * (1 + (p.marge_pct || 100)/100);
+        const prixTTC = prixVenteHT * (1 + (p.tva_pct || 20)/100);
+        return [
+          p.format?.name || '',
+          p.grade?.name || '',
+          p.finish?.name || '',
+          p.prix_achat_ht || 0,
+          p.marge_pct || 100,
+          prixVenteHT.toFixed(2),
+          prixTTC.toFixed(2)
+        ];
+      });
+      
+      const csv = [headers, ...rows].map(r => r.join(';')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'natura-tarifs-' + new Date().toISOString().split('T')[0] + '.csv';
+      a.click();
+    }
+    
+    // Tabs
+    function setupTabs() {
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+          document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+          tab.classList.add('active');
+          document.getElementById('tab-' + tab.dataset.tab).classList.remove('hidden');
+        });
+      });
+    }
+    
+    // Modal helpers
+    function openAddPriceModal() {
+      document.getElementById('addPriceModal').classList.add('active');
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('active');
+    }
+    
+    // Toast
+    function showToast(message, type = 'info') {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.className = 'toast active ' + type;
+      setTimeout(() => toast.classList.remove('active'), 3000);
+    }
+    
+    // Close modal on overlay click
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) overlay.classList.remove('active');
+      });
+    });
+  </script>
+</body>
+</html>
