@@ -154,71 +154,90 @@ export default function HomePage() {
       <Navigation />
 
       {/* ============================================
-          HERO SECTION - Style Axemark Premium avec texture parquet
+          HERO SECTION - Style Catalogue Bronze/Marron Luxe
           ============================================ */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Background avec texture parquet */}
+        {/* Background dégradé bronze doré → marron comme le catalogue */}
         <div className="absolute inset-0">
-          {/* Image de fond parquet avec overlay */}
-          <img 
-            src={`${SUPABASE_STORAGE}/ambiance/gammes-teintes-05.jpg`}
-            alt=""
-            className="absolute inset-0 w-full h-full object-cover opacity-30"
-          />
-          {/* Gradient bronze par-dessus */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#5A4A3A]/95 via-[#7A6550]/90 to-[#8B7355]/85" />
+          {/* Base gradient - bronze doré en haut, marron en bas */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#9C8568] via-[#8A7358] to-[#6D5847]" />
+          {/* Légère vignette subtile */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(60,45,35,0.25)_100%)]" />
         </div>
         
-        {/* Effet lames de parquet en bas - lignes verticales ultra-fines */}
+        {/* Effet lames de parquet en bas - PLUS GRAND ET VISIBLE */}
         <div className="absolute bottom-0 left-0 right-0 h-[40%] pointer-events-none overflow-hidden">
-          {/* Fond légèrement plus chaud */}
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#8B7355]/20" />
-          {/* Lignes verticales ultra-fines espacées de 2px */}
+          {/* Lignes verticales plus marquées style cannelure */}
           <div 
             className="absolute inset-0"
             style={{
               background: `repeating-linear-gradient(
                 to right,
                 transparent,
-                transparent 2px,
-                rgba(60,50,40,0.35) 2px,
-                rgba(60,50,40,0.35) 2.5px
+                transparent 3px,
+                rgba(60,45,35,0.5) 3px,
+                rgba(60,45,35,0.5) 4px
+              )`,
+            }}
+          />
+          {/* Ombre pour effet relief */}
+          <div 
+            className="absolute inset-0"
+            style={{
+              background: `repeating-linear-gradient(
+                to right,
+                transparent,
+                transparent 4px,
+                rgba(40,30,22,0.25) 4px,
+                rgba(40,30,22,0.25) 4.5px,
+                transparent 4.5px,
+                transparent 7px
               )`,
             }}
           />
         </div>
 
-        {/* Content */}
-        <div className="relative z-10 text-center px-6">
-          {/* Tagline - espacement large */}
-          <p className="text-[#D4C4A8] text-xs md:text-sm tracking-[0.4em] mb-10 font-light">
+        {/* Content - Monté encore plus haut */}
+        <div className="relative z-10 text-center px-6 max-w-5xl mx-auto -mt-32">
+          {/* Tagline EN PREMIER - BEAUCOUP PLUS GROS ET VISIBLE */}
+          <p className="text-[#D8C8B0] text-base md:text-lg lg:text-xl tracking-[0.4em] mb-8 font-sans font-normal uppercase">
             {labels.heroTagline[locale]}
           </p>
           
-          {/* Main title - Police serif élégante Playfair Display */}
-          <h1 className="text-white font-display text-6xl md:text-7xl lg:text-[5.5rem] font-light tracking-[0.05em] leading-[1.1] whitespace-pre-line drop-shadow-lg">
+          {/* Main title - NATURA PARQUETS - plus grand */}
+          <h1 className="text-white font-display text-7xl md:text-8xl lg:text-[7rem] xl:text-[8rem] font-light tracking-[0.06em] leading-[1.1] whitespace-pre-line">
             {labels.heroTitle[locale]}
           </h1>
           
           {/* Slogan - italique élégant */}
-          <p className="text-[#E8DCC8] font-display text-lg md:text-xl lg:text-2xl italic mt-12 font-light tracking-wide">
+          <p className="text-[#E8DCC8] font-display text-xl md:text-2xl lg:text-3xl italic font-light tracking-wide mt-10">
             {labels.heroSlogan[locale]}
           </p>
           
-          {/* CTA Button - encadré fin style catalogue */}
-          <div className="mt-20">
+          {/* CTA Buttons - ARRONDI */}
+          <div className="mt-14 flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link
               href={`/${locale}/produits`}
-              className="inline-block px-10 py-3.5 border border-[#D4C4A8]/50 text-[#E8DCC8] text-sm tracking-[0.15em] hover:bg-[#D4C4A8]/10 hover:border-[#D4C4A8]/70 transition-all duration-300"
+              className="inline-block px-10 py-3.5 border border-[#C8B8A0]/50 text-[#D8C8B0] text-sm tracking-[0.2em] hover:bg-[#C8B8A0]/10 hover:border-[#C8B8A0]/70 transition-all duration-300 font-light rounded-full"
             >
               natura-parquets.fr
             </Link>
+            <a
+              href="/Catalogue-NATURA-PARQUETS.pdf"
+              download
+              className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#8B7355]/80 hover:bg-[#8B7355] text-white text-sm tracking-[0.15em] transition-all duration-300 font-light rounded-full"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              {locale === 'fr' ? 'Télécharger le catalogue' : locale === 'de' ? 'Katalog herunterladen' : 'Download catalogue'}
+            </a>
           </div>
         </div>
 
         {/* Scroll indicator */}
         <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
-          <svg className="w-5 h-5 text-[#D4C4A8]/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5 text-[#E8DCC8]/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
           </svg>
         </div>

@@ -22,6 +22,9 @@ export const metadata = {
   title: 'Natura Parquet - L\'authenticité du bois européen',
   description: 'Parquets premium européens - Chêne & Frêne de qualité supérieure. Distribution France, Allemagne, Belgique, Suisse.',
   keywords: 'parquet, parquet chêne, parquet frêne, parquet premium, parquet européen, parquet contrecollé, parquet massif',
+  icons: {
+    icon: '/favicon.svg',
+  },
 };
 
 export default async function LocaleLayout({

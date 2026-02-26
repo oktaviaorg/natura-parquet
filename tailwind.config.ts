@@ -22,18 +22,18 @@ const config: Config = {
           800: '#4A3F32',  // Brun profond
           900: '#2D251C',  // Quasi noir
         },
-        // Accent vert sapin (CTA)
+        // Accent marron/bronze (CTA) - remplace le vert
         forest: {
-          50: '#F0F7F4',
-          100: '#DBF0E5',
-          200: '#B8E0CC',
-          300: '#8BCAAB',
-          400: '#5BAF86',
-          500: '#3D9268',  // Vert principal
-          600: '#2F7653',
-          700: '#285F45',
-          800: '#234C39',
-          900: '#1E3F30',
+          50: '#FAF7F4',
+          100: '#F0EBE4',
+          200: '#E0D5C8',
+          300: '#C9B9A5',
+          400: '#A69282',
+          500: '#8B7355',  // Marron principal (CTA)
+          600: '#6B5A45',
+          700: '#5A4A3A',
+          800: '#4A3F32',
+          900: '#3A3028',
         },
         // Accent doré (prix, badges)
         gold: {

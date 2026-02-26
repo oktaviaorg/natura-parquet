@@ -119,10 +119,14 @@ export default function ProductFilters({ activeFilters, onFilterChange }: Produc
     count?: number;
     onChange: () => void 
   }) => (
-    <label className="flex items-center gap-3 py-1.5 cursor-pointer group">
+    <button 
+      type="button"
+      onClick={onChange}
+      className="flex items-center gap-3 py-1.5 cursor-pointer group w-full text-left"
+    >
       <div className={`w-4 h-4 rounded border-2 flex items-center justify-center transition-colors ${
         checked 
-          ? 'bg-forest-500 border-forest-500' 
+          ? 'bg-[#8B7355] border-[#8B7355]' 
           : 'border-natura-300 group-hover:border-natura-400'
       }`}>
         {checked && (
@@ -137,7 +141,7 @@ export default function ProductFilters({ activeFilters, onFilterChange }: Produc
       {count !== undefined && (
         <span className="text-xs text-natura-400">({count})</span>
       )}
-    </label>
+    </button>
   );
 
   const ColorSwatch = ({ 
