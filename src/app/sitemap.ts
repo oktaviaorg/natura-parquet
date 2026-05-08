@@ -10,6 +10,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages = [
     { path: '', priority: 1.0, changeFrequency: 'daily' as const },
     { path: '/produits', priority: 0.9, changeFrequency: 'daily' as const },
+    // SEO pillar pages — 10 priorities for ranking on category queries
+    { path: '/parquet-point-de-hongrie', priority: 0.9, changeFrequency: 'weekly' as const },
     { path: '/guide-parquet', priority: 0.8, changeFrequency: 'weekly' as const },
     { path: '/articles', priority: 0.8, changeFrequency: 'daily' as const },
     { path: '/partenaires', priority: 0.7, changeFrequency: 'weekly' as const },
