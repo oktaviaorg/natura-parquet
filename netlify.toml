@@ -1,5 +1,5 @@
 [build]
-  command = "npm run build"
+  command = "cp -a site-static/. public/ && npm run build"
   publish = ".next"
 
 [build.environment]
@@ -7,3 +7,129 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+# Réécritures vers les fichiers du miroir statique. Les règles plus spécifiques
+# précèdent le handler Next. Pas de règle qui réécrit index.html vers lui-même.
+[[redirects]]
+  from = "/fr/espace-pro"
+  to = "/fr/professionnels/"
+  status = 301
+
+[[redirects]]
+  from = "/fr/espace-pro/"
+  to = "/fr/professionnels/"
+  status = 301
+
+[[redirects]]
+  from = "/fr/devenir-partenaire"
+  to = "/fr/professionnels/"
+  status = 301
+
+[[redirects]]
+  from = "/fr/devenir-partenaire/"
+  to = "/fr/professionnels/"
+  status = 301
+
+[[redirects]]
+  from = "/fr/articles"
+  to = "/fr/guide-parquet/"
+  status = 301
+
+[[redirects]]
+  from = "/fr/articles/"
+  to = "/fr/guide-parquet/"
+  status = 301
+
+[[redirects]]
+  from = "/fr/faq"
+  to = "/fr/guide-parquet/"
+  status = 301
+
+[[redirects]]
+  from = "/fr/faq/"
+  to = "/fr/guide-parquet/"
+  status = 301
+
+[[redirects]]
+  from = "/fr/catalogue"
+  to = "/fr/produits/"
+  status = 301
+
+[[redirects]]
+  from = "/fr/catalogue/"
+  to = "/fr/produits/"
+  status = 301
+
+[[redirects]]
+  from = "/fr/echantillon"
+  to = "/fr/contact/?type=echantillon"
+  status = 301
+
+[[redirects]]
+  from = "/fr/echantillon/"
+  to = "/fr/contact/?type=echantillon"
+  status = 301
+
+[[redirects]]
+  from = "/fr/partenaires"
+  to = "/fr/professionnels/"
+  status = 301
+
+[[redirects]]
+  from = "/fr/partenaires/"
+  to = "/fr/professionnels/"
+  status = 301
+
+[[redirects]]
+  from = "/fr/produits/:slug/"
+  to = "/fr/produits/:slug/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/de/produits/:slug/"
+  to = "/de/produits/:slug/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/en/produits/:slug/"
+  to = "/en/produits/:slug/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/fr/"
+  to = "/fr/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/de/"
+  to = "/de/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/en/"
+  to = "/en/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/fr/:page/"
+  to = "/fr/:page/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/de/:page/"
+  to = "/de/:page/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/en/:page/"
+  to = "/en/:page/index.html"
+  status = 200
+  force = true

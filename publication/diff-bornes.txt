@@ -1,0 +1,33 @@
+Diff borné — pages existantes reprises dans publication/
+Source comparée : copie HTTP du déploiement de production 6addac51ba236bd7ef78d610.
+Chaque fichier publication est identique à cette source, plus uniquement les paragraphes ci-dessous.
+
+publication/fr/parquet-baton-rompu/index.html
+  +106 octets
+  + <p><a href="/fr/guide-baton-rompu-chene-sur-mesure/">choisir les proportions de votre bâton rompu</a></p>
+
+publication/fr/parquet-lames-droites/index.html
+  +111 octets
+  + <p><a href="/fr/guide-lames-droites-chene-sur-mesure/">préparer un parquet à lames droites sur mesure</a></p>
+
+publication/fr/professionnels/index.html
+  +106 octets
+  + <p><a href="/fr/guide-baton-rompu-chene-sur-mesure/">choisir les proportions de votre bâton rompu</a></p>
+
+publication/fr/parquet-moderne-salon/index.html
+  +137 octets
+  + <p><a href="https://natura-parquets.fr/fr/guide-lames-droites-chene-sur-mesure/">préparer un parquet à lames droites sur mesure</a></p>
+
+publication/fr/guide-parquet/index.html
+  +284 octets, deux paragraphes seulement
+  + <p><a href="/fr/guide-baton-rompu-chene-sur-mesure/">Parquet bâton rompu sur mesure en chêne européen : format, bois et finition</a></p>
+  + <p><a href="/fr/guide-lames-droites-chene-sur-mesure/">Parquet chêne en lames droites sur mesure : choisir largeur, longueur et finition</a></p>
+
+Ajouts, sans remplacement d’une page existante :
+  publication/fr/guide-baton-rompu-chene-sur-mesure/index.html
+  publication/fr/guide-lames-droites-chene-sur-mesure/index.html
+  public/images/guides/baton-rompu-illustration.webp
+  public/images/guides/lames-droites-illustration.webp
+  publication/sitemap.xml = sitemap de production + ces deux URL (1364 + 2)
+
+robots.txt de production n’est pas modifié.
