@@ -68,6 +68,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     'chene-europeen-qualite-origine',
   ];
 
+  // Guides FR approuvés — pas de version de/en, pas de guide Hongrie.
+  const approvedGuideUrls = [
+    'guide-baton-rompu-chene-sur-mesure',
+    'guide-lames-droites-chene-sur-mesure',
+  ].map(slug => ({
+    url: `${baseUrl}/fr/${slug}/`,
+    lastModified: now,
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }));
+
   const articleUrls = articleSlugs.flatMap(slug =>
     locales.map(locale => ({
       url: `${baseUrl}/${locale}/articles/${slug}`,
@@ -107,5 +118,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ),
   ];
 
-  return [...staticUrls, ...productUrls, ...articleUrls, ...categoryUrls];
+  return [...staticUrls, ...productUrls, ...articleUrls, ...approvedGuideUrls, ...categoryUrls];
 }
