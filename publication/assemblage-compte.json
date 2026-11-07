@@ -1,0 +1,16 @@
+{
+  "originDeploy": "6addac51ba236bd7ef78d610",
+  "prodSitemapSha256": "78df8cab1feae746550bc1801ee481749f218ff211ab6d9b958e3a651bf4d074",
+  "prodSitemapUrls": 1364,
+  "previewSitemapUrls": 1366,
+  "added": [
+    "https://natura-parquets.fr/fr/guide-baton-rompu-chene-sur-mesure/",
+    "https://natura-parquets.fr/fr/guide-lames-droites-chene-sur-mesure/"
+  ],
+  "robotsSha256": "c9d9df47f5b4de2b66acd19652966a304272252e06e94dd0d2a919b8a79a7a67",
+  "htmlFiles": 1370,
+  "assetPaths": 1412,
+  "missingProdUrls": 0,
+  "redirectsWritten": 15,
+  "redirectsNote": "Le fichier _redirects du déploiement manuel n’est pas téléchargeable (HTTP 404). Ces règles sont celles observées par sondage. Les 822 règles annoncées par Netlify restent dans le déploiement de production et ne doivent pas être écrasées par un remplacement intégral."
+}
