@@ -8,8 +8,8 @@
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
-# Le runtime Next reste exigé par le plugin du site. Ces règles, plus spécifiques,
-# servent les fichiers du site statique (production + deux guides) avant le handler Next.
+# Réécritures vers les fichiers du miroir statique. Les règles plus spécifiques
+# précèdent le handler Next. Pas de règle qui réécrit index.html vers lui-même.
 [[redirects]]
   from = "/fr/espace-pro"
   to = "/fr/professionnels/"
@@ -81,39 +81,22 @@
   status = 301
 
 [[redirects]]
-  from = "/fr"
-  to = "/fr/"
-  status = 301
+  from = "/fr/produits/:slug/"
+  to = "/fr/produits/:slug/index.html"
+  status = 200
+  force = true
 
 [[redirects]]
-  from = "/fr/produits/:slug"
-  to = "/fr/produits/:slug/"
-  status = 301
+  from = "/de/produits/:slug/"
+  to = "/de/produits/:slug/index.html"
+  status = 200
+  force = true
 
 [[redirects]]
-  from = "/de/produits/:slug"
-  to = "/de/produits/:slug/"
-  status = 301
-
-[[redirects]]
-  from = "/en/produits/:slug"
-  to = "/en/produits/:slug/"
-  status = 301
-
-[[redirects]]
-  from = "/fr/:page"
-  to = "/fr/:page/"
-  status = 301
-
-[[redirects]]
-  from = "/de/:page"
-  to = "/de/:page/"
-  status = 301
-
-[[redirects]]
-  from = "/en/:page"
-  to = "/en/:page/"
-  status = 301
+  from = "/en/produits/:slug/"
+  to = "/en/produits/:slug/index.html"
+  status = 200
+  force = true
 
 [[redirects]]
   from = "/fr/"
@@ -130,42 +113,6 @@
 [[redirects]]
   from = "/en/"
   to = "/en/index.html"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/fr/produits/"
-  to = "/fr/produits/index.html"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/de/produits/"
-  to = "/de/produits/index.html"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/en/produits/"
-  to = "/en/produits/index.html"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/fr/produits/:slug/"
-  to = "/fr/produits/:slug/index.html"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/de/produits/:slug/"
-  to = "/de/produits/:slug/index.html"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/en/produits/:slug/"
-  to = "/en/produits/:slug/index.html"
   status = 200
   force = true
 
